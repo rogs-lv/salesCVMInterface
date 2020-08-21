@@ -1,15 +1,31 @@
 <div class="container">
-    <div class="row pl-5">
+    <div class="row pl-5 justify-content-center">
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Grafica</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">Gráfica</h5>
+                    <div class="flex">
+                        <div class="flex-item">
+                            <div style="display: block;">
+                                <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                            </div>
+                        </div>
+                        <div class="flex-item">
+                            <!-- <table class="table table-responsive table-condensed">
+                                <tr>
+                                    <th *ngFor="let label of lineChartLabels">{{label}}</th>
+                                </tr>
+                                <tr *ngFor="let d of lineChartData; let i=index" [class]="'line-'+i">
+                                    <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
+                                </tr>
+                            </table> -->
+                            <button mat-button mat-raised-button color="primary" class="btn btn-primary" (click)="randomize()">Randomize</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Noticias y Promociones</h5>

@@ -4,6 +4,7 @@ import { SociosnegociosComponent } from '../datosmaestros/sociosnegocios/sociosn
 import { ArticulosComponent } from '../datosmaestros/articulos/articulos.component';
 import { CotizacionComponent } from '../ventas/cotizacion/cotizacion.component';
 import { PedidoComponent } from '../ventas/pedido/pedido.component';
+import { CrmComponent } from '../crm/crm.component';
 
 export const HOME_ROUTES: Routes = [
     { path: 'dashboard'           , component: DashboardComponent },
@@ -11,5 +12,6 @@ export const HOME_ROUTES: Routes = [
     { path: 'articulos'           , component: ArticulosComponent },
     { path: 'cotizacion'          , component: CotizacionComponent },
     { path: 'pedido'              , component: PedidoComponent },
+    { path: 'crm'                 , component: CrmComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'dashboard'}
 ];

@@ -3,4 +3,44 @@
 body {
     margin: 0em;
     background-color: #eee;
+    font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.brand {
+    color: #777
+}
+
+.typeheadbox {
+    color: #333;
+    font-weight: 300
+}
+
+
+/*animaciones*/
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
 }

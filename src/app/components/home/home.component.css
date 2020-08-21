@@ -1,104 +1,158 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
-* {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    text-decoration: none;
+/* -- main content -- */
+
+.content-container {
+    position: relative;
+    z-index: 0;
+    padding: 20px;
+    /* max-width: 728px; */
+    margin: 0 auto;
+    overflow: hidden;
+    transition: all 300ms ease-in-out;
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
-}
-
-.sidebar {
-    /* position: absolute; */
-    left: 0px;
-    width: 250px;
-    height: 100%;
-    background: #0067A8;
-    transition: all .5s ease;
-    position: fixed;
-    z-index: 1;
-}
-
-.sidebar header {
-    font-size: 22px;
-    color: white;
-    line-height: 70px;
+.site-title {
     text-align: center;
-    background: #0067A8;
-    user-select: none;
+    border-bottom: 1px solid #111111;
+    margin-bottom: 24px;
 }
 
-.sidebar ul a {
-    display: block;
-    height: 100%;
+.site-title h1 {
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+}
+
+img {
     width: 100%;
-    line-height: 55px;
-    font-size: 20px;
-    color: white;
-    padding-left: 40px;
-    box-sizing: border-box;
-    /* border-bottom: 1px solid black; */
-    border-top: 1px solid rgba(255, 255, 255, .1);
-    transition: .4s;
 }
 
-ul li:hover a {
-    padding-left: 50px;
+.content p {
+    line-height: 1.6em;
+    margin-bottom: 24px;
 }
 
-.sidebar ul a i {
-    margin-right: 16px;
+
+/* -- Slideout Sidebar -- */
+
+.slideout-sidebar {
+    position: fixed;
+    top: 0;
+    left: -190px;
+    z-index: 0;
+    width: 210px;
+    height: 100%;
+    padding: 20px;
+    background-color: #0067A8;
+    transition: all 300ms ease-in-out;
 }
 
-#check {
+.slideout-sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.slideout-sidebar ul li {
+    cursor: pointer;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(244, 244, 244, 0.4);
+    color: rgba(244, 244, 244, 0.7);
+}
+
+.slideout-sidebar ul li:last-child {
+    border-bottom: 0;
+}
+
+.slideout-sidebar ul li:hover {
+    color: rgba(244, 244, 244, 1);
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+    background-color: transparent;
+    font-size: 17px;
+}
+
+
+/* -- Menu Icon -- */
+
+#menu-toggle {
     display: none;
 }
 
-label #btn,
-label #cancel {
-    position: absolute;
-    background: #042331;
-    border-radius: 3px;
-    cursor: pointer;
+.menu-icon {
+    position: fixed;
+    /* top: 18px; */
+    left: 30px;
+    font-size: 34px;
+    z-index: 1;
+    transition: all 300ms ease-in-out;
 }
 
-label #btn {
-    left: 250px;
-    top: 25px;
-    font-size: 50px;
-    color: white;
-    padding: 6px 12px;
-    opacity: 0;
-    pointer-events: none;
-    transition: all .5s;
+
+/*-- The Magic --*/
+
+#menu-toggle:checked~.slideout-sidebar {
+    left: 0px;
 }
 
-label #cancel {
-    z-index: 1111;
-    left: 195px;
-    top: 17px;
-    font-size: 50px;
-    color: #0a5275;
-    padding: 4px 9px;
-    transition: all .5s ease;
+#menu-toggle:checked+.menu-icon {
+    left: 215px;
 }
 
-#check:checked~.sidebar {
-    left: -250px;
+#menu-toggle:checked~.content-container {
+    padding-left: 190px;
 }
 
-#check:checked~label #btn {
-    left: 40px;
-    opacity: 1;
-    pointer-events: auto;
+
+/* -- Media Queries -- */
+
+@media (max-width: 991px) {
+    .content-container {
+        max-width: 480px;
+    }
 }
 
-#check:checked~label #cancel {
-    left: -195px;
-}
-
-#check:checked~section {
-    margin-left: 0px;
+@media (max-width: 767px) {
+    .content-container {
+        max-width: 100%;
+        margin: 30px auto 0;
+    }
+    #menu-toggle:checked~.content-container {
+        padding-left: 0;
+    }
+    .slideout-sidebar ul {
+        text-align: center;
+        max-width: 200px;
+        margin: 30px auto 0;
+    }
+    .menu-icon {
+        left: 20px
+    }
+    #menu-toggle:checked~.slideout-sidebar {
+        width: 100%;
+    }
+    #menu-toggle:checked+.menu-icon {
+        left: 87%;
+        color: #fafafa;
+    }
+    @media screen and (max-width: 736px) and (orientation: landscape) {
+        .slideout-sidebar {
+            padding: 0;
+        }
+        .slideout-sidebar ul {
+            max-width: 100%;
+            margin: 60px auto 0;
+        }
+        .slideout-sidebar ul li {
+            display: inline-block;
+            border-bottom: 0;
+            width: 72px;
+            padding: 18px 24px;
+            margin: 0 6px 12px;
+            color: #ffffff;
+            background-color: #777;
+        }
+    }
 }

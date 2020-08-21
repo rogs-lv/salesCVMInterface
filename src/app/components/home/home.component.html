@@ -1,5 +1,12 @@
 <input type="checkbox" id="menu-toggle" />
 <label for="menu-toggle" class="menu-icon"><i class="fa fa-bars"></i></label>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand"></a>
+    <form class="form-inline">
+        <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit" (click)="logout()"><span class="iconspan"><i class="fas fa-sign-out-alt"></i></span></button>
+    </form>
+</nav>
 <div class="content-container">
     <div class="content">
         <router-outlet></router-outlet>
@@ -7,14 +14,14 @@
 </div>
 <div class="slideout-sidebar">
     <ul>
-        <li><a href="#" [routerLink]="['dashboard']"><span class="iconspan"><i class="fas fa-newspaper"></i></span> Dashboard</a></li>
+        <li><a href="#" [routerLink]="['dashboard']"><span class="iconspan"><i class="fas fa-chart-pie"></i></span> Dashboard</a></li>
         <li><a href="#" [routerLink]="['sn']"><span class="iconspan"><i class="fas fa-users"></i></span> Socio de Negocios</a></li>
-        <li><a href="#" [routerLink]="['articulos']"><span class="iconspan"><i class="fas fa-newspaper"></i></span> Artículos</a></li>
+        <li><a href="#" [routerLink]="['articulos']"><span class="iconspan"><i class="fas fa-cubes"></i></span> Artículos</a></li>
         <li><a href="#" [routerLink]="['cotizacion']"><span class="iconspan"><i class="fas fa-id-card"></i></span> Cotización</a></li>
         <li><a href="#" [routerLink]="['pedido']"><span class="iconspan"><i class="fas fa-shopping-cart"></i></span> Pedido</a></li>
         <li><a href="#" [routerLink]="['crm']"><span class="iconspan"><i class="fas fa-sitemap"></i></span> CRM</a></li>
         <li><a href="#" [routerLink]="['']"><span class="iconspan"><i class="fas fa-file-contract"></i></span> Reportes</a></li>
-        <li><a href="#"><span class="iconspan"><i class="fas fa-sign-out-alt" (click)="logout()"></i></span> Salir</a></li>
+        <!-- <li><a href="#"><span class="iconspan"><i class="fas fa-sign-out-alt" (click)="logout()"></i></span> Salir</a></li> -->
     </ul>
     <div class="text-center pt-4">
         <img src="../assets/images/logo2.png" class="sizelogo" alt="">

@@ -2,21 +2,21 @@
 <label for="menu-toggle" class="menu-icon"><i class="fa fa-bars"></i></label>
 <div class="content-container">
     <div class="content">
-        <router-outlet class="m-5"></router-outlet>
+        <router-outlet></router-outlet>
     </div>
 </div>
 <div class="slideout-sidebar">
     <ul>
-        <li><a href="#" [routerLink]="['dashboard']"><span style=""><i class="fas fa-newspaper"></i></span> Dashboard</a></li>
-        <li><a href="#" [routerLink]="['sn']"><i class="fas fa-users"></i> Socio de Negocios</a></li>
-        <li><a href="#" [routerLink]="['articulos']"><i class="fas fa-newspaper"></i> Artículos</a></li>
-        <li><a href="#" [routerLink]="['cotizacion']"><i class="fas fa-id-card"></i> Cotización</a></li>
-        <li><a href="#" [routerLink]="['pedido']"><i class="fas fa-shopping-cart"></i> Pedido</a></li>
-        <li><a href="#" [routerLink]="['crm']"><i class="fas fa-sitemap"></i> CRM</a></li>
-        <li><a href="#"><i class="fas fa-file-contract"></i> Reportes</a></li>
-        <li><a href="#"><i class="fas fa-sign-out-alt" (click)="logout()"></i> Salir</a></li>
+        <li><a href="#" [routerLink]="['dashboard']"><span class="iconspan"><i class="fas fa-newspaper"></i></span> Dashboard</a></li>
+        <li><a href="#" [routerLink]="['sn']"><span class="iconspan"><i class="fas fa-users"></i></span> Socio de Negocios</a></li>
+        <li><a href="#" [routerLink]="['articulos']"><span class="iconspan"><i class="fas fa-newspaper"></i></span> Artículos</a></li>
+        <li><a href="#" [routerLink]="['cotizacion']"><span class="iconspan"><i class="fas fa-id-card"></i></span> Cotización</a></li>
+        <li><a href="#" [routerLink]="['pedido']"><span class="iconspan"><i class="fas fa-shopping-cart"></i></span> Pedido</a></li>
+        <li><a href="#" [routerLink]="['crm']"><span class="iconspan"><i class="fas fa-sitemap"></i></span> CRM</a></li>
+        <li><a href="#" [routerLink]="['']"><span class="iconspan"><i class="fas fa-file-contract"></i></span> Reportes</a></li>
+        <li><a href="#"><span class="iconspan"><i class="fas fa-sign-out-alt" (click)="logout()"></i></span> Salir</a></li>
     </ul>
     <div class="text-center pt-4">
-        <img src="../assets/images/logo2.png" style="max-width: 100%;" alt="">
+        <img src="../assets/images/logo2.png" class="sizelogo" alt="">
     </div>
 </div>

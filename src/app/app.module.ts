@@ -14,6 +14,8 @@ import { ArticulosComponent } from './components/datosmaestros/articulos/articul
 import { CotizacionComponent } from './components/ventas/cotizacion/cotizacion.component';
 import { PedidoComponent } from './components/ventas/pedido/pedido.component';
 import { CrmComponent } from './components/crm/crm.component';
+import { TablaArticulosComponent } from './components/ventas/shared/tabla-articulos/tabla-articulos.component';
+import { ListaArticulosComponent } from './components/ventas/shared/lista-articulos/lista-articulos.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { CrmComponent } from './components/crm/crm.component';
     ArticulosComponent,
     CotizacionComponent,
     PedidoComponent,
-    CrmComponent
+    CrmComponent,
+    TablaArticulosComponent,
+    ListaArticulosComponent
   ],
   imports: [
     BrowserModule,

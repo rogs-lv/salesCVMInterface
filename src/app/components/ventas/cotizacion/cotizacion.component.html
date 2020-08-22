@@ -1,5 +1,75 @@
-<div class="container animated fadeIn fast">
-    <div class="row justify-content-center">
-        <h3>Cotización</h3>
+<div class="ml-5 animated fadeIn fast">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="header-title">
+                        <h4 class="title">Cotización</h4>
+                    </div>
+                    <div class="container pt-3">
+                        <div class="row">
+                            <!-- Encabezado -->
+                            <div class="col-sm-12">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="cardcode">Cliente</label>
+                                                <input id="cardcode" type="text" class="form-control" placeholder="Cliente" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="cardname">Nombre</label>
+                                                <input id="cardname" type="text" class="form-control" placeholder="Nombre" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="docdate">Fecha</label>
+                                                <div class="input-group mb-3">
+                                                    <input id="docdate" type="text" class="form-control" placeholder="Fecha">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="reference">Referencia</label>
+                                                <input id="reference" type="text" class="form-control" placeholder="Referencia" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="comments">Comentarios</label>
+                                                <textarea class="form-control" id="comments" placeholder="comentarios"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <app-tabla-articulos class="col-sm-12"></app-tabla-articulos>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-success"><span><i class="fas fa-paper-plane"></i></span> Enviar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sección artículos -->
+        <div class="col-md-4">
+            <div class="card">
+                <app-lista-articulos class="col-sm-12"></app-lista-articulos>
+            </div>
+        </div>
     </div>
 </div>

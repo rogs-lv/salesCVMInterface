@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-articulos-nuevo',
+  selector: 'app-articulos-lista',
   template: `
     <p>
-      articulos-nuevo works!
+      articulos-lista works!
     </p>
   `,
   styles: []
 })
-export class ArticulosNuevoComponent implements OnInit {
+export class ArticulosListaComponent implements OnInit {
 
   constructor() {
   }

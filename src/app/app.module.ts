@@ -16,6 +16,12 @@ import { PedidoComponent } from './components/ventas/pedido/pedido.component';
 import { CrmComponent } from './components/crm/crm.component';
 import { TablaArticulosComponent } from './components/ventas/shared/tabla-articulos/tabla-articulos.component';
 import { ListaArticulosComponent } from './components/ventas/shared/lista-articulos/lista-articulos.component';
+import { ArticulosNuevoComponent } from './components/datosmaestros/articulos/articulos-nuevo.component';
+import { ArticulosEditarComponent } from './components/datosmaestros/articulos/articulos-editar.component';
+import { SociosNegociosNuevoComponent } from './components/datosmaestros/sociosnegocios/sociosnegocios-nuevo.component';
+import { SociosNegociosEditarComponent } from './components/datosmaestros/sociosnegocios/sociosnegocios-editar.component';
+import { SociosNegociosListaComponent } from './components/datosmaestros/sociosnegocios/sociosnegocios-lista.component';
+import { ArticulosListaComponent } from './components/datosmaestros/articulos/articulos-lista.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,13 @@ import { ListaArticulosComponent } from './components/ventas/shared/lista-articu
     PedidoComponent,
     CrmComponent,
     TablaArticulosComponent,
-    ListaArticulosComponent
+    ListaArticulosComponent,
+    ArticulosNuevoComponent,
+    ArticulosEditarComponent,
+    ArticulosListaComponent,
+    SociosNegociosNuevoComponent,
+    SociosNegociosEditarComponent,
+    SociosNegociosListaComponent
   ],
   imports: [
     BrowserModule,

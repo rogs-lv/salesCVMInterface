@@ -1,12 +1,218 @@
 <div class="container animated fadeIn fast">
     <div class="row">
-        <div class="col-md-12 text-center">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['lista']">Lista de Artículos</button>
-                <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['nuevo']">Nuevos Artículo</button>
-                <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['editar']">Editar Artículo</button>
+        <!-- Formulario de Artículos (editar/nuevo) -->
+        <div class="col-sm-8 pt-4">
+            <div class="card bxcard">
+                <div class="card-body">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-user"></i> Artículo</span>
+                        </div>
+                    </div>
+                    <div class="container pt-3">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Código</label>
+                                                <input id="" type="text" class="form-control" placeholder="codigo" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Descripción</label>
+                                                <input id="" type="text" class="form-control" placeholder="Descripción" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Grupo Artículos</label>
+                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                    <option>Grupo 1</option>
+                                                    <option>Grupo 2</option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Unidad de Medida</label>
+                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                    <option>Manual</option>
+                                                    <option>Caja</option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Lista de precios</label>
+                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                    <option>Mayore</option>
+                                                    <option>Menudeo</option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Precio</label>
+                                                <input id="" type="text" class="form-control" placeholder="Precio" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 d-flex align-items-center justify-content-around">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked="checked">
+                                                <label class="form-check-label" for="inlineCheckbox1">Inventario</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                                <label class="form-check-label" for="inlineCheckbox2">Compra</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                                                <label class="form-check-label" for="inlineCheckbox3">venta</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-sm-5">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked="checked">
+                                                <label class="form-check-label" for="inlineCheckbox1">Retención de impuestos</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                                <label class="form-check-label" for="inlineCheckbox2">Sujeto a impuesto</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                <label class="form-check-label" for="inlineRadio1">Activo</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                <label class="form-check-label" for="inlineRadio2">Inactivo</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- Sección detalle -->
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="table-responsive-sm">
+                                                        <table class="table table-borderless">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Nom Propiedad</th>
+                                                                    <th scope="col">Estatus</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Artículo propiedad 1</td>
+                                                                    <td><input type="checkbox" checked="checked"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Artículo propiedad 2</td>
+                                                                    <td><input type="checkbox" checked="checked"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="table-responsive-sm">
+                                                        <table class="table table-borderless">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Codigo</th>
+                                                                    <th scope="col">Nombre</th>
+                                                                    <th scope="col">Bloqueado</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>01</td>
+                                                                    <td>Almacén 1</td>
+                                                                    <td><input type="checkbox" checked="checked"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>02</td>
+                                                                    <td>Almacén 2</td>
+                                                                    <td><input type="checkbox" checked="checked"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-4">
+                                        <div class="col-sm-6 d-flex justify-content-center">
+                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-pencil-alt"></i></span></button>
+                                            <!-- <button class="btn btn-light btnLimon"><span><i class="fas fa-times"></i></span></button> -->
+                                        </div>
+                                        <div class="col-sm-6 d-flex justify-content-center">
+                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Lista Socios de Artículos -->
+        <div class="col-sm-4 pt-4">
+            <div class="card bxcard">
+                <div class="card-body">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-users"></i> Artículos</span>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive-xl">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Código</th>
+                                                <th scope="col">Descripción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Art01</td>
+                                                <td>Articulo 1</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Art01</td>
+                                                <td>Articulo 1</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <router-outlet></router-outlet>
 </div>

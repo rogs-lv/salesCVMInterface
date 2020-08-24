@@ -2,10 +2,12 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['crmoportunidad']">Oportunidades</button>
-                <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['crmactividad']">Actividades</button>
-                <!-- <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['editarsn']">Editar</button> -->
+                <button type="button" class="btn btn-light btnLimon" routerLinkActive="active" [routerLink]="['crm-oportunidad']">Oportunidades</button>
+                <button type="button" class="btn btn-light btnLimon" routerLinkActive="active" [routerLink]="['crm-actividad']">Actividades</button>
             </div>
         </div>
     </div>
+</div>
+<div class="container pt-3">
+    <router-outlet></router-outlet>
 </div>

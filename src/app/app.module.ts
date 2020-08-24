@@ -22,6 +22,8 @@ import { SociosNegociosNuevoComponent } from './components/datosmaestros/sociosn
 import { SociosNegociosEditarComponent } from './components/datosmaestros/sociosnegocios/sociosnegocios-editar.component';
 import { SociosNegociosListaComponent } from './components/datosmaestros/sociosnegocios/sociosnegocios-lista.component';
 import { ArticulosListaComponent } from './components/datosmaestros/articulos/articulos-lista.component';
+import { CrmOportunidadesComponent } from './components/crm/crm-oportunidades/crm-oportunidades.component';
+import { CrmActividadesComponent } from './components/crm/crm-actividades/crm-actividades.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { ArticulosListaComponent } from './components/datosmaestros/articulos/ar
     ArticulosListaComponent,
     SociosNegociosNuevoComponent,
     SociosNegociosEditarComponent,
-    SociosNegociosListaComponent
+    SociosNegociosListaComponent,
+    CrmOportunidadesComponent,
+    CrmActividadesComponent
   ],
   imports: [
     BrowserModule,

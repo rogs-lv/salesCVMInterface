@@ -7,6 +7,7 @@ import { PedidoComponent } from '../ventas/pedido/pedido.component';
 import { CrmComponent } from '../crm/crm.component';
 import { SOCIOSNEGOCIOS_ROUTES } from '../datosmaestros/sociosnegocios/sociosnegocios.routes';
 import { ARTICULO_ROUTES } from '../datosmaestros/articulos/articulos.routes';
+import { CRM_ROUTES } from '../crm/crm.routes';
 
 export const HOME_ROUTES: Routes = [
     { path: 'dashboard'           , component: DashboardComponent },
@@ -14,6 +15,6 @@ export const HOME_ROUTES: Routes = [
     { path: 'articulos'           , component: ArticulosComponent          , children: ARTICULO_ROUTES },
     { path: 'cotizacion'          , component: CotizacionComponent },
     { path: 'pedido'              , component: PedidoComponent },
-    { path: 'crm'                 , component: CrmComponent },
+    { path: 'crm'                 , component: CrmComponent                , children: CRM_ROUTES },
     { path: '**', pathMatch: 'full', redirectTo: 'dashboard'}
 ];

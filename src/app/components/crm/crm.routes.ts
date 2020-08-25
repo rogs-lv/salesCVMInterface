@@ -5,5 +5,5 @@ import { CrmOportunidadesComponent } from './crm-oportunidades/crm-oportunidades
 export const CRM_ROUTES: Routes = [
     { path: 'crm-oportunidad', component: CrmOportunidadesComponent },
     { path: 'crm-actividad', component: CrmActividadesComponent },
-    { path: '**', pathMatch: 'full', redirectTo: 'actividad' }
+    { path: '**', pathMatch: 'full', redirectTo: 'crm-oportunidad' }
 ];

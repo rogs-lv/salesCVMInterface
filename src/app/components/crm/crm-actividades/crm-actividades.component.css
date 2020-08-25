@@ -1,0 +1,27 @@
+.atabs {
+    padding-top: 0.5em;
+    padding-right: 0.3em;
+    padding-bottom: 0.5em;
+    padding-left: 0.3em;
+    /* color: #17a2b8 !important; */
+}
+
+.icontabs {
+    font-size: 1.2em;
+}
+
+.nav-tabs>li.active>a {
+    color: #3c5a78;
+    font-size: 16px;
+}
+
+.nav-tabs>li>a {
+    color: #575757;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    color: #FFFFFF;
+    background-color: #17a2b8;
+    border-color: #dee2e6 #dee2e6 #fff;
+}

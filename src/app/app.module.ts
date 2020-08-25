@@ -24,6 +24,7 @@ import { SociosNegociosListaComponent } from './components/datosmaestros/sociosn
 import { ArticulosListaComponent } from './components/datosmaestros/articulos/articulos-lista.component';
 import { CrmOportunidadesComponent } from './components/crm/crm-oportunidades/crm-oportunidades.component';
 import { CrmActividadesComponent } from './components/crm/crm-actividades/crm-actividades.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CrmActividadesComponent } from './components/crm/crm-actividades/crm-ac
     SociosNegociosEditarComponent,
     SociosNegociosListaComponent,
     CrmOportunidadesComponent,
-    CrmActividadesComponent
+    CrmActividadesComponent,
+    ReportesComponent
   ],
   imports: [
     BrowserModule,

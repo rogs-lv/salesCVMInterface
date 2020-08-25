@@ -83,6 +83,17 @@ body {
     box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
 }
 
+.card-icondetalle,
+.card-textdetalle {
+    border-radius: 3px;
+    margin-top: -15px;
+    text-align: center;
+    background-color: #87cb16;
+    -webkit-box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
+}
+
 .card-header {
     margin: 0 15px;
     padding: 0;

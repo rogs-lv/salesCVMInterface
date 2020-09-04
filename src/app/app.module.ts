@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpInterceptor } from '@angular/common/http';
 
 import { ChartsModule} from 'ng2-charts';
 import { AppRoutingModule } from './app.routes';
@@ -26,6 +26,7 @@ import { ArticulosListaComponent } from './components/datosmaestros/articulos/ar
 import { CrmOportunidadesComponent } from './components/crm/crm-oportunidades/crm-oportunidades.component';
 import { CrmActividadesComponent } from './components/crm/crm-actividades/crm-actividades.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
+import { AuthInterceptor } from './services/authconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -54,10 +55,17 @@ import { ReportesComponent } from './components/reportes/reportes.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     ChartsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    /* {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    } */
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,12 +7,12 @@
 					</span>
                 <div class="wrap-input100 validate-input m-b-23">
                     <span class="text-danger" *ngIf="(formLogin.submitted  || formLogin.controls['usuario']?.touched ) && formLogin.controls['usuario'].errors"><i class="fas fa-user-lock"></i> El usuario es obligatorio</span>
-                    <input required usuario [(ngModel)]="usuario.nameUser" class="input100" type="text" name="usuario" placeholder="Usuario">
+                    <input required usuario [(ngModel)]="usuario.IdUser" class="input100" type="text" name="usuario" placeholder="Usuario">
                     <span class=" focus-input100 " data-symbol="&#xf15a;"></span>
                 </div>
                 <div class="wrap-input100 validate-input ">
                     <span class="text-danger" *ngIf="(formLogin.submitted || formLogin.controls['password']?.touched ) && formLogin.controls['password'].errors"><i class="fas fa-key"></i> La contraseña es obligatoria</span>
-                    <input required password [(ngModel)]="usuario.password" class="input100" type="password" name="password" placeholder="Contraseña">
+                    <input required password [(ngModel)]="usuario.Password" class="input100" type="password" name="password" placeholder="Contraseña">
                     <span class="focus-input100 " data-symbol="&#xf190;"></span>
                 </div>
                 <div class="text-right p-t-8 p-b-31 ">

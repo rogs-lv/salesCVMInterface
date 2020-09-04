@@ -5,7 +5,7 @@ import { AuthService } from '../../services/authentication/auth.service';
 
 import Swal from 'sweetalert2';
 
-import { Usuario } from '../../models/usuario';
+import { UserLogin } from '../../models/usuario';
 
 @Component({
   selector: 'app-login',
@@ -14,26 +14,37 @@ import { Usuario } from '../../models/usuario';
 })
 export class LoginComponent implements OnInit {
 
-  usuario: Usuario;
+  usuario: UserLogin;
   processLogin: boolean;
 
   constructor(
     private auth: AuthService,
     private router: Router
   ) {
-    this.usuario = new Usuario();
+    this.usuario = new UserLogin();
     this.processLogin = false;
   }
 
   ngOnInit() {
   }
-
+  
   login(form: NgForm) {
     if (form.invalid) {
       return;
     } else {
       this.processLogin = true;
-      this.auth.login(this.usuario).subscribe(response => {
+      this.auth.signIn(this.usuario).subscribe(response => {
+          this.router.navigateByUrl('/home');
+      }, (err) => {
+        Swal.fire({
+          title: 'Mensaje de sistema',
+          icon: 'error',
+          text: err.error
+        });
+        this.processLogin = false;
+      });
+
+      /* .subscribe(response => {
         this.router.navigateByUrl('/home');
       }, (error) => {
         console.log(error);
@@ -43,7 +54,7 @@ export class LoginComponent implements OnInit {
           text: error.error.error.message
         });
         this.processLogin = false;
-      });
+      }); */
     }
   }
 }

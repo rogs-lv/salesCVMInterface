@@ -82,7 +82,7 @@ export class AuthService {
     const headersProf = new HttpHeaders()
     /* .set('Content-Type', 'application/json') */
     .set('Authorization', this.getToken());
-    const api = `${this.endpoint}Config/GetConfiguration?code=${id}`;
+    const api = `${this.endpoint}salesCVM/Config/GetConfiguration?code=${id}`;
     return this.http.get(api, { headers: headersProf }).pipe(
       map( (response: Response) => {
           return response;

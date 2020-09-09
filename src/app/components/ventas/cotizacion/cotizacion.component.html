@@ -3,9 +3,6 @@
         <div class="col-md-8 pt-4">
             <div class="card bxcard">
                 <div class="card-body">
-                    <!-- <div class="header-title">
-                        <h4 class="title">Cotización</h4>
-                    </div> -->
                     <div class="card-header">
                         <div class="card-icon">
                             <span style="font-size: 1.5em; color: white;"><i class="fas fa-id-card"></i> Cotización</span>
@@ -15,25 +12,25 @@
                         <div class="row">
                             <!-- Encabezado -->
                             <div class="col-sm-12">
-                                <form>
+                                <form (ngSubmit)="saveDoc(frmCot)" #frmCot="ngForm">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="cardcode">Cliente</label>
-                                                <input id="cardcode" type="text" class="form-control" placeholder="Cliente" value="">
+                                                <label for="CardCode">Cliente</label>
+                                                <input id="CardCode" name="CardCode" CardCode [(ngModel)]="document.Header.CardCode" type="text" class="form-control" placeholder="Cliente" value="">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label for="cardname">Nombre</label>
-                                                <input id="cardname" type="text" class="form-control" placeholder="Nombre" value="">
+                                                <label for="CardName">Nombre</label>
+                                                <input id="CardName" name="CardName" CardName [(ngModel)]="document.Header.CardName" type="text" class="form-control" placeholder="Nombre" value="">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="docdate">Fecha</label>
+                                                <label for="DocDate">Fecha</label>
                                                 <div class="input-group mb-3">
-                                                    <input id="docdate" type="text" class="form-control" placeholder="Fecha">
+                                                    <input id="DocDate" name="DocDate" DocDate [(ngModel)]="document.Header.DocDate" type="text" class="form-control" placeholder="Fecha">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
@@ -44,14 +41,14 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label for="reference">Referencia</label>
-                                                <input id="reference" type="text" class="form-control" placeholder="Referencia" value="">
+                                                <label for="Reference">Referencia</label>
+                                                <input id="Reference" name="Reference" Reference [(ngModel)]="document.Header.Reference" type="text" class="form-control" placeholder="Referencia" value="">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="comments">Comentarios</label>
-                                                <textarea class="form-control" id="comments" placeholder="comentarios"></textarea>
+                                                <label for="Comments">Comentarios</label>
+                                                <textarea id="Comments" name="Comments" Comments [(ngModel)]="document.Header.Comments" class="form-control" placeholder="comentarios"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -74,7 +71,8 @@
                                             <!-- <button class="btn btn-light btnLimon"><span><i class="fas fa-times"></i></span></button> -->
                                         </div>
                                         <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                            <button class="btn btn-light btnLimon" *ngIf="!proceso" [disabled]="frmCot.status == 'INVALID'"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                            <button class="btn btn-light btnLimon" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                         </div>
                                     </div>
                                 </form>

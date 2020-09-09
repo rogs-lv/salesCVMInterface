@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tabla-articulos',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TablaArticulosComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+  ) {
+  }
 
   ngOnInit() {
   }
-
 }

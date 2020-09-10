@@ -3,7 +3,7 @@ export class DocSAP {
     Detail: Array<DocumentLines>;
 }
 
-class Document {
+export class Document {
     DocEntry: number;
     CardCode: string;
     CardName: string;
@@ -13,9 +13,21 @@ class Document {
     Status: string;
     DocEntrySAP: number;
     DocNumSAP: number;
+
+    constructor() {
+        this.DocEntry = 0;
+        this.CardCode = '';
+        this.CardName = '';
+        this.DocDate = '';
+        this.Reference = '';
+        this.Comments = '';
+        this.Status = '';
+        this.DocEntrySAP = 0;
+        this.DocNumSAP = 0;
+    }
 }
 
-class DocumentLines {
+export class DocumentLines {
     DocEntry: number;
     ItemCode: string;
     ItemName: string;

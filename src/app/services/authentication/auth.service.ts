@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -59,10 +60,13 @@ export class AuthService {
       }); */
   }
 
-
-
   getToken() {
     return localStorage.getItem('access_token');
+  }
+
+  getDataToken(): any {
+    const jwt = jwt_decode(this.getToken());
+    return jwt;
   }
 
   get isLoggedIn(): boolean {

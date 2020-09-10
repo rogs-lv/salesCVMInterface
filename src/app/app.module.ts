@@ -4,6 +4,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpInterceptor } from '@angular/common/http';
 
 import { ChartsModule} from 'ng2-charts';
+import { AgGridModule } from 'ag-grid-angular';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routes';
 
 import { AppComponent } from './app.component';
@@ -57,7 +59,9 @@ import { AuthInterceptor } from './services/authconfig.interceptor';
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule,
+    AgGridModule.withComponents([])
   ],
   providers: [
     /* {

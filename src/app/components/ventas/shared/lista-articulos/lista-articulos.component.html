@@ -4,35 +4,17 @@
             <span style="font-size: 1.5em; color: white;"><i class="fas fa-cubes"></i> Artículos</span>
         </div>
     </div>
-    <div class="table-responsive-sm">
-        <table class="table table-borderless">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
+    <div>
+        <div class="example-header">
+            N° Paginas:
+            <select (change)="onPageSizeChanged(pageSize)" [(ngModel)]="pageSize">
+              <option value="10" selected="">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+        </div>
+        <input class="form-control" type="text" (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Buscar..." />
+        <ag-grid-angular #agGrid id="agGrid" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }" (cellClicked)='onCellClicked($event)'>
+        </ag-grid-angular>
     </div>
 </div>

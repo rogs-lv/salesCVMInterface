@@ -17,23 +17,27 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="CardCode">Cliente</label>
-                                                <input id="CardCode" name="CardCode" CardCode [(ngModel)]="document.Header.CardCode" type="text" class="form-control" placeholder="Cliente" value="">
+                                                <input id="CardCode" name="CardCode" CardCode [(ngModel)]="document.CardCode" required type="text" class="form-control" placeholder="Cliente" [disabled]="true">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label for="CardName">Nombre</label>
-                                                <input id="CardName" name="CardName" CardName [(ngModel)]="document.Header.CardName" type="text" class="form-control" placeholder="Nombre" value="">
+                                                <input id="CardName" name="CardName" CardName [(ngModel)]="document.CardName" required type="text" class="form-control" placeholder="Nombre" [disabled]="true">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="DocDate">Fecha</label>
                                                 <div class="input-group mb-3">
-                                                    <input id="DocDate" name="DocDate" DocDate [(ngModel)]="document.Header.DocDate" type="text" class="form-control" placeholder="Fecha">
+                                                    <input class="form-control" placeholder="Fecha" name="DocDate" [(ngModel)]="document.DocDate" ngbDatepicker #d="ngbDatepicker" [readonly]="true">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
+                                                    </div>
+                                                    <!-- <input id="DocDate" name="DocDate" DocDate [(ngModel)]="document.DocDate" type="text" class="form-control" placeholder="Fecha">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -42,13 +46,13 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="Reference">Referencia</label>
-                                                <input id="Reference" name="Reference" Reference [(ngModel)]="document.Header.Reference" type="text" class="form-control" placeholder="Referencia" value="">
+                                                <input id="Reference" name="Reference" Reference [(ngModel)]="document.Reference" type="text" class="form-control" placeholder="Referencia" value="">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="Comments">Comentarios</label>
-                                                <textarea id="Comments" name="Comments" Comments [(ngModel)]="document.Header.Comments" class="form-control" placeholder="comentarios"></textarea>
+                                                <textarea id="Comments" name="Comments" Comments [(ngModel)]="document.Comments" class="form-control" placeholder="comentarios"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -71,7 +75,7 @@
                                             <!-- <button class="btn btn-light btnLimon"><span><i class="fas fa-times"></i></span></button> -->
                                         </div>
                                         <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon" *ngIf="!proceso" [disabled]="frmCot.status == 'INVALID'"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                            <button class="btn btn-light btnLimon" *ngIf="!proceso" [disabled]="frmCot.invalid"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
                                             <button class="btn btn-light btnLimon" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                         </div>
                                     </div>

@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 
   loadConfiMenu() {
     let jwt = jwt_decode(this.auth.getToken());
-    this.auth.getUserProfile(jwt.nameid).subscribe( response => {
+    this.auth.getUserProfile(jwt.Code).subscribe( response => {
       this.menu = response.menuOpciones;
       this.adicional = response.confOpciones;
     }, (err) => {

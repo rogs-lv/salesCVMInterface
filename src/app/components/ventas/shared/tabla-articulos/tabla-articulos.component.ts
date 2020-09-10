@@ -14,7 +14,15 @@ import { Item } from 'src/app/models/masterData';
 export class TablaArticulosComponent implements OnInit {
   @ViewChild('agGrid', {static: true}) agGrid: AgGridAngular;
 
-  columnDefs = [{headerName: '#', valueGetter: 'node.rowIndex + 1' , maxWidth: '60'}, {headerName: 'Codigo', field: 'ItemCode', maxWidth: '150', minWidth: '50' }, {headerName: 'Nombre', field: 'ItemName', maxWidth: '250', minWidth: '100' }, {headerName: 'Cantidad', field: 'Quantity', maxWidth: '100', minWidth: '70'},{headerName: 'Precio', field: 'Price' }, {headerName: 'UM', field: 'SalUnitMsr', maxWidth: '50', minWidth: '70' }, {headerName: 'Importe', field: 'Importe', maxWidth: '50', minWidth: '70' }, {headerName: 'Total', field: 'Total', maxWidth: '50', minWidth: '70'}];
+  columnDefs = [
+      {headerName: '#', valueGetter: 'node.rowIndex + 1' , maxWidth: '60'},
+      {headerName: 'Codigo', field: 'ItemCode', maxWidth: '150', minWidth: '50' },
+      {headerName: 'Nombre', field: 'ItemName', maxWidth: '250', minWidth: '100' },
+      {headerName: 'Cantidad', field: 'Quantity', maxWidth: '100', minWidth: '70'},
+      {headerName: 'Precio', field: 'Price', maxWidth: '50', minWidth: '70' },
+      {headerName: 'UM', field: 'SalUnitMsr', maxWidth: '50', minWidth: '70' },
+      {headerName: 'Importe', field: 'Importe', maxWidth: '50', minWidth: '70' },
+      {headerName: 'Total', field: 'Total', maxWidth: '50', minWidth: '70'}];
   pageSize = 10;
   quickSearchValue = '';
 

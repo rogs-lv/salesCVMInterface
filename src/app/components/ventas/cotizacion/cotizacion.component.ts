@@ -35,7 +35,7 @@ export class CotizacionComponent implements OnInit {
   }
 
   saveDoc(form: NgForm) {
-    console.log(this.document);
+    //console.log(this.document);
     /* if (form.invalid) {
       return;
     } else {

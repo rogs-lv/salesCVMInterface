@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { MtrDataService } from 'src/app/services/masterData/mtr-data.service';
 import { Item } from 'src/app/models/masterData';
+import { SharedService } from 'src/app/services/shared/shared.service';
 
 
 
@@ -23,30 +24,34 @@ export class ListaArticulosComponent implements OnInit {
     {headerName: '#', valueGetter: 'node.rowIndex + 1', maxWidth: '60'},
     {headerName: 'Codigo', field: 'ItemCode', maxWidth: '150', minWidth: '50' },
     {headerName: 'Nombre', field: 'ItemName',  maxWidth: '250', minWidth: '100' },
-    {headerName: 'Precio', field: 'Price',  maxWidth: '50', minWidth: '100' },
-    {headerName: 'AplicaImpuesto', field: 'VATLiable', maxWidth: '', minWidth: '', hiden: true},
-    {headerName: 'ImpuestoIndirecto', field: 'IndirctTax', maxWidth: '', minWidth: '', hiden: true},
-    {headerName: 'UM', field: 'SalUnitMsr', maxWidth: '70', minWidth: '80', hiden: true},
-    {headerName: 'Cantidad', field: 'Quantity', maxWidth: '100', minWidth: '150', hiden: true},
-    {headerName: 'Almacén', field: 'WhsCod', maxWidth: '100', minWidth: '180', hiden: true}
+    {headerName: 'Precio', field: 'Price',  maxWidth: '50', minWidth: '100', cellRenderer: this.CurrencyCellRendererUSD},
+    {headerName: 'AplicaImpuesto', field: 'VATLiable', maxWidth: '', minWidth: '', hide: true},
+    {headerName: 'ImpuestoIndirecto', field: 'IndirctTax', maxWidth: '', minWidth: '', hide: true},
+    {headerName: 'UM', field: 'SalUnitMsr', maxWidth: '70', minWidth: '80', hide: true},
+    {headerName: 'Cantidad', field: 'Quantity', maxWidth: '100', minWidth: '150', hide: true},
+    {headerName: 'Almacén', field: 'WhsCod', maxWidth: '100', minWidth: '180', hide: true}
   ];
   pageSize = 10;
   quickSearchValue = '';
 
-
+  item: Item;
 
   constructor(
     private mdService: MtrDataService,
-    private auth: AuthService
+    private auth: AuthService,
+    private sharedService: SharedService
   ) {
+    this.sharedService.sharedMessage.subscribe(message => this.item = message);
   }
 
   ngOnInit() {
     this.getListItems();
   }
 
+
   getListItems() {
-    this.mdService.getItems(this.auth.getToken(), 4, '01', '3').subscribe(response => {
+    const inf = this.auth.getDataToken();
+    this.mdService.getItems(this.auth.getToken(), 4, inf.WhsCode , inf.ListNum).subscribe(response => {
       this.agGrid.api.setRowData(this.buildRows(response));
       this.agGrid.api.onFilterChanged();
       /* this.agGrid.api.paginationGoToPage(10); */
@@ -68,7 +73,10 @@ export class ListaArticulosComponent implements OnInit {
   }
 
   /* onRowClicked(event: any) { console.log('row', event); } */
-  onCellClicked(event: any) { console.log('cell', event); }
+  onCellClicked(event: any) {
+    /* console.log('cell', event.data); */
+    this.sharedService.nextMessage(event.data);
+  }
   /* onSelectionChanged(event: any) { console.log('selection', event); } */
 
   private buildRows(data: any): Array<Item> {
@@ -89,5 +97,14 @@ export class ListaArticulosComponent implements OnInit {
       );
     }
     return rows;
+  }
+
+  CurrencyCellRendererUSD(params: any) {
+    const inrFormat = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2
+    });
+    return inrFormat.format(params.value);
   }
 }

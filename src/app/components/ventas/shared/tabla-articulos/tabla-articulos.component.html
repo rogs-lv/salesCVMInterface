@@ -14,5 +14,5 @@
     </div>
 </div>
 <br>
-<ag-grid-angular #agGrid id="agGrid" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }">
+<ag-grid-angular #agGridC id="agGridC" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [rowData]="rowDataCot" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }" (cellValueChanged)="onCellValueChanged($event)">
 </ag-grid-angular>

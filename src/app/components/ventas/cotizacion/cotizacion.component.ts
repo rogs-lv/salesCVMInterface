@@ -18,6 +18,8 @@ export class CotizacionComponent implements OnInit {
   document: Document;
   documentLine: DocumentLines;
   proceso: boolean;
+  procesoSave: boolean;
+  rowDataCot = [];
 
   constructor(
     private mktService: MktService,
@@ -25,6 +27,7 @@ export class CotizacionComponent implements OnInit {
   ) {
     this.document = new Document();
     this.documentLine = new DocumentLines();
+    this.proceso = false;
     this.proceso = false;
   }
 
@@ -34,7 +37,8 @@ export class CotizacionComponent implements OnInit {
     this.document.CardName = data.CardName;
   }
 
-  saveDoc(form: NgForm) {
+  SaveQuotation(form: NgForm) {
+    console.log(form, this.rowDataCot);
     //console.log(this.document);
     /* if (form.invalid) {
       return;

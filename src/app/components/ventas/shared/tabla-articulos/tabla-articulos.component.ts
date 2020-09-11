@@ -16,6 +16,13 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 })
 export class TablaArticulosComponent implements OnInit {
   @ViewChild('agGridC', {static: true}) agGridC: AgGridAngular;
+  @Input() rowDataCot = [];
+
+  pageSize = 10;
+  quickSearchValue = '';
+  item: Item;
+  subscription: Subscription;
+  rowSelection = 'multiple';
 
   columnDefs = [
       {headerName: '#', valueGetter: 'node.rowIndex + 1' , maxWidth: '60'},
@@ -28,12 +35,6 @@ export class TablaArticulosComponent implements OnInit {
       {headerName: 'Importe', field: 'Importe', maxWidth: '70', minWidth: '120', cellStyle: {textAlign: 'center'}, cellRenderer: this.CurrencyCellRendererUSD, valueGetter: this.importeValueGetter },
       {headerName: 'Total', field: 'Total', maxWidth: '100', minWidth: '150', cellStyle: {textAlign: 'center'}, cellRenderer: this.CurrencyCellRendererUSD, valueGetter: this.totalValueGetter}
   ];
-  rowDataCot = [];
-  pageSize = 10;
-  quickSearchValue = '';
-  item: Item;
-  subscription: Subscription;
-
 
   constructor(
     private sharedService: SharedService,
@@ -50,7 +51,6 @@ export class TablaArticulosComponent implements OnInit {
 
   ngOnInit() {
   }
-
 
   private buildRows(data: Item) {
     const inf = this.auth.getDataToken();
@@ -116,19 +116,18 @@ export class TablaArticulosComponent implements OnInit {
     }
   }
 
-  totalSum(params: any) {
-    console.log('>',params);
-    const inf = this.auth.getDataToken();
-    const desc = (100 - Number.parseFloat(inf.PDescuento)) / 100;
-    const PrConDesc = desc * params.data.Price;
-    const ImpoImpus = 0.16 * PrConDesc * params.data.Quantity;
-    params.data.Total = (PrConDesc + ImpoImpus);
+  onCellValueChanged(event) {
+    // handle the rest here
   }
 
-  onCellValueChanged(event) {
-    /* console.log(event);
-    this.totalSum(event); */
-    // handle the rest here
+  onRemoveSelected() {
+    const selectedData = this.agGridC.api.getSelectedRows();
+    const res = this.agGridC.api.applyTransaction({ remove: selectedData });
+
+    let temp = this.rowDataCot.filter((el) => {
+      return selectedData.indexOf(el) < 0;
+    });
+    this.rowDataCot = temp;
   }
 
 }

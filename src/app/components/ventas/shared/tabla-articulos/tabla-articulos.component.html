@@ -2,17 +2,20 @@
     <div class="col-sm-3">
         <input class="form-control" type="text" (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Buscar..." />
     </div>
-    <div class="col-sm-9 d-flex  justify-content-end">
+    <div class="col-sm-3">
+        <button class="btn btn-danger" [disabled]="rowDataCot.length === 0" (click)="onRemoveSelected()">Eliminar</button>
+    </div>
+    <div class="col-sm-6 d-flex  justify-content-end">
         <div class="example-header">
             N° Paginas:
             <select (change)="onPageSizeChanged(pageSize)" [(ngModel)]="pageSize">
-              <option value="10" selected="">10</option>
+              <option value="5" selected="">5</option>
+              <option value="10">10</option>
               <option value="20">20</option>
-              <option value="50">50</option>
             </select>
         </div>
     </div>
 </div>
 <br>
-<ag-grid-angular #agGridC id="agGridC" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [rowData]="rowDataCot" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }" (cellValueChanged)="onCellValueChanged($event)">
+<ag-grid-angular #agGridC id="agGridC" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [rowData]="rowDataCot" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }" [rowSelection]="rowSelection">
 </ag-grid-angular>

@@ -55,7 +55,7 @@ body {
 }
 
 .btnLimon {
-    background-color: #87cb16;
+    background-color: #5C6AC4;
     color: white
 }
 
@@ -75,7 +75,7 @@ body {
     /* float: left; */
     text-align: center;
     /* background: linear-gradient(60deg, #fb7e23, #fb8128) */
-    background-color: #87cb16;
+    background-color: #025F74;
     -webkit-box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
     box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
@@ -86,7 +86,7 @@ body {
     border-radius: 3px;
     margin-top: -20px;
     text-align: center;
-    background-color: #87cb16;
+    background-color: #025F74;
     -webkit-box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
     box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
@@ -97,7 +97,7 @@ body {
     border-radius: 3px;
     margin-top: -15px;
     text-align: center;
-    background-color: #87cb16;
+    background-color: #025F74;
     -webkit-box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);
     box-shadow: 10px 14px 17px -15px rgba(0, 0, 0, 0.75);

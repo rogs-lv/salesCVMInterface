@@ -58,6 +58,23 @@ export class MktService {
     );
   }
 
+  getDocumentSAP(token: string, docEntry: number) {
+    const headersDocSAP = new HttpHeaders()
+    .set('Authorization', token);
+    let api = '';
+    if (docEntry > 0) {
+      api = `${this.endpoint}salesCVM/Marketing/GetDocumentSAP?docEntry=${docEntry}`;
+    } else {
+      api = `${this.endpoint}salesCVM/Marketing/GetDocumentSAP`;
+    }
+
+    return this.http.get(api, {headers: headersDocSAP }).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
   updateDocument() {
 
   }

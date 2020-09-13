@@ -5,6 +5,7 @@ export class DocSAP {
 
 export class Document {
     DocEntry: number;
+    DocNum: number;
     CardCode: string;
     CardName: string;
     DocDate: string;
@@ -16,6 +17,7 @@ export class Document {
 
     constructor() {
         this.DocEntry = 0;
+        this.DocNum = 0;
         this.CardCode = '';
         this.CardName = '';
         this.DocDate = '';
@@ -29,6 +31,7 @@ export class Document {
 
 export class DocumentLines {
     DocEntry: number;
+    LineNum: number;
     ItemCode: string;
     ItemName: string;
     Quantity: number;

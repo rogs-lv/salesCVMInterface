@@ -18,27 +18,27 @@
                         <div class="row">
                             <!-- Encabezado -->
                             <div class="col-sm-12">
-                                <form>
+                                <form #formOrd="ngForm">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="cardcode">Cliente</label>
-                                                <input id="cardcode" type="text" class="form-control" placeholder="Cliente" value="">
+                                                <label for="CardCode">Cliente</label>
+                                                <input id="CardCode" name="CardCode" CardCode [(ngModel)]="document.CardCode" required type="text" class="form-control" placeholder="Cliente" [disabled]="true">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label for="cardname">Nombre</label>
-                                                <input id="cardname" type="text" class="form-control" placeholder="Nombre" value="">
+                                                <label for="CardName">Nombre</label>
+                                                <input id="CardName" name="CardName" CardName [(ngModel)]="document.CardName" required type="text" class="form-control" placeholder="Nombre" [disabled]="true">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="docdate">Fecha</label>
                                                 <div class="input-group mb-3">
-                                                    <input id="docdate" type="text" class="form-control" placeholder="Fecha">
+                                                    <input class="form-control" placeholder="Fecha" name="dp" [(ngModel)]="DateOrder" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" required readonly>
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
+                                                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -47,39 +47,39 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="reference">Referencia</label>
-                                                <input id="reference" type="text" class="form-control" placeholder="Referencia" value="">
+                                                <label for="Reference">Referencia</label>
+                                                <input id="Reference" name="Reference" Reference [(ngModel)]="document.Reference" type="text" class="form-control" placeholder="Referencia" value="">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label for="comments">Comentarios</label>
-                                                <textarea class="form-control" id="comments" placeholder="comentarios"></textarea>
+                                                <label for="Comments">Comentarios</label>
+                                                <textarea id="Comments" name="Comments" Comments [(ngModel)]="document.Comments" class="form-control" id="comments" placeholder="Comentarios"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="">Moneda</label>
-                                                <select class="form-control" id="">
-                                                    <option>$</option>
-                                                    <option>MXP</option>
+                                                <select class="form-control" id="Currency" [(ngModel)]="currencySel" name="currencySel">
+                                                    <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-2 btncenterrow">
-                                            <button class="btn btn-light btnLimon"><span style="font-size: 1.5em;"><i class="fas fa-file-import"></i></span></button>
+                                            <button class="btn btn-info" (click)="LoadQuotations()"><span style="font-size: 1.5em;"><i class="fas fa-file-import"></i></span></button>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <!-- <app-tabla-articulos class="col-sm-12"></app-tabla-articulos> -->
+                                        <app-tabla-articulos [rowDataCot]="rowDataCot" (rowDataCotEmit)="refreshData($event)" class="col-sm-12"></app-tabla-articulos>
                                     </div>
                                     <div class="row pt-4">
                                         <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-pencil-alt"></i></span></button>
+                                            <!-- <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-pencil-alt"></i></span></button> -->
                                             <!-- <button class="btn btn-light btnLimon"><span><i class="fas fa-times"></i></span></button> -->
                                         </div>
                                         <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                            <button class="btn btn-info" (click)="CreateOrder(formOrd)" *ngIf="!proceso" [disabled]="formOrd.invalid || rowDataCot.length === 0"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span> Crear</button>
+                                            <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                         </div>
                                     </div>
                                 </form>

@@ -13,7 +13,7 @@ export class MktService {
     private http: HttpClient
   ) { }
 
-  saveDocument(document: DocSAP, typeDocument: number, token: string) {
+  createDocument(document: DocSAP, typeDocument: number, token: string) {
     const headersMk = new HttpHeaders()
     .set('Content-Type', 'application/json')
     .set('Authorization', token);
@@ -24,7 +24,23 @@ export class MktService {
       document,
       { headers: headersMk }
     ).pipe(
-      map( (response: Response) => {
+      map( (response: any) => {
+        return response;
+      })
+    );
+  }
+
+  saveDocument(document: DocSAP, typeDocument: number, token: string) {
+    const headersMk = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/Marketing/SaveDocument?typeEvent=I&typeDocument=${typeDocument}`;
+    return this.http.post(
+      api,
+      document,
+      {headers: headersMk}
+    ).pipe(
+      map((response: Response) => {
         return response;
       })
     );

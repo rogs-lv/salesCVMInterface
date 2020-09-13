@@ -12,7 +12,7 @@
                         <div class="row">
                             <!-- Encabezado -->
                             <div class="col-sm-12">
-                                <form (ngSubmit)="SaveQuotation(frmCot)" #frmCot="ngForm">
+                                <form #frmCot="ngForm">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -30,14 +30,10 @@
                                             <div class="form-group">
                                                 <label for="DocDate">Fecha</label>
                                                 <div class="input-group mb-3">
-                                                    <input class="form-control" placeholder="Fecha" name="DocDate" [(ngModel)]="document.DocDate" ngbDatepicker #d="ngbDatepicker" [readonly]="true">
+                                                    <input class="form-control" placeholder="Fecha" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" [maxDate]="maxDate" required readonly>
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
-                                                    <!-- <input id="DocDate" name="DocDate" DocDate [(ngModel)]="document.DocDate" type="text" class="form-control" placeholder="Fecha">
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
-                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -46,7 +42,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="Reference">Referencia</label>
-                                                <input id="Reference" name="Reference" Reference [(ngModel)]="document.Reference" type="text" class="form-control" placeholder="Referencia" value="">
+                                                <input id="Reference" name="Reference" Reference [(ngModel)]="document.Reference" type="text" class="form-control" placeholder="Referencia" maxlength="11">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -58,25 +54,25 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="">Moneda</label>
-                                                <select class="form-control" id="">
-                                                    <option>$</option>
-                                                    <option>MXP</option>
+                                                <select class="form-control" id="" [(ngModel)]="currencySel" name="currencySel">
+                                                    <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <app-tabla-articulos [rowDataCot]="rowDataCot" class="col-sm-12"></app-tabla-articulos>
+                                        <app-tabla-articulos [rowDataCot]="rowDataCot" (rowDataCotEmit)="refreshData($event)" class="col-sm-12"></app-tabla-articulos>
                                     </div>
                                     <div class="row pt-4">
                                         <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon" *ngIf="!procesoSave" [disabled]="frmCot.invalid || rowDataCot.length === 0"><span class="btnFomr"><i class="fas fa-save"></i></span> Guardar</button>
-                                            <button class="btn btn-light btnLimon" *ngIf="procesoSave"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                            <!-- <button class="btn btn-info" (click)="SaveQuotation(frmCot)" *ngIf="!procesoSave" [disabled]="frmCot.invalid || rowDataCot.length === 0"><span class="btnFomr"><i class="fas fa-save"></i></span> Guardar</button>
+                                            <button class="btn btn-info" *ngIf="procesoSave"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button> -->
+                                            <!-- <button (click)="parentFF()">limpiar</button> -->
                                         </div>
                                         <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon" *ngIf="!proceso" [disabled]="frmCot.invalid || rowDataCot.length === 0"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span> Crear</button>
-                                            <button class="btn btn-light btnLimon" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                            <button class="btn btn-info" (click)="CreateQuotation(frmCot)" *ngIf="!proceso" [disabled]="frmCot.invalid || rowDataCot.length === 0"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span> Crear</button>
+                                            <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                         </div>
                                     </div>
                                 </form>

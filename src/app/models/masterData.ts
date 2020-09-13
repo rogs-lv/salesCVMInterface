@@ -17,4 +17,7 @@ export class Item {
     Price: number;
     ItmsGrpCod: number;
     ItmsGrpNam: string;
+    WhsCode: string;
+    TaxCode: string;
+    Currency: string;
 }

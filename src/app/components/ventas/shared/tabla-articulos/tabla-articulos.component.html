@@ -3,7 +3,7 @@
         <input class="form-control" type="text" (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Buscar..." />
     </div>
     <div class="col-sm-3">
-        <button class="btn btn-danger" [disabled]="rowDataCot.length === 0" (click)="onRemoveSelected()">Eliminar</button>
+        <button class="btn btn-danger" [disabled]="rowDataCot.length === 0" (click)="onRemoveSelected()"> <span style="color: white;"><i class="fas fa-cubes"></i></span> Eliminar</button>
     </div>
     <div class="col-sm-6 d-flex  justify-content-end">
         <div class="example-header">
@@ -17,5 +17,7 @@
     </div>
 </div>
 <br>
-<ag-grid-angular #agGridC id="agGridC" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [rowData]="rowDataCot" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }" [rowSelection]="rowSelection">
+<div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end"><label>Total: <span class="font-weight-bold">{{totalDocumento | currency}}</span></label></div>
+<ag-grid-angular #agGridC id="agGridC" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [rowData]="rowDataCot" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }" [rowSelection]="rowSelection"
+    (cellValueChanged)="onCellValueChanged($event)">
 </ag-grid-angular>

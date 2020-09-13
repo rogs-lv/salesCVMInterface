@@ -29,7 +29,8 @@ export class ListaArticulosComponent implements OnInit {
     {headerName: 'ImpuestoIndirecto', field: 'IndirctTax', maxWidth: '', minWidth: '', hide: true},
     {headerName: 'UM', field: 'SalUnitMsr', maxWidth: '70', minWidth: '80', hide: true},
     {headerName: 'Cantidad', field: 'Quantity', maxWidth: '100', minWidth: '150', hide: true},
-    {headerName: 'Almacén', field: 'WhsCod', maxWidth: '100', minWidth: '180', hide: true}
+    {headerName: 'Almacén', field: 'WhsCode', maxWidth: '100', minWidth: '180', hide: true},
+    {headerName: 'Tipo Impuesto', field: 'TaxCode', maxWidth: '130', minWidth: '180', hide: true}
   ];
   pageSize = 10;
   quickSearchValue = '';
@@ -52,7 +53,7 @@ export class ListaArticulosComponent implements OnInit {
   getListItems() {
     const inf = this.auth.getDataToken();
     this.mdService.getItems(this.auth.getToken(), 4, inf.WhsCode , inf.ListNum).subscribe(response => {
-      this.agGrid.api.setRowData(this.buildRows(response));
+      this.agGrid.api.setRowData(this.buildRows(response, inf.WhsCode, inf.TaxCode));
       this.agGrid.api.onFilterChanged();
       /* this.agGrid.api.paginationGoToPage(10); */
     }, (err) => {
@@ -79,7 +80,7 @@ export class ListaArticulosComponent implements OnInit {
   }
   /* onSelectionChanged(event: any) { console.log('selection', event); } */
 
-  private buildRows(data: any): Array<Item> {
+  private buildRows(data: any, whsCode: string, taxCode: string): Array<Item> {
     const rows = [];
     // tslint:disable-next-line: forin
     for (const i in data) {
@@ -92,7 +93,9 @@ export class ListaArticulosComponent implements OnInit {
           IndirctTax: data[i].IndirctTax,
           SalUnitMsr: data[i].SalUnitMsr,
           Quantity: 1,
-          WhsCode: ''
+          WhsCode: whsCode,
+          Currency: '',
+          TaxCode: taxCode
         }
       );
     }

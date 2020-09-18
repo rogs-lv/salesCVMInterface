@@ -20,9 +20,9 @@ export class CotizacionComponent implements OnInit {
   proceso: boolean;
   procesoSave: boolean;
   rowDataCot = [];
-  model: NgbDateStruct;
-  currencySel: string;
-  currencies = ['$', 'MXP', 'USD'];
+  model: NgbDateStruct = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+  currencies = ['MXP', 'USD', '$'];
+  currencySel = this.currencies[0];
   maxDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
 
   constructor(
@@ -84,7 +84,7 @@ export class CotizacionComponent implements OnInit {
       for (let it of this.doc.Detail) {
         it.Currency = this.currencySel;
       }
-      this.mktService.createDocument(this.doc, 23, this.auth.getToken()).subscribe(response => {
+      this.mktService.createDocument(this.doc, 23, this.auth.getToken(), this.auth.getDataToken().Code).subscribe(response => {
         Swal.fire({
           title: 'Mensaje de sistema',
           icon: 'success',

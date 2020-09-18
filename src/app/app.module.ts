@@ -29,6 +29,7 @@ import { CrmOportunidadesComponent } from './components/crm/crm-oportunidades/cr
 import { CrmActividadesComponent } from './components/crm/crm-actividades/crm-actividades.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
 import { AuthInterceptor } from './services/authconfig.interceptor';
+import { ModalComponent } from './components/ventas/shared/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,11 @@ import { AuthInterceptor } from './services/authconfig.interceptor';
     SociosNegociosListaComponent,
     CrmOportunidadesComponent,
     CrmActividadesComponent,
-    ReportesComponent
+    ReportesComponent,
+    ModalComponent
+  ],
+  entryComponents:[
+    ModalComponent
   ],
   imports: [
     BrowserModule,

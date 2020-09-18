@@ -64,15 +64,15 @@ export class ListaArticulosComponent implements OnInit {
       });
     });
   }
-
+  // Paginacion
   onPageSizeChanged(newPageSize) {
     this.agGrid.api.paginationSetPageSize(newPageSize);
   }
-
+  // Se detecta la busqueda de los caracteres ingresados
   onQuickFilterChanged() {
     this.agGrid.api.setQuickFilter(this.quickSearchValue);
   }
-
+  // Se envia información cuando se hace clic sobre un registro de la lista de articulos
   /* onRowClicked(event: any) { console.log('row', event); } */
   onCellClicked(event: any) {
     /* console.log('cell', event.data); */

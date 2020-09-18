@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SocioNegocios } from 'src/app/models/socioNegocios';
 
 @Component({
   selector: 'app-sociosnegocios',
@@ -7,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SociosnegociosComponent implements OnInit {
 
-  constructor() { }
+  Partner: SocioNegocios;
+  Series: Array<string> = ['Manual'];
+  CardTypes = [{ Code: 'C', Name: 'Cliente'}, { Code: 'S', Name : 'Vendedor'}, { Code: 'L', Name: 'Lead'}];
+  Currencies = ['MXP', 'EUA'];
+
+  constructor() {
+    this.Partner = new SocioNegocios();
+  }
 
   ngOnInit() {
   }

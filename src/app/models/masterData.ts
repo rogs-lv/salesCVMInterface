@@ -7,6 +7,7 @@ export class BusnessPartner {
 }
 
 export class Item {
+    LineNum: number;
     ItemCode: string;
     ItemName: string;
     VATLiable: string;

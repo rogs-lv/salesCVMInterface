@@ -2,10 +2,7 @@
     <div class="col-sm-3">
         <input class="form-control" type="text" (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Buscar..." />
     </div>
-    <div class="col-sm-3">
-        <button class="btn btn-danger" [disabled]="rowDataCot.length === 0" (click)="onRemoveSelected()"> <span style="color: white;"><i class="fas fa-cubes"></i></span> Eliminar</button>
-    </div>
-    <div class="col-sm-6 d-flex  justify-content-end">
+    <div class="col-sm-9 d-flex justify-content-end align-self-center">
         <div class="example-header">
             N° Paginas:
             <select (change)="onPageSizeChanged(pageSize)" [(ngModel)]="pageSize">
@@ -16,8 +13,20 @@
         </div>
     </div>
 </div>
-<br>
-<div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end"><label>Total: <span class="font-weight-bold">{{totalDocumento | currency}}</span></label></div>
+<div class="row mt-1 mb-1">
+    <div class="col-sm-3 align-self-center">
+        <button class="btn btn-danger" [disabled]="rowDataCot.length === 0" (click)="onRemoveSelected()"> <span style="color: white;"><i class="fas fa-times"></i></span> Linea</button>
+    </div>
+    <div class="col-sm-9">
+    </div>
+</div>
 <ag-grid-angular #agGridC id="agGridC" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [rowData]="rowDataCot" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }" [rowSelection]="rowSelection"
-    (cellValueChanged)="onCellValueChanged($event)">
+    [singleClickEdit]="true" (cellValueChanged)="onCellValueChanged($event)">
 </ag-grid-angular>
+<div class="row d-flex justify-content-end">
+    <div class="col-sm-6">
+        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end"><label>Subtotal: <span class="font-weight-bold">{{subTotalDocumento | currency}}</span></label></div>
+        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end"><label>Impuestos: <span class="font-weight-bold">{{totalImpuesto | currency}}</span></label></div>
+        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end"><label>Total: <span class="font-weight-bold">{{totalDocumento | currency}}</span></label></div>
+    </div>
+</div>

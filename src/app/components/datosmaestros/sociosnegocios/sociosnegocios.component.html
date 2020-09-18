@@ -17,54 +17,55 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Series</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>PRO</option>
-                                                    <option>CL</option>
-                                                  </select>
+                                                <select class="form-control" id="Serie" [(ngModel)]="Partner.Serie" name="Serie" [disabled]>
+                                                    <option *ngFor="let sr of Series" [ngValue]="sr">{{sr}}</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Código</label>
-                                                <input id="" type="text" class="form-control" placeholder="codigo" value="">
+                                                <label for="CardCode">Código</label>
+                                                <input id="CardCode" name="CardCode" CardCode [(ngModel)]="Partner.CardCode" type="text" class="form-control" placeholder="Código" maxlength="15">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Nombre</label>
-                                                <input id="" type="text" class="form-control" placeholder="nombre" value="">
+                                                <label for="CardName">Nombre</label>
+                                                <input id="CardName" name="CardName" CardName [(ngModel)]="Partner.CardName" type="text" class="form-control" placeholder="Nombre" maxlength="15">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Tipo</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>Proovedor</option>
-                                                    <option>Cliente</option>
-                                                  </select>
+                                                <select class="form-control" id="CardType" [(ngModel)]="Partner.CardType" name="CardType" [disabled]>
+                                                    <option *ngFor="let ty of CardTypes" [ngValue]="ty.Code">{{ty.Name}}</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Email</label>
-                                                <input id="" type="text" class="form-control" placeholder="Email" value="">
+                                                <label for="Email">Email</label>
+                                                <input id="Email" name="Email" CardName [(ngModel)]="Partner.E_Mail" type="text" class="form-control" placeholder="Email" maxlength="100">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Moneda</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>MXP</option>
-                                                    <option>USD</option>
-                                                  </select>
+                                                <label for="Currency">Moneda</label>
+                                                <select class="form-control" id="Currency" [(ngModel)]="Partner.Currency" name="Currency">
+                                                    <option *ngFor="let c of Currencies" [ngValue]="c">{{c}}</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">RFC</label>
                                                 <input id="" type="text" class="form-control" placeholder="RFC" value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="RFC">RFC</label>
+                                                <input id="RFC" name="RFC" RFC [(ngModel)]="Partner.LicTradNum" type="text" class="form-control" placeholder="RFC" maxlength="32">
                                             </div>
                                         </div>
                                     </div>

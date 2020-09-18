@@ -13,11 +13,11 @@ export class MktService {
     private http: HttpClient
   ) { }
 
-  createDocument(document: DocSAP, typeDocument: number, token: string) {
+  createDocument(document: DocSAP, typeDocument: number, token: string, usuario: string) {
     const headersMk = new HttpHeaders()
     .set('Content-Type', 'application/json')
     .set('Authorization', token);
-    const api = `${this.endpoint}salesCVM/Marketing/CreateDocument?typeDocument=${typeDocument}`;
+    const api = `${this.endpoint}salesCVM/Marketing/CreateDocument?typeDocument=${typeDocument}&usuario=${usuario}`;
 
     return this.http.post(
       api,

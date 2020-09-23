@@ -24,9 +24,9 @@
     [singleClickEdit]="true" (cellValueChanged)="onCellValueChanged($event)">
 </ag-grid-angular>
 <div class="row d-flex justify-content-end">
-    <div class="col-sm-6">
-        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end"><label>Subtotal: <span class="font-weight-bold">{{subTotalDocumento | currency}}</span></label></div>
-        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end"><label>Impuestos: <span class="font-weight-bold">{{totalImpuesto | currency}}</span></label></div>
-        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end"><label>Total: <span class="font-weight-bold">{{totalDocumento | currency}}</span></label></div>
+    <div class="col-sm-4 mt-2">
+        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end sbtotal"><label class="mb-0 pr-3 mt-2 colorLetra">Subtotal: <span class="font-weight-bold">{{subTotalDocumento | currency}}</span></label></div>
+        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end impuesto"><label class="mb-0 pr-3 colorLetra">Impuestos: <span class="font-weight-bold">{{totalImpuesto | currency}}</span></label></div>
+        <div *ngIf="rowDataCot.length > 0" class="d-flex justify-content-end total"><label class="mb-0 pr-3 mb-2 colorLetra">Total: <span class="font-weight-bold">{{totalDocumento | currency}}</span></label></div>
     </div>
 </div>

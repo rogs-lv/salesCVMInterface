@@ -30,6 +30,11 @@ import { CrmActividadesComponent } from './components/crm/crm-actividades/crm-ac
 import { ReportesComponent } from './components/reportes/reportes.component';
 import { AuthInterceptor } from './services/authconfig.interceptor';
 import { ModalComponent } from './components/ventas/shared/modal/modal.component';
+import { ListasociosComponent } from './components/datosmaestros/shared/listasocios/listasocios.component';
+import { FacturacionPipe } from './pipes/facturacion.pipe';
+import { EntregaPipe } from './pipes/entrega.pipe';
+import { ToastComponent } from './components/toast/toast.component';
+import { EstadosPipe } from './pipes/estados.pipe';
 
 @NgModule({
   declarations: [
@@ -53,7 +58,12 @@ import { ModalComponent } from './components/ventas/shared/modal/modal.component
     CrmOportunidadesComponent,
     CrmActividadesComponent,
     ReportesComponent,
-    ModalComponent
+    ModalComponent,
+    ListasociosComponent,
+    FacturacionPipe,
+    EntregaPipe,
+    ToastComponent,
+    EstadosPipe
   ],
   entryComponents:[
     ModalComponent

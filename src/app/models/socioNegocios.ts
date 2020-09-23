@@ -1,3 +1,8 @@
+export class BP {
+    Header: SocioNegocios;
+    TabDireccion: Direcciones;
+}
+
 export class SocioNegocios {
     Serie: string;
     CardCode: string;
@@ -9,5 +14,14 @@ export class SocioNegocios {
 }
 
 export class Direcciones {
+    Address: string;
+    AdresType: string;
+    Country: string;
+    County: string;
+    State: string;
+    Block: string;
+    Street: string;
+    StreetNo: string;
+    ZipCode: number;
 
 }

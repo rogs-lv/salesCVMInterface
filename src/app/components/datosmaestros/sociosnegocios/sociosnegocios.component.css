@@ -10,17 +10,17 @@
 
 .w3-border-blue,
 .w3-hover-border-blue:hover {
-    border-color: #2196F3 !important;
+    border-color: #DFDFDF !important
 }
 
 .w3-pale-blue,
 .w3-hover-pale-blue:hover {
     color: #000 !important;
-    background-color: #ddffff !important;
+    background-color: #f9e3d6 !important;
 }
 
 .w3-leftbar {
-    border-left: 6px solid #2196F3 !important;
+    border-left: 6px solid #F47E00 !important;
     border-left-color: rgb(204, 204, 204);
 }
 

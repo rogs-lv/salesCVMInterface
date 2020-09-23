@@ -36,4 +36,40 @@ export class MtrDataService {
       })
     );
   }
+
+  getInformacionSocio(token: string, type: number, cardcode: string) {
+    const headersBP = new HttpHeaders()
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetBusnessPartner?type=${type}&cardcode=${cardcode}`;
+
+    return this.http.get(api, {headers: headersBP}).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  getListBP(token: string, type: number) {
+    const headersBP = new HttpHeaders()
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetBusnessPartner?type=${type}&cardcode=''`;
+
+    return this.http.get(api, { headers: headersBP }).pipe(
+      map( (response: any) => {
+          return response;
+      })
+    );
+  }
+
+  getDestinos(token: string) {
+    const headersDs = new HttpHeaders()
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetDestinos`;
+
+    return this.http.get(api, { headers: headersDs }).pipe(
+      map( (response: any) => {
+          return response;
+      })
+    );
+  }
 }

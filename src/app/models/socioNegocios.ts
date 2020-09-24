@@ -1,6 +1,9 @@
 export class BP {
     Header: SocioNegocios;
-    TabDireccion: Direcciones;
+    TabDireccion: Array<Direcciones>;
+    constructor() {
+        this.TabDireccion = new Array<Direcciones>();
+    }
 }
 
 export class SocioNegocios {
@@ -14,6 +17,7 @@ export class SocioNegocios {
 }
 
 export class Direcciones {
+    LineNum: number;
     Address: string;
     AdresType: string;
     Country: string;
@@ -23,5 +27,7 @@ export class Direcciones {
     Street: string;
     StreetNo: string;
     ZipCode: number;
-
+    constructor() {
+        this.LineNum = -1;
+    }
 }

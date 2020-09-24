@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { BP } from 'src/app/models/socioNegocios';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,40 @@ export class MtrDataService {
     return this.http.get(api, { headers: headersDs }).pipe(
       map( (response: any) => {
           return response;
+      })
+    );
+  }
+
+  createBP(token: string, documento: BP, usuario: string) {
+    const headersMk = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/CreateBusnessPartner?usuario=${usuario}`;
+
+    return this.http.post(
+      api,
+      documento,
+      { headers: headersMk }
+    ).pipe(
+      map( (response: any) => {
+        return response;
+      })
+    );
+  }
+
+  updateBP(token: string, documento: BP, usuario: string) {
+    const headersMk = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/UpdateBusnessPartner?usuario=${usuario}`;
+
+    return this.http.patch(
+      api,
+      documento,
+      {headers: headersMk}
+    ).pipe(
+      map( (response: any) => {
+        return response;
       })
     );
   }

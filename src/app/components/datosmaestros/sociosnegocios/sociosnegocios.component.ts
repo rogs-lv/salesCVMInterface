@@ -31,6 +31,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   Direccion: Direcciones;
   EstadoForm = 'N';
   EstadoDir = 'N';
+  proceso: boolean;
 
   constructor(
     private mkService: MtrDataService,
@@ -42,6 +43,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.DireccionesFac = new Array<Direcciones>();
     this.DireccionesEnt = new Array<Direcciones>();
     this.Direccion = new Direcciones();
+    this.proceso = false;
   }
 
   ngOnInit() {
@@ -62,6 +64,8 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getDireccionesSocio(cardcode: string) {
+    this.DireccionesFac = [];
+    this.DireccionesEnt = [];
     this.mkService.getInformacionSocio(this.auth.getToken(), 2, cardcode).subscribe(response => {
       if (response !== null) {
         // this.Direcciones = response;
@@ -117,11 +121,13 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
       this.DireccionesFac.splice(index, 1, value);
       this.Direccion = new Direcciones();
       this.showSuccess('Dirección actualizada');
+      this.EstadoDir = 'N';
     } else {
       let index = this.DireccionesEnt.findIndex(el => el.Address === value.Address);
       this.DireccionesEnt.splice(index, 1, value);
       this.Direccion = new Direcciones();
       this.showSuccess('Dirección actualizada');
+      this.EstadoDir = 'N';
     }
   }
 
@@ -185,14 +191,80 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.DireccionesFac = new Array<Direcciones>();
     this.DireccionesEnt = new Array<Direcciones>();
   }
-  ActualizarSocio(frmUpdate: NgForm) {
-    console.log('Actualizar socio', frmUpdate);
+  ActualizarSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>) {
+    this.proceso = true;
+    this.BusnessP.Header = header;
+    // tslint:disable-next-line: forin
+    for (const key in DirF) {
+       this.BusnessP.TabDireccion.push(DirF[key]);
+    }
+    // tslint:disable-next-line: forin
+    for (const key in DirE) {
+      this.BusnessP.TabDireccion.push(DirE[key]);
+    }
+    this.mkService.updateBP(this.auth.getToken(), this.BusnessP, this.auth.getDataToken().Code).subscribe(response => {
+
+      Swal.fire({
+        title: 'Socio Actualizado',
+        icon: 'success',
+        text: String(response)
+      });
+      this.proceso = false;
+      this.valueDefault();
+      frm.resetForm();
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al crear socio',
+        icon: 'error',
+        text: err.error
+      });
+      this.proceso = false;
+    });
   }
 
-  CrearSocio(header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>) {
-    console.log('Crear socio', header, DirF, DirE);
+  CrearSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>) {
+    this.proceso = true;
+    this.BusnessP.Header = header;
+    // tslint:disable-next-line: forin
+    for (const key in DirF) {
+       this.BusnessP.TabDireccion.push(DirF[key]);
+    }
+    // tslint:disable-next-line: forin
+    for (const key in DirE) {
+      this.BusnessP.TabDireccion.push(DirE[key]);
+    }
+    this.mkService.createBP(this.auth.getToken(), this.BusnessP, this.auth.getDataToken().Code).subscribe(response => {
+      console.log('Creacion', response);
+      Swal.fire({
+        title: 'Socio Creado',
+        icon: 'success',
+        text: String(response)
+      });
+      this.proceso = false;
+      this.valueDefault();
+      frm.resetForm();
+    }, (err) => {
+      console.log('Creacion err', err);
+      Swal.fire({
+        title: 'Error al crear socio',
+        icon: 'error',
+        text: err.error.ExceptionMessage ? err.error.ExceptionMessage : err.error
+      });
+      this.proceso = false;
+    });
   }
 
+  private valueDefault() {
+    this.BusnessP = new BP();
+    this.Partner = new SocioNegocios();
+    this.DireccionesFac = new Array<Direcciones>();
+    this.DireccionesEnt = new Array<Direcciones>();
+    this.Direccion = new Direcciones();
+    this.EstadoForm = 'N';
+    this.EstadoDir = 'N';
+    /* this.States = [];
+    this.Countrys = []; */
+  }
   showSuccess(mensaje: string) {
     this.toastService.show(mensaje, { classname: 'bg-success text-light', delay: 10000 });
   }

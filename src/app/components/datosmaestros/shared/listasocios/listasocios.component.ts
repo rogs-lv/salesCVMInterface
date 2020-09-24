@@ -67,6 +67,10 @@ export class ListasociosComponent implements OnInit {
     this.agGrid.api.setQuickFilter(this.quickSearchValue);
   }
 
+  onCleanFilter() {
+    this.quickSearchValue = '';
+    this.agGrid.api.setQuickFilter(this.quickSearchValue);
+  }
   onGrdiReady(event) {
 
   }

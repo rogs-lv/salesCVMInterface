@@ -44,9 +44,12 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Tipo</label>
-                                                <select class="form-control" id="CardType" [(ngModel)]="Partner.CardType" name="CardType">
+                                                <select class="form-control" #CardType="ngModel" id="CardType" [(ngModel)]="Partner.CardType" name="CardType" [ngClass]="{ 'is-invalid': (CardType.errors?.required) && CardType.touched }" required>
                                                     <option *ngFor="let ty of CardTypes" [ngValue]="ty.Code">{{ty.Name}}</option>
                                                 </select>
+                                                <div *ngIf="(CardType.errors?.required) && CardType.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -71,9 +74,12 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="LicTradNum">RFC</label>
-                                                <input class="form-control" type="text" placeholder="RFC" name="LicTradNum" [(ngModel)]="Partner.LicTradNum" minlength="12" #LicTradNum="ngModel" [ngClass]="{ 'is-invalid': LicTradNum.invalid }">
+                                                <input class="form-control" type="text" placeholder="RFC" name="LicTradNum" [(ngModel)]="Partner.LicTradNum" minlength="12" #LicTradNum="ngModel" [ngClass]="{ 'is-invalid': (LicTradNum.errors?.required) && LicTradNum.touched }" required>
                                                 <div *ngIf="LicTradNum.errors?.minlength" class="invalid-feedback d-block">
                                                     Minimo {{ LicTradNum.errors.minlength.requiredLength}} caracteres
+                                                </div>
+                                                <div *ngIf="(LicTradNum.errors?.required) && LicTradNum.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
                                                 </div>
                                             </div>
                                         </div>
@@ -96,12 +102,12 @@
                                                         <div class="scroll">
                                                             <div *ngFor="let f of DireccionesFac; let j = index" class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
                                                                 <div class="row">
-                                                                    <div class="col-10" (click)="editarDireccion(f)">
+                                                                    <div class="col-12" (click)="editarDireccion(f)">
                                                                         <p class="pf">{{f.Address}}</p>
                                                                     </div>
-                                                                    <div class="col-2 align-self-center" style="border-left: 2px solid rgba(28, 27, 27, 0.42)" (click)="eliminarDireccion('B', j)">
+                                                                    <!-- <div class="col-2 align-self-center" style="border-left: 2px solid rgba(28, 27, 27, 0.42)" (click)="eliminarDireccion('B', j)">
                                                                         <span><i class="fas fa-times"></i></span>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -110,12 +116,12 @@
                                                         <div class="scroll">
                                                             <div *ngFor="let e of DireccionesEnt; let i = index" class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
                                                                 <div class="row">
-                                                                    <div class="col-10" (click)="editarDireccion(e)">
+                                                                    <div class="col-12" (click)="editarDireccion(e)">
                                                                         <p class="pf">{{e.Address}}</p>
                                                                     </div>
-                                                                    <div class="col-2 align-self-center" style="border-left: 2px solid rgba(28, 27, 27, 0.42)" (click)="eliminarDireccion('S', i)">
+                                                                    <!-- <div class="col-2 align-self-center" style="border-left: 2px solid rgba(28, 27, 27, 0.42)" (click)="eliminarDireccion('S', i)">
                                                                         <span><i class="fas fa-times"></i></span>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -146,7 +152,7 @@
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="Address">Id de Dirección</label>
-                                                        <input id="Address" name="Address" Address [(ngModel)]="Direccion.Address" type="text" class="form-control" placeholder="Direccion">
+                                                        <input id="Address" name="Address" Address [(ngModel)]="Direccion.Address" type="text" class="form-control" placeholder="Direccion" [disabled]="EstadoDir == 'E'">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
@@ -208,7 +214,7 @@
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="AdresType">Tipo</label>
-                                                        <select class="form-control" id="AdresType" [(ngModel)]="Direccion.AdresType" name="AdresType">
+                                                        <select class="form-control" id="AdresType" [(ngModel)]="Direccion.AdresType" name="AdresType" [disabled]="EstadoDir == 'E'">
                                                             <option *ngFor="let at of AdresTypes" [ngValue]="at.Code">{{at.Name}}</option>
                                                         </select>
                                                     </div>
@@ -239,12 +245,14 @@
                                         <div class="col-sm-6 d-flex justify-content-end">
                                         </div>
                                         <div class="col-sm-6">
-                                            <div *ngIf="EstadoForm === 'E'" class=" d-flex justify-content-between">
-                                                <button *ngIf="EstadoForm === 'E'" class="btn btn-info" (click)="CancelarEdicionSocio()"><span class="btnFomr"><i class="fas fa-user-slash"></i></span> Cancelar</button>
-                                                <button *ngIf="EstadoForm === 'E'" class="btn btn-info" (click)="ActualizarSocio()"><span class="btnFomr"><i class="fas fa-user-check"></i></span> Actualizar Socio</button>
+                                            <div *ngIf="EstadoForm === 'E'" [ngClass]="{'d-flex' : true , 'justify-content-between' : (EstadoForm === 'E' && !proceso), 'justify-content-end' : (EstadoForm === 'E'  && proceso)}">
+                                                <button *ngIf="EstadoForm === 'E' && !proceso" class="btn btn-info" (click)="CancelarEdicionSocio()"><span class="btnFomr"><i class="fas fa-user-slash"></i></span> Cancelar</button>
+                                                <button *ngIf="EstadoForm === 'E' && !proceso" class="btn btn-info" (click)="ActualizarSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-check"></i></span> Actualizar Socio</button>
+                                                <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                             <div *ngIf="EstadoForm === 'N'" class=" d-flex justify-content-end">
-                                                <button *ngIf="EstadoForm === 'N'" [disabled]="EstadoForm === 'P' || frmSocio.invalid" class="btn btn-info" (click)="CrearSocio(Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-plus"></i></span> Crear Socio</button>
+                                                <button *ngIf="EstadoForm === 'N' && !proceso" [disabled]="EstadoForm === 'P' || frmSocio.invalid" class="btn btn-info" (click)="CrearSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-plus"></i></span> Crear Socio</button>
+                                                <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                         </div>
                                     </div>

@@ -76,7 +76,7 @@ export class PedidoComponent implements OnInit {
       this.procesoQt = false;
     }, (err) => {
       Swal.fire({
-        title: 'Mensaje de sistema',
+        title: 'Error al obtener cotizaciones abiertas',
         icon: 'error',
         text: err.error
       });
@@ -98,7 +98,7 @@ export class PedidoComponent implements OnInit {
       this.childTable.getSumRows(response.Detail);
     }, (err) => {
       Swal.fire({
-        title: 'Mensaje de sistema',
+        title: 'Error al descargar cotización',
         icon: 'error',
         text: err.error
       });
@@ -120,7 +120,7 @@ export class PedidoComponent implements OnInit {
       }
       this.mktServices.createDocument(this.docSap, 17, this.auth.getToken(), this.auth.getDataToken().Code).subscribe(response => {
         Swal.fire({
-          title: 'Mensaje de sistema',
+          title: 'Orden creada',
           icon: 'success',
           text: String(response.DocNum)
         });
@@ -128,7 +128,7 @@ export class PedidoComponent implements OnInit {
         this.valueDefault();
       }, (err) => {
         Swal.fire({
-          title: 'Mensaje de sistema',
+          title: 'Error al crear orden',
           icon: 'error',
           text: err.error
         });
@@ -138,7 +138,6 @@ export class PedidoComponent implements OnInit {
   }
 
   refreshData($event) {
-    console.log('refresh', this.rowDataOrder);
     this.rowDataOrder = $event;
   }
 

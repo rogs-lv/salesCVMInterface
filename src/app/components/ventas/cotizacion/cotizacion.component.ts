@@ -57,14 +57,14 @@ export class CotizacionComponent implements OnInit {
       this.procesoSave = true;
       this.mktService.saveDocument(this.doc, 23, this.auth.getToken()).subscribe(response => {
         Swal.fire({
-          title: 'Mensaje de sistema',
+          title: 'Cotización guardada',
           icon: 'success',
           text: String(response)
         });
         this.procesoSave = false;
       }, (err) => {
         Swal.fire({
-          title: 'Mensaje de sistema',
+          title: 'Error al guardar cotización',
           icon: 'error',
           text: err.error
         });
@@ -86,7 +86,7 @@ export class CotizacionComponent implements OnInit {
       }
       this.mktService.createDocument(this.doc, 23, this.auth.getToken(), this.auth.getDataToken().Code).subscribe(response => {
         Swal.fire({
-          title: 'Mensaje de sistema',
+          title: 'Cotización creada',
           icon: 'success',
           text: String(response.DocNum)
         });
@@ -94,7 +94,7 @@ export class CotizacionComponent implements OnInit {
         this.valueDefault();
       }, (err) => {
         Swal.fire({
-          title: 'Mensaje de sistema',
+          title: 'Error al crear cotización',
           icon: 'error',
           text: err.error
         });
@@ -108,7 +108,7 @@ export class CotizacionComponent implements OnInit {
     }, (err) => {
       console.log(err);
       Swal.fire({
-        title: 'Mensaje de sistema',
+        title: 'Error al cargar documentos',
         icon: 'error',
         text: err.error
       });

@@ -38,7 +38,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="CardName">Nombre</label>
-                                                <input id="CardName" name="CardName" CardName [(ngModel)]="Partner.CardName" type="text" class="form-control" placeholder="Nombre" maxlength="15">
+                                                <input id="CardName" name="CardName" CardName [(ngModel)]="Partner.CardName" type="text" class="form-control" placeholder="Nombre" maxlength="100">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -247,7 +247,7 @@
                                         <div class="col-sm-6">
                                             <div *ngIf="EstadoForm === 'E'" [ngClass]="{'d-flex' : true , 'justify-content-between' : (EstadoForm === 'E' && !proceso), 'justify-content-end' : (EstadoForm === 'E'  && proceso)}">
                                                 <button *ngIf="EstadoForm === 'E' && !proceso" class="btn btn-info" (click)="CancelarEdicionSocio()"><span class="btnFomr"><i class="fas fa-user-slash"></i></span> Cancelar</button>
-                                                <button *ngIf="EstadoForm === 'E' && !proceso" class="btn btn-info" (click)="ActualizarSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-check"></i></span> Actualizar Socio</button>
+                                                <button *ngIf="EstadoForm === 'E' && !proceso" [disabled]="frmSocio.invalid" class="btn btn-info" (click)="ActualizarSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-check"></i></span> Actualizar Socio</button>
                                                 <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                             <div *ngIf="EstadoForm === 'N'" class=" d-flex justify-content-end">

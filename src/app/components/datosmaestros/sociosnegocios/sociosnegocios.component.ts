@@ -8,6 +8,7 @@ import { MtrDataService } from '../../../services/masterData/mtr-data.service';
 import Swal from 'sweetalert2';
 import { BP, Direcciones, SocioNegocios } from 'src/app/models/socioNegocios';
 import { ToastService } from 'src/app/services/toasts/toast.service';
+import { ListasociosComponent } from '../shared/listasocios/listasocios.component';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { ToastService } from 'src/app/services/toasts/toast.service';
 })
 export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('agGrid', {static: true}) agGrid: AgGridAngular;
+  @ViewChild(ListasociosComponent, {static: false}) childList: ListasociosComponent;
 
   Partner: SocioNegocios;
   Series: Array<string> = ['Manual'];
@@ -192,6 +194,16 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.DireccionesEnt = new Array<Direcciones>();
   }
   ActualizarSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>) {
+
+    if (frm.invalid) {
+      Swal.fire({
+        title: 'Error al actualizar el socio de negocios',
+        icon: 'error',
+        text: 'Los datos del formulario no son validos'
+      });
+      return;
+    }
+
     this.proceso = true;
     this.BusnessP.Header = header;
     // tslint:disable-next-line: forin
@@ -212,6 +224,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
       this.proceso = false;
       this.valueDefault();
       frm.resetForm();
+      this.childList.refreshListBP();
     }, (err) => {
       Swal.fire({
         title: 'Error al crear socio',
@@ -223,6 +236,16 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   CrearSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>) {
+
+    if (frm.invalid) {
+      Swal.fire({
+        title: 'Error al crear socio de negocios',
+        icon: 'error',
+        text: 'Los datos del formulario no son validos'
+      });
+      return;
+    }
+
     this.proceso = true;
     this.BusnessP.Header = header;
     // tslint:disable-next-line: forin
@@ -243,6 +266,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
       this.proceso = false;
       this.valueDefault();
       frm.resetForm();
+      this.childList.refreshListBP();
     }, (err) => {
       console.log('Creacion err', err);
       Swal.fire({
@@ -270,6 +294,6 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   showDanger(mensaje: string) {
-    this.toastService.show(mensaje, { classname: 'bg-danger text-light', delay: 15000 });
+    this.toastService.show(mensaje, { classname: 'bg-danger text-light', delay: 10000 });
   }
 }

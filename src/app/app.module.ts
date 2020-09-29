@@ -35,6 +35,7 @@ import { FacturacionPipe } from './pipes/facturacion.pipe';
 import { EntregaPipe } from './pipes/entrega.pipe';
 import { ToastComponent } from './components/toast/toast.component';
 import { EstadosPipe } from './pipes/estados.pipe';
+import { ListaarticulosComponent } from './components/datosmaestros/shared/listaarticulos/listaarticulos.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { EstadosPipe } from './pipes/estados.pipe';
     FacturacionPipe,
     EntregaPipe,
     ToastComponent,
-    EstadosPipe
+    EstadosPipe,
+    ListaarticulosComponent
   ],
   entryComponents:[
     ModalComponent

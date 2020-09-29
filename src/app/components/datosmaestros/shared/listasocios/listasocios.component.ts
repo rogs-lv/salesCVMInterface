@@ -35,10 +35,8 @@ export class ListasociosComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private mdService: MtrDataService,
-    private sharedService: SharedService
+    private mdService: MtrDataService
   ) {
-    // this.sharedService.sharedSocioBP.subscribe(sn => this.socioNegocios = sn);
   }
 
   ngOnInit() {
@@ -77,5 +75,9 @@ export class ListasociosComponent implements OnInit {
   onCellClicked(event: any) {
     this.socioSel.emit(event.data);
     // this.sharedService.nextSocioBP(event.data);
+  }
+
+  refreshListBP() {
+    this.getListPartner();
   }
 }

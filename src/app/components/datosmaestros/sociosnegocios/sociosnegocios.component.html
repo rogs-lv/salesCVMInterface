@@ -14,14 +14,6 @@
                             <div class="col-sm-12">
                                 <form class="needs-validation" #frmSocio="ngForm" novalidate="">
                                     <div class="row">
-                                        <!-- <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Series</label>
-                                                <select class="form-control" id="Serie" [(ngModel)]="Partner.Serie" name="Serie" [disabled]>
-                                                    <option *ngFor="let sr of Series" [ngValue]="sr">{{sr}}</option>
-                                                </select>
-                                            </div>
-                                        </div> -->
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="CardCode">Código</label>
@@ -38,7 +30,10 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="CardName">Nombre</label>
-                                                <input id="CardName" name="CardName" CardName [(ngModel)]="Partner.CardName" type="text" class="form-control" placeholder="Nombre" maxlength="100">
+                                                <input id="CardName" name="CardName" #CardName="ngModel" [(ngModel)]="Partner.CardName" type="text" class="form-control" placeholder="Nombre" maxlength="100" required [ngClass]="{ 'is-invalid': (CardName.errors?.minlength || CardName.errors?.required) && CardName.touched }">
+                                                <div *ngIf="(CardName.errors?.required) && CardName.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -94,9 +89,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
-                                                    <!-- <div class="text-center" *ngIf="DireccionesFac.length === 0">
-                                                        <span style="font-size: 4em; color:#8ec5fb"><i class="fas fa-globe-americas"></i></span>
-                                                    </div> -->
                                                     <div>
                                                         <h5 class="card-title typeheadbox"><span><i class="fas fa-file-invoice-dollar"></i></span> Facturación</h5>
                                                         <div class="scroll">
@@ -105,9 +97,6 @@
                                                                     <div class="col-12" (click)="editarDireccion(f)">
                                                                         <p class="pf">{{f.Address}}</p>
                                                                     </div>
-                                                                    <!-- <div class="col-2 align-self-center" style="border-left: 2px solid rgba(28, 27, 27, 0.42)" (click)="eliminarDireccion('B', j)">
-                                                                        <span><i class="fas fa-times"></i></span>
-                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -119,31 +108,10 @@
                                                                     <div class="col-12" (click)="editarDireccion(e)">
                                                                         <p class="pf">{{e.Address}}</p>
                                                                     </div>
-                                                                    <!-- <div class="col-2 align-self-center" style="border-left: 2px solid rgba(28, 27, 27, 0.42)" (click)="eliminarDireccion('S', i)">
-                                                                        <span><i class="fas fa-times"></i></span>
-                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="text-center" *ngIf="Direcciones.length === 0">
-                                                        <span style="font-size: 4em; color:#8ec5fb"><i class="fas fa-globe-americas"></i></span>
-                                                    </div>
-                                                    <div *ngIf="Direcciones.length > 0">
-                                                        <h5 class="card-title typeheadbox"><span><i class="fas fa-file-invoice-dollar"></i></span> Facturación</h5>
-                                                        <div class="scroll">
-                                                            <div *ngFor="let f of Direcciones | facturacion; let i = index;" (click)="editarDireccion(f)" class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                                <p class="pf">{{f.Address}}</p>
-                                                            </div>
-                                                        </div>
-                                                        <br>
-                                                        <h5 class="card-title typeheadbox pt-2"><span><i class="fas fa-truck-loading"></i></span> Entrega</h5>
-                                                        <div class="scroll">
-                                                            <div *ngFor="let e of Direcciones | entrega; let i = index;" (click)="editarDireccion(e)" class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                                <p class="pf">{{e.Address}}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -157,11 +125,12 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="Country">País</label>
-                                                        <!-- <input id="Country" name="Country" Country [(ngModel)]="Direccion.Country" type="text" class="form-control" placeholder="nombre"> -->
-                                                        <select class="form-control" id="Country" [(ngModel)]="Direccion.Country" name="Country">
-                                                            <option *ngFor="let c of Countrys" [ngValue]="c.Code">{{c.Name}}</option>
-                                                        </select>
+                                                        <div class="form-group">
+                                                            <label for="AdresType">Tipo</label>
+                                                            <select class="form-control" id="AdresType" [(ngModel)]="Direccion.AdresType" name="AdresType" [disabled]="EstadoDir == 'E'">
+                                                                <option *ngFor="let at of AdresTypes" [ngValue]="at.Code">{{at.Name}}</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,10 +138,23 @@
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="State">Estado</label>
-                                                        <!-- <input id="State" name="State" State [(ngModel)]="Direccion.State" type="text" class="form-control" placeholder="Estado"> -->
                                                         <select class="form-control" id="State" [(ngModel)]="Direccion.State" name="State">
                                                             <option *ngFor="let s of States | FilterStates: Direccion.Country" [ngValue]="s.Code">{{s.Name}}</option>
                                                         </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="Country">País</label>
+                                                    <select class="form-control" id="Country" [(ngModel)]="Direccion.Country" name="Country">
+                                                        <option *ngFor="let c of Countrys" [ngValue]="c.Code">{{c.Name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="Street">Calle</label>
+                                                        <input id="Street" name="Street" Street [(ngModel)]="Direccion.Street" type="text" class="form-control" placeholder="Calle">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
@@ -185,8 +167,8 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="Street">Calle</label>
-                                                        <input id="Street" name="Street" Street [(ngModel)]="Direccion.Street" type="text" class="form-control" placeholder="Calle">
+                                                        <label for="StreetNo">Num Ext</label>
+                                                        <input id="StreetNo" name="StreetNo" StreetNo [(ngModel)]="Direccion.StreetNo" type="text" class="form-control" placeholder="número">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
@@ -199,24 +181,8 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="StreetNo">Num Ext</label>
-                                                        <input id="StreetNo" name="StreetNo" StreetNo [(ngModel)]="Direccion.StreetNo" type="text" class="form-control" placeholder="número">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
                                                         <label for="ZipCode">CP</label>
                                                         <input id="ZipCode" name="ZipCode" ZipCode [(ngModel)]="Direccion.ZipCode" type="text" class="form-control" placeholder="Código Postal">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="AdresType">Tipo</label>
-                                                        <select class="form-control" id="AdresType" [(ngModel)]="Direccion.AdresType" name="AdresType" [disabled]="EstadoDir == 'E'">
-                                                            <option *ngFor="let at of AdresTypes" [ngValue]="at.Code">{{at.Name}}</option>
-                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 text-center p-2">

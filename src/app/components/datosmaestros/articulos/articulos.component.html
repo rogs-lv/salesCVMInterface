@@ -30,7 +30,10 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="ItemName">Descripción</label>
-                                                <input id="ItemName" name="ItemName" #ItemName="ngModel" [(ngModel)]="header.ItemName" type="text" class="form-control" placeholder="Descripcion" maxlength="100">
+                                                <input id="ItemName" name="ItemName" #ItemName="ngModel" [(ngModel)]="header.ItemName" type="text" class="form-control" placeholder="Descripcion" maxlength="100" required [ngClass]="{ 'is-invalid': (ItemName.errors?.minlength || ItemName.errors?.required) && ItemName.touched }">
+                                                <div *ngIf="(ItemName.errors?.required) && ItemName.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">

@@ -117,3 +117,34 @@ body {
 .btnFomr {
     font-size: 1.4em;
 }
+
+
+/*Totales*/
+
+.sbtotal {
+    background-color: #025F74;
+    border-radius: 3% 3% 0 0;
+}
+
+.impuesto {
+    background-color: #025F74;
+}
+
+.total {
+    background-color: #025F74;
+    border-radius: 0% 0% 3% 3%;
+}
+
+.colorLetra {
+    color: white;
+}
+
+
+/*Toast*/
+
+.toast {
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, 0px);
+    z-index: 9999;
+}

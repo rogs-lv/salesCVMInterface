@@ -1,4 +1,4 @@
-<div class="container animated fadeIn fast">
+<div class="ml-5 animated fadeIn fast">
     <div class="row">
         <!-- Formulario Socios de negocios (editar/nuevo) -->
         <div class="col-sm-8 pt-4">
@@ -12,60 +12,70 @@
                     <div class="container pt-3">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form>
+                                <form class="needs-validation" #frmSocio="ngForm" novalidate="">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Series</label>
-                                                <select class="form-control" id="Serie" [(ngModel)]="Partner.Serie" name="Serie" [disabled]>
-                                                    <option *ngFor="let sr of Series" [ngValue]="sr">{{sr}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
                                                 <label for="CardCode">Código</label>
-                                                <input id="CardCode" name="CardCode" CardCode [(ngModel)]="Partner.CardCode" type="text" class="form-control" placeholder="Código" maxlength="15">
+                                                <input id="CardCode" name="CardCode" #CardCode="ngModel" [(ngModel)]="Partner.CardCode" type="text" class="form-control" placeholder="Código" maxlength="15" [disabled]="EstadoForm === 'E'" required [ngClass]="{ 'is-invalid': (CardCode.errors?.minlength || CardCode.errors?.required) && CardCode.touched }"
+                                                    minlength="5">
+                                                <div *ngIf="(CardCode.errors?.required) && CardCode.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
+                                                <div *ngIf="(CardCode.errors?.minlength) && CardCode.touched" class="invalid-feedback d-block">
+                                                    Minimo 5 caracteres
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="CardName">Nombre</label>
-                                                <input id="CardName" name="CardName" CardName [(ngModel)]="Partner.CardName" type="text" class="form-control" placeholder="Nombre" maxlength="15">
+                                                <input id="CardName" name="CardName" #CardName="ngModel" [(ngModel)]="Partner.CardName" type="text" class="form-control" placeholder="Nombre" maxlength="100" required [ngClass]="{ 'is-invalid': (CardName.errors?.minlength || CardName.errors?.required) && CardName.touched }">
+                                                <div *ngIf="(CardName.errors?.required) && CardName.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Tipo</label>
-                                                <select class="form-control" id="CardType" [(ngModel)]="Partner.CardType" name="CardType" [disabled]>
+                                                <select class="form-control" #CardType="ngModel" id="CardType" [(ngModel)]="Partner.CardType" name="CardType" [ngClass]="{ 'is-invalid': (CardType.errors?.required) && CardType.touched }" required>
                                                     <option *ngFor="let ty of CardTypes" [ngValue]="ty.Code">{{ty.Name}}</option>
                                                 </select>
+                                                <div *ngIf="(CardType.errors?.required) && CardType.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="Email">Email</label>
+                                                <input id="Email" name="Email" #Email="ngModel" [(ngModel)]="Partner.E_Mail" type="text" class="form-control" placeholder="Email" maxlength="100" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [ngClass]="{ 'is-invalid': Email.invalid }">
+                                                <div *ngIf="Email.errors?.pattern" class="invalid-feedback d-block">
+                                                    No es un correo valido
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="Email">Email</label>
-                                                <input id="Email" name="Email" CardName [(ngModel)]="Partner.E_Mail" type="text" class="form-control" placeholder="Email" maxlength="100">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
                                                 <label for="Currency">Moneda</label>
                                                 <select class="form-control" id="Currency" [(ngModel)]="Partner.Currency" name="Currency">
-                                                    <option *ngFor="let c of Currencies" [ngValue]="c">{{c}}</option>
+                                                    <option *ngFor="let c of Currencies" [ngValue]="c.CurrCode">{{c.CurrName}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">RFC</label>
-                                                <input id="" type="text" class="form-control" placeholder="RFC" value="">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="RFC">RFC</label>
-                                                <input id="RFC" name="RFC" RFC [(ngModel)]="Partner.LicTradNum" type="text" class="form-control" placeholder="RFC" maxlength="32">
+                                                <label for="LicTradNum">RFC</label>
+                                                <input class="form-control" type="text" placeholder="RFC" name="LicTradNum" [(ngModel)]="Partner.LicTradNum" minlength="12" #LicTradNum="ngModel" [ngClass]="{ 'is-invalid': (LicTradNum.errors?.required) && LicTradNum.touched }" required>
+                                                <div *ngIf="LicTradNum.errors?.minlength" class="invalid-feedback d-block">
+                                                    Minimo {{ LicTradNum.errors.minlength.requiredLength}} caracteres
+                                                </div>
+                                                <div *ngIf="(LicTradNum.errors?.required) && LicTradNum.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -79,41 +89,27 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
-                                                    <h5 class="card-title typeheadbox"><span><i class="fas fa-ship"></i></span> Embarque</h5>
-                                                    <div class="scroll">
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Direccion de embarque 1</p>
+                                                    <div>
+                                                        <h5 class="card-title typeheadbox"><span><i class="fas fa-file-invoice-dollar"></i></span> Facturación</h5>
+                                                        <div class="scroll">
+                                                            <div *ngFor="let f of DireccionesFac; let j = index" class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
+                                                                <div class="row">
+                                                                    <div class="col-12" (click)="editarDireccion(f)">
+                                                                        <p class="pf">{{f.Address}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Direccion de embarque 2</p>
-                                                        </div>
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Direccion de embarque 3</p>
-                                                        </div>
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Direccion de embarque 4</p>
-                                                        </div>
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Direccion de embarque 5</p>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                    <h5 class="card-title typeheadbox pt-2"><span><i class="fas fa-truck-loading"></i></span> Entrega</h5>
-                                                    <div class="scroll">
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Dirección de embarque 1</p>
-                                                        </div>
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Dirección de embarque 2</p>
-                                                        </div>
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Dirección de embarque 3</p>
-                                                        </div>
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Dirección de embarque 4</p>
-                                                        </div>
-                                                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                                                            <p class="pf">Dirección de embarque 5</p>
+                                                        <br>
+                                                        <h5 class="card-title typeheadbox pt-2"><span><i class="fas fa-truck-loading"></i></span> Entrega</h5>
+                                                        <div class="scroll">
+                                                            <div *ngFor="let e of DireccionesEnt; let i = index" class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
+                                                                <div class="row">
+                                                                    <div class="col-12" (click)="editarDireccion(e)">
+                                                                        <p class="pf">{{e.Address}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -123,81 +119,107 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">Tipo</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
+                                                        <label for="Address">Id de Dirección</label>
+                                                        <input id="Address" name="Address" Address [(ngModel)]="Direccion.Address" type="text" class="form-control" placeholder="Direccion" [disabled]="EstadoDir == 'E'">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">País</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Estado</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="">Municipio</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
+                                                        <div class="form-group">
+                                                            <label for="AdresType">Tipo</label>
+                                                            <select class="form-control" id="AdresType" [(ngModel)]="Direccion.AdresType" name="AdresType" [disabled]="EstadoDir == 'E'">
+                                                                <option *ngFor="let at of AdresTypes" [ngValue]="at.Code">{{at.Name}}</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">Localidad</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
+                                                        <label for="State">Estado</label>
+                                                        <select class="form-control" id="State" [(ngModel)]="Direccion.State" name="State">
+                                                            <option *ngFor="let s of States | FilterStates: Direccion.Country" [ngValue]="s.Code">{{s.Name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <label for="Country">País</label>
+                                                    <select class="form-control" id="Country" [(ngModel)]="Direccion.Country" name="Country">
+                                                        <option *ngFor="let c of Countrys" [ngValue]="c.Code">{{c.Name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="Street">Calle</label>
+                                                        <input id="Street" name="Street" Street [(ngModel)]="Direccion.Street" type="text" class="form-control" placeholder="Calle">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">Calle</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
+                                                        <label for="County">Municipio</label>
+                                                        <input id="County" name="County" County [(ngModel)]="Direccion.County" type="text" class="form-control" placeholder="Municipio">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">Colonia</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
+                                                        <label for="StreetNo">Num Ext</label>
+                                                        <input id="StreetNo" name="StreetNo" StreetNo [(ngModel)]="Direccion.StreetNo" type="text" class="form-control" placeholder="número">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">Num Ext</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
+                                                        <label for="Block">Colonia</label>
+                                                        <input id="Block" name="Block" Block [(ngModel)]="Direccion.Block" type="text" class="form-control" placeholder="Colonia">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="">CP</label>
-                                                        <input id="" type="text" class="form-control" placeholder="nombre" value="">
+                                                        <label for="ZipCode">CP</label>
+                                                        <input id="ZipCode" name="ZipCode" ZipCode [(ngModel)]="Direccion.ZipCode" type="text" class="form-control" placeholder="Código Postal">
                                                     </div>
                                                 </div>
                                                 <div class="col-6 text-center p-2">
-                                                    <div class="form-group">
-                                                        <button class="btn btn-light btnLimon"><span style="font-size: 1.5em;"><i class="fas fa-plus-circle"></i></span></button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div *ngIf="EstadoDir == 'E'">
+                                                        <div class="form-group d-flex justify-content-between">
+                                                            <button *ngIf="EstadoDir == 'E'" class="btn btn-info" [disabled]="!Direccion.Address" (click)="actualizarDireccion(Direccion, Direccion.AdresType)"><span><i class="fas fa-sync-alt"></i></span> Direccion</button>
+                                                            <button *ngIf="EstadoDir == 'E'" class="btn btn-info" [disabled]="!Direccion.Address" (click)="cancelActDireccion()"><span><i class="fas fa-window-close"></i></span> Direccion</button>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="EstadoDir == 'N'">
+                                                        <div class="form-group d-flex justify-content-end">
+                                                            <button *ngIf="EstadoDir == 'N'" class="btn btn-info" [disabled]="!Direccion.Address || !Partner.CardCode || !Direccion.AdresType" (click)="nuevaDireccion(Direccion, Direccion.AdresType)"><span style="font-size: 1.3em;"><i class="fas fa-plus-circle"></i></span> Dirección</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row pt-4">
-                                        <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-pencil-alt"></i></span></button>
-                                            <!-- <button class="btn btn-light btnLimon"><span><i class="fas fa-times"></i></span></button> -->
+                                        <div class="col-sm-6 d-flex justify-content-end">
                                         </div>
-                                        <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                        <div class="col-sm-6">
+                                            <div *ngIf="EstadoForm === 'E'" [ngClass]="{'d-flex' : true , 'justify-content-between' : (EstadoForm === 'E' && !proceso), 'justify-content-end' : (EstadoForm === 'E'  && proceso)}">
+                                                <button *ngIf="EstadoForm === 'E' && !proceso" class="btn btn-info" (click)="CancelarEdicionSocio()"><span class="btnFomr"><i class="fas fa-user-slash"></i></span> Cancelar</button>
+                                                <button *ngIf="EstadoForm === 'E' && !proceso" [disabled]="frmSocio.invalid" class="btn btn-info" (click)="ActualizarSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-check"></i></span> Actualizar Socio</button>
+                                                <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                            </div>
+                                            <div *ngIf="EstadoForm === 'N'" class=" d-flex justify-content-end">
+                                                <button *ngIf="EstadoForm === 'N' && !proceso" [disabled]="EstadoForm === 'P' || frmSocio.invalid" class="btn btn-info" (click)="CrearSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-plus"></i></span> Crear Socio</button>
+                                                <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -208,64 +230,12 @@
             </div>
         </div>
         <!-- Lista Socios de negocios -->
-        <div class="col-sm-4 pt-4">
+        <div class="col-md-4 pt-4">
             <div class="card bxcard">
-                <div class="card-body">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-users"></i> Lista de Socios</span>
-                        </div>
-                    </div>
+                <app-listasocios (socioSel)="listenBP($event)" class="col-sm-12"></app-listasocios>
+            </div>
+        </div>
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">First</th>
-                                                <th scope="col">Last</th>
-                                                <th scope="col">Handle</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td colspan="2">Larry the Bird</td>
-                                                <td>@twitter</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <app-toast aria-live="polite" aria-atomic="true"></app-toast>
     </div>
-    <!--     <div class="row">
-        <div class="col-md-12 text-center">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['lista']">Lista de SN</button>
-                <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['nuevo']">Nuevo SN</button>
-                <button type="button" class="btn btn-secondary" routerLinkActive="active" [routerLink]="['editar']">Editar SN</button>
-            </div>
-        </div>
-    </div>
-    <router-outlet></router-outlet> -->
 </div>

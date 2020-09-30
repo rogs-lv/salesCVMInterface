@@ -19,17 +19,17 @@ import { PedidoComponent } from './components/ventas/pedido/pedido.component';
 import { CrmComponent } from './components/crm/crm.component';
 import { TablaArticulosComponent } from './components/ventas/shared/tabla-articulos/tabla-articulos.component';
 import { ListaArticulosComponent } from './components/ventas/shared/lista-articulos/lista-articulos.component';
-import { ArticulosNuevoComponent } from './components/datosmaestros/articulos/articulos-nuevo.component';
-import { ArticulosEditarComponent } from './components/datosmaestros/articulos/articulos-editar.component';
-import { SociosNegociosNuevoComponent } from './components/datosmaestros/sociosnegocios/sociosnegocios-nuevo.component';
-import { SociosNegociosEditarComponent } from './components/datosmaestros/sociosnegocios/sociosnegocios-editar.component';
-import { SociosNegociosListaComponent } from './components/datosmaestros/sociosnegocios/sociosnegocios-lista.component';
-import { ArticulosListaComponent } from './components/datosmaestros/articulos/articulos-lista.component';
 import { CrmOportunidadesComponent } from './components/crm/crm-oportunidades/crm-oportunidades.component';
 import { CrmActividadesComponent } from './components/crm/crm-actividades/crm-actividades.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
 import { AuthInterceptor } from './services/authconfig.interceptor';
 import { ModalComponent } from './components/ventas/shared/modal/modal.component';
+import { ListasociosComponent } from './components/datosmaestros/shared/listasocios/listasocios.component';
+import { FacturacionPipe } from './pipes/facturacion.pipe';
+import { EntregaPipe } from './pipes/entrega.pipe';
+import { ToastComponent } from './components/toast/toast.component';
+import { EstadosPipe } from './pipes/estados.pipe';
+import { ListaarticulosComponent } from './components/datosmaestros/shared/listaarticulos/listaarticulos.component';
 
 @NgModule({
   declarations: [
@@ -44,16 +44,16 @@ import { ModalComponent } from './components/ventas/shared/modal/modal.component
     CrmComponent,
     TablaArticulosComponent,
     ListaArticulosComponent,
-    ArticulosNuevoComponent,
-    ArticulosEditarComponent,
-    ArticulosListaComponent,
-    SociosNegociosNuevoComponent,
-    SociosNegociosEditarComponent,
-    SociosNegociosListaComponent,
     CrmOportunidadesComponent,
     CrmActividadesComponent,
     ReportesComponent,
-    ModalComponent
+    ModalComponent,
+    ListasociosComponent,
+    FacturacionPipe,
+    EntregaPipe,
+    ToastComponent,
+    EstadosPipe,
+    ListaarticulosComponent
   ],
   entryComponents:[
     ModalComponent

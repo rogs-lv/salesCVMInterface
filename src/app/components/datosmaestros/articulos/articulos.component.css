@@ -1,0 +1,28 @@
+.table1-fixed {
+    width: 100%;
+    background-color: #f3f3f3;
+}
+
+.table1-fixed tbody {
+    height: 200px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table1-fixed thead,
+.table1-fixed tbody,
+.table1-fixed tr,
+.table1-fixed td,
+.table1-fixed th {
+    display: block;
+}
+
+.table1-fixed tbody td {
+    float: left;
+}
+
+.table1-fixed thead tr th {
+    float: left;
+    background-color: #F8F8F8;
+    border-color: #F8F8F8;
+}

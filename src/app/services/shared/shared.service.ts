@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Item } from '../../models/masterData';
+import { SocioNegocios } from '../../models/socioNegocios';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class SharedService {
   private item = new BehaviorSubject<Item>(null);
   sharedMessage = this.item.asObservable();
 
-  private listItem = new BehaviorSubject<any>(null);
-  sharedList = this.listItem.asObservable();
+  private socio = new BehaviorSubject<SocioNegocios>(null);
+  sharedSocioBP = this.socio.asObservable();
 
   constructor() { }
 
@@ -19,7 +20,7 @@ export class SharedService {
     this.item.next(message);
   }
 
-  nextList(list: Array<any>) {
-    this.listItem.next(list);
+  nextSocioBP(bp: SocioNegocios) {
+    this.socio.next(bp);
   }
 }

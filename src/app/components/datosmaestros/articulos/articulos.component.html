@@ -6,102 +6,135 @@
                 <div class="card-body">
                     <div class="card-header">
                         <div class="card-icon">
-                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-user"></i> Artículo</span>
+                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-cube"></i> Artículo</span>
                         </div>
                     </div>
                     <div class="container pt-3">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form>
+                                <form class="needs-validation" #frmArt="ngForm" novalidate="">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Código</label>
-                                                <input id="" type="text" class="form-control" placeholder="codigo" value="">
+                                                <label for="ItemCode">Código</label>
+                                                <input [disabled]="estadoFrm === 'E'" id="ItemCode" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="header.ItemCode" type="text" class="form-control" placeholder="Código" maxlength="15" [disabled]="" required [ngClass]="{ 'is-invalid': (ItemCode.errors?.minlength || ItemCode.errors?.required) && ItemCode.touched }"
+                                                    minlength="5">
+                                                <div *ngIf="(ItemCode.errors?.required) && ItemCode.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
+                                                <div *ngIf="(ItemCode.errors?.minlength) && ItemCode.touched" class="invalid-feedback d-block">
+                                                    Minimo 5 caracteres
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Descripción</label>
-                                                <input id="" type="text" class="form-control" placeholder="Descripción" value="">
+                                                <label for="ItemName">Descripción</label>
+                                                <input id="ItemName" name="ItemName" #ItemName="ngModel" [(ngModel)]="header.ItemName" type="text" class="form-control" placeholder="Descripcion" maxlength="100" required [ngClass]="{ 'is-invalid': (ItemName.errors?.minlength || ItemName.errors?.required) && ItemName.touched }">
+                                                <div *ngIf="(ItemName.errors?.required) && ItemName.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Grupo Artículos</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>Grupo 1</option>
-                                                    <option>Grupo 2</option>
-                                                  </select>
+                                                <label for="ItmsGrpCod">Grupo Artículos</label>
+                                                <select class="form-control" #ItmsGrpCod="ngModel" id="ItmsGrpCod" [(ngModel)]="header.ItmsGrpCod" name="ItmsGrpCod" [ngClass]="{ 'is-invalid': (ItmsGrpCod.errors?.required) && ItmsGrpCod.touched }" required>
+                                                    <option *ngFor="let ty of opcionesGrp" [ngValue]="ty.ItmsGrpCod">{{ty.ItmsGrpNam}}</option>
+                                                </select>
+                                                <div *ngIf="(ItmsGrpCod.errors?.required) && ItmsGrpCod.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Unidad de Medida</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>Manual</option>
-                                                    <option>Caja</option>
-                                                  </select>
+                                                <label for="UgpEntry">Unidad de Medida</label>
+                                                <select class="form-control" #UgpEntry="ngModel" id="UgpEntry" [(ngModel)]="header.UgpEntry" name="UgpEntry" [ngClass]="{ 'is-invalid': (UgpEntry.errors?.required) && UgpEntry.touched }" required>
+                                                    <option *ngFor="let um of opcionesUoM" [ngValue]="um.UgpEntry">{{um.UgpName}}</option>
+                                                </select>
+                                                <div *ngIf="(UgpEntry.errors?.required) && UgpEntry.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Lista de precios</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>Mayore</option>
-                                                    <option>Menudeo</option>
-                                                  </select>
+                                                <label for="ListNum">Lista de precios</label>
+                                                <select *ngIf="estadoFrm === 'E'" class="form-control" #ListNum="ngModel" id="ListNum" [(ngModel)]="header.ListNum" name="ListNum" (change)="getPrecios(2, header.ItemCode, header.ListNum)">
+                                                    <option *ngFor="let l of opcionesList" [ngValue]="l.ListNum">{{l.ListName}}</option>
+                                                </select>
+                                                <select *ngIf="estadoFrm === 'N'" class="form-control" #ListNum="ngModel" id="ListNum" [(ngModel)]="header.ListNum" name="ListNum">
+                                                    <option *ngFor="let l of opcionesList" [ngValue]="l.ListNum">{{l.ListName}}</option>
+                                                </select>
+                                                <!-- <div *ngIf="(UgpEntry.errors?.required) && UgpEntry.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Precio</label>
-                                                <input id="" type="text" class="form-control" placeholder="Precio" value="">
+                                                <label for="Price">Precio</label>
+                                                <input id="Price" name="Price" #Price="ngModel" [(ngModel)]="header.Price" type="text" class="form-control" placeholder="Precio">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 d-flex align-items-center justify-content-around">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked="checked">
-                                                <label class="form-check-label" for="inlineCheckbox1">Inventario</label>
+                                                <!-- <input class="form-check-input" type="checkbox" value="option1" checked="checked"> -->
+                                                <input id="InvntItem" name="InvntItem" #InvntItem="ngModel" [(ngModel)]="header.InvntItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.InvntItem}">
+                                                <label class="form-check-label" for="InvntItem">Inventario</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                <label class="form-check-label" for="inlineCheckbox2">Compra</label>
+                                                <!-- <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> -->
+                                                <input id="PrchseItem" name="PrchseItem" #PrchseItem="ngModel" [(ngModel)]="header.PrchseItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.PrchseItem}">
+                                                <label class="form-check-label" for="PrchseItem">Compra</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                                                <label class="form-check-label" for="inlineCheckbox3">venta</label>
+                                                <!-- <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"> -->
+                                                <input id="SellItem" name="SellItem" #SellItem="ngModel" [(ngModel)]="header.SellItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.SellItem}">
+                                                <label class="form-check-label" for="SellItem">venta</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="col-sm-5">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked="checked">
-                                                <label class="form-check-label" for="inlineCheckbox1">Retención de impuestos</label>
+                                                <!-- <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked="checked"> -->
+                                                <input id="WTLiable" name="WTLiable" #WTLiable="ngModel" [(ngModel)]="header.WTLiable" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.WTLiable}">
+                                                <label class="form-check-label" for="WTLiable">Retención de impuestos</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                <label class="form-check-label" for="inlineCheckbox2">Sujeto a impuesto</label>
+                                                <!-- <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> -->
+                                                <input id="VATLiable" name="VATLiable" #VATLiable="ngModel" [(ngModel)]="header.VATLiable" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.VATLiable}">
+                                                <label class="form-check-label" for="VATLiable">Sujeto a impuesto</label>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                                <label class="form-check-label" for="inlineRadio1">Activo</label>
+                                            <!-- <div class="custom-control custom-radio">
+                                                <input id="validForYes" type="radio" class="custom-control-input" [value]="true" name="validFor" #validFor="ngModel" [(ngModel)]="header.validFor" required>
+                                                <label class="custom-control-label" for="validForYes">Activo</label>
                                             </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                                <label class="form-check-label" for="inlineRadio2">Inactivo</label>
+
+                                            <div class="custom-control custom-radio">
+                                                <input id="validForNo" type="radio" class="custom-control-input" [value]="false" name="validFor" #validFor="ngModel" [(ngModel)]="header.validFor" required>
+                                                <label class="custom-control-label" for="validForNo">Incativo</label>
+                                            </div> -->
+                                            <!-- <div class="">
+                                                <input id="validForY" type="radio" class="custom-control-input" value="Y" name="validForY" ngModel required>
+                                                <label class="custom-control-label" for="validForY">Activo</label>
                                             </div>
+                                            <div class="">
+                                                <input id="validForN" type="radio" class="custom-control-input" value="N" name="validForN" ngModel required>
+                                                <label class="custom-control-label" for="validForN">Inactivo</label>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <hr>
                                     <!-- Sección detalle -->
                                     <div class="row mt-4">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-12">
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="card-icondetalle">
@@ -109,22 +142,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
-                                                    <div class="table-responsive-sm">
-                                                        <table class="table table-borderless">
+                                                    <div class="">
+                                                        <table class="table table1-fixed">
                                                             <thead>
                                                                 <tr>
-                                                                    <th scope="col">Nom Propiedad</th>
-                                                                    <th scope="col">Estatus</th>
+                                                                    <th class="col-sm-1" scope="col">#</th>
+                                                                    <th class="col-sm-8" scope="col">Nom Propiedad</th>
+                                                                    <th class="col-sm-3" scope="col">Estatus</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>Artículo propiedad 1</td>
-                                                                    <td><input type="checkbox" checked="checked"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Artículo propiedad 2</td>
-                                                                    <td><input type="checkbox" checked="checked"></td>
+                                                                <tr *ngFor="let pr of tabProp; let i = index">
+                                                                    <td class="col-sm-1">{{pr.ItmsTypCod}}</td>
+                                                                    <td class="col-sm-8">{{pr.ItmsGrpNam}}</td>
+                                                                    <td class="col-sm-3">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input [id]="pr.ItmsTypCod" [name]="pr.ItmsTypCod" #Status="ngModel" [(ngModel)]="tabProp[i].Status" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : pr.Status}">
+                                                                        </div>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -132,7 +167,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <!-- <div class="col-sm-6">
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="card-icondetalle">
@@ -165,15 +200,21 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="row pt-4">
-                                        <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-pencil-alt"></i></span></button>
-                                            <!-- <button class="btn btn-light btnLimon"><span><i class="fas fa-times"></i></span></button> -->
+                                        <div class="col-sm-6 d-flex justify-content-end">
                                         </div>
-                                        <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                        <div class="col-sm-6">
+                                            <div *ngIf="estadoFrm === 'E'" [ngClass]="{'d-flex' : true , 'justify-content-between' : (estadoFrm === 'E' && !proceso), 'justify-content-end' : (estadoFrm === 'E'  && proceso)}">
+                                                <button *ngIf="estadoFrm === 'E' && !proceso" class="btn btn-info" (click)="CancelarEdicionArticulo(frmArt)"><span class="btnFomr"><i class="fas fa-ban"></i></span> Cancelar</button>
+                                                <button *ngIf="estadoFrm === 'E' && !proceso" class="btn btn-info" (click)="ActualizarArticulo(frmArt, header, tabProp)"><span class="btnFomr"><i class="fas fa-cube"></i></span> Actualizar Articulo</button>
+                                                <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                            </div>
+                                            <div *ngIf="estadoFrm === 'N'" class=" d-flex justify-content-end">
+                                                <button *ngIf="estadoFrm === 'N' && !proceso" [disabled]="estadoFrm === 'P' || frmArt.invalid" class="btn btn-info" (click)="CrearArticulo(frmArt, header, tabProp)"><span class="btnFomr"><i class="fas fa-cube"></i></span> Crear Artículo</button>
+                                                <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -184,44 +225,9 @@
             </div>
         </div>
         <!-- Lista Socios de Artículos -->
-        <div class="col-sm-4 pt-4">
+        <div class="col-md-4 pt-4">
             <div class="card bxcard">
-                <div class="card-body">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-users"></i> Artículos</span>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Código</th>
-                                                <th scope="col">Descripción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Art01</td>
-                                                <td>Articulo 1</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Art01</td>
-                                                <td>Articulo 1</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <app-listaarticulos (artSel)="lisenArticulo($event)"></app-listaarticulos>
             </div>
         </div>
     </div>

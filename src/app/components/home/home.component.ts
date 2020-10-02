@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
     }, (err) => {
       console.log(err);
       Swal.fire({
-        title: 'Mensaje de sistema',
+        title: 'Error al obtener las configuraciones del usuario',
         icon: 'error',
         text: err.error.Message
       });

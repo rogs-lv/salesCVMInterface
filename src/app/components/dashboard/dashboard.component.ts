@@ -1,6 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
+import { DashService } from '../../services/dashboard/dash.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import Swal from 'sweetalert2';
+import { Anuncio } from 'src/app/models/dashboard';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,15 +12,17 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  DtsNoticas: Array<Anuncio>;
+  DtsPromo: Array<Anuncio>;
+  // Valores para llenar la tabla
   public lineChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Desarollo' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Soporte' },
-    { data: [180, 480, 770, 90, 1000, 270, 400], label: 'Consultoria', yAxisID: 'y-axis-1' }
+    { data: [], label: 'Cuotas' },
+    { data: [], label: 'Ventas' }
   ];
-
-  public lineChartLabels: Label[] = ['Enero', 'Febrero', 'Marzo', 'April', 'Mayo', 'Junio', 'Julio'];
-
+  // public lineChartData: ChartDataSets[] = [];
+  // Linea X
+  public lineChartLabels: Label[] = ['Enero', 'Febrero', 'Marzo', 'April', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  // Pendiente
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
@@ -31,10 +37,10 @@ export class DashboardComponent implements OnInit {
           id: 'y-axis-1',
           position: 'right',
           gridLines: {
-            color: 'rgba(255,0,0,0.3)',
+            color: 'rgba(0,0,0,0.3)',
           },
           ticks: {
-            fontColor: 'red',
+            fontColor: 'black',
           }
         }
       ]
@@ -57,27 +63,19 @@ export class DashboardComponent implements OnInit {
       ],
     },
   };
-
+  // Colores a las lineas y sombras
   public lineChartColors: Color[] = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
+    {
+      backgroundColor: 'rgba(92,181,66,0.3)',
+      borderColor: 'rgba(23,102,35,0.5)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
-    { // red
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
+    {
+      backgroundColor: 'rgba(230,154,16,0.3)',
+      borderColor: 'rgba(138,106,20,0.5)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -89,7 +87,7 @@ export class DashboardComponent implements OnInit {
   public lineChartType = 'line';
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
-
+  // Metodo de prueba para generar numeros aleatorios
   public randomize(): void {
     for (let i = 0; i < this.lineChartData.length; i++) {
       for (let j = 0; j < this.lineChartData[i].data.length; j++) {
@@ -98,7 +96,7 @@ export class DashboardComponent implements OnInit {
     }
     this.chart.update();
   }
-
+  // Metodo de prueba para devolver numero
   private generateNumber(i: number) {
     return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
   }
@@ -112,9 +110,77 @@ export class DashboardComponent implements OnInit {
     console.log(event, active);
   }
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    private services: DashService,
+    private auth: AuthService
+  ) {
+    this.DtsNoticas = new Array<Anuncio>();
+    this.DtsPromo = new Array<Anuncio>();
   }
 
+  ngOnInit() {
+    this.getProm();
+    this.getGrafica();
+  }
+
+  getProm() {
+    const usr = this.auth.getDataToken();
+    this.services.getPromociones(this.auth.getToken(), usr.Sucursal).subscribe(response => {
+      if (response.codigo === 0) {
+        this.DtsPromo = response.mensaje;
+      } else {
+        return;
+      }
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al obtener las promociones',
+        icon: 'error',
+        text: err.error.ExceptionMessage ? err.error.ExceptionMessage : err.error.Message
+      });
+    });
+  }
+
+  getNot() {
+    this.services.getNoticias(this.auth.getToken(), '').subscribe(response => {
+      if (response.codigo === 0) {
+        this.DtsNoticas = response.mensaje;
+      } else {
+        return;
+      }
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al obtener las ultimas noticias',
+        icon: 'error',
+        text: err.error.ExceptionMessage ? err.error.ExceptionMessage : err.error.Message
+      });
+    });
+  }
+
+  getGrafica() {
+    const usr = this.auth.getDataToken();
+    this.services.getDtsGrafica(this.auth.getToken(), usr.Code).subscribe(response => {
+      if (response.codigo === 0) {
+        // tslint:disable-next-line: forin
+        for (const key in response.mensaje) {
+          this.lineChartData[0].data.push(response.mensaje[key].U_Cuota);
+        }
+        // tslint:disable-next-line: forin
+        for (const key in response.mensaje) {
+          this.lineChartData[1].data.push(response.mensaje[key].Ventas);
+        }
+      } else {
+        return;
+      }
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al obtener datos para la grafica',
+        icon: 'error',
+        text: err.error.ExceptionMessage ? err.error.ExceptionMessage : err.error.Message
+      });
+    });
+  }
+
+  actualizarGrafica() {
+    this.getGrafica();
+  }
 }

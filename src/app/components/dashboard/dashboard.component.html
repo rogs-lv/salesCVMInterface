@@ -1,81 +1,72 @@
-<div class="container animated fadeIn fast">
-    <!-- <div class="row text-center">
-        <div class="col-sm-12">
-            <h2 class="brand">Dashboard</h2>
-        </div>
-    </div> -->
-    <div class="row pl-5 justify-content-center">
-        <div class="col-sm-6">
-            <div class="card">
+<div class="ml-5 animated fadeIn fast">
+    <div class="row">
+        <!-- Grafica de ventas -->
+        <div class="col-sm-7 pt-4">
+            <div class="card bxcard">
                 <div class="card-body">
-                    <h5 class="card-title typeheadbox">Gráfica</h5>
-                    <div class="flex">
-                        <div class="flex-item">
-                            <div style="display: block;">
-                                <canvas baseChart width="auto" height="220" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-chart-line"></i> Cuota de Ventas</span>
+                        </div>
+                    </div>
+                    <div class="container pt-3">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="flex-item">
+                                    <div *ngIf="lineChartData[0].data.length === 0" class="d-flex justify-content-center pt-5">
+                                        <span style="font-size: 5em;"><i class="fas fa-spinner fa-pulse"></i></span>
+                                    </div>
+                                    <div *ngIf="lineChartData[0].data.length > 0" style="display: block;">
+                                        <canvas baseChart width="auto" height="220" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="d-flex justify-content-end">
+                                    <button mat-button mat-raised-button color="primary" class="btn btn-primary" (click)="actualizarGrafica()"> <span><i class="fas fa-sync-alt"></i></span> Actualizar</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex-item">
-                            <!-- <table class="table table-responsive table-condensed">
-                                <tr>
-                                    <th *ngFor="let label of lineChartLabels">{{label}}</th>
-                                </tr>
-                                <tr *ngFor="let d of lineChartData; let i=index" [class]="'line-'+i">
-                                    <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
-                                </tr>
-                            </table> -->
-                            <button mat-button mat-raised-button color="primary" class="btn btn-primary" (click)="randomize()">Randomize</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Lista Noticias y Promociones-->
+        <div class="col-md-5 pt-4">
+            <div class="card bxcard">
+                <div class="card-body">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-bullhorn"></i> Noticias</span>
+                        </div>
+                    </div>
+                    <div class="scroll mt-3">
+                        <div *ngIf="DtsNoticas.length === 0" class="d-flex justify-content-center">
+                            <span style="color: tomato;"><i class="fas fa-bullhorn"></i> No hay noticias recientes</span>
+                        </div>
+                        <div *ngFor="let n of DtsNoticas" class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
+                            <p class="pf"><strong>{{n.U_Anuncio}}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bxcard mt-5">
+                <div class="card-body">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-money-check-alt"></i> Promociones</span>
+                        </div>
+                    </div>
+                    <div class="scroll mt-3">
+                        <div *ngIf="DtsPromo.length === 0" class="d-flex justify-content-center">
+                            <span style="color: tomato;"><i class="fas fa-bullhorn"></i> No hay promociones recientes</span>
+                        </div>
+                        <div *ngFor="let p of DtsPromo" class="w3-container w3-pale-blue w3-leftbarp w3-border-blue mb-1">
+                            <p class="pf"><span><i class="fas fa-bell faa-ring animated iconPromo"></i></span><strong> {{p.U_Anuncio}}</strong></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title typeheadbox">Noticias</h5>
-                    <div class="scroll">
-                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                            <!-- <h6 class="pf"><span style="font-size: 1.5em;"><i class="fas fa-newspaper" aria-hidden="true"></i></span>lorem</h6> -->
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                        <div class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mt-3">
-                <div class="card-body">
-                    <h5 class="card-title typeheadbox">Promociones</h5>
-                    <div class="scroll">
-                        <div class="w3-container w3-pale-blue w3-leftbarp w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                        <div class="w3-container w3-pale-blue w3-leftbarp w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                        <div class="w3-container w3-pale-blue w3-leftbarp w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                        <div class="w3-container w3-pale-blue w3-leftbarp w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                        <div class="w3-container w3-pale-blue w3-leftbarp w3-border-blue mb-1">
-                            <p class="pf">I have a blue left border.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- <app-toast aria-live="polite" aria-atomic="true"></app-toast> -->
     </div>
 </div>

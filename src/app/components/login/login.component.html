@@ -1,9 +1,9 @@
 <div class="limiter">
-    <div class="container-login100" style="background-image: url('../assets/images/fondo.jpeg');">
+    <div class="container-login100" style="background-image: url('assets/images/fondo.jpeg');">
         <div class="wrap-login100 p-l-55 p-r-55 p-t-0 p-b-54">
             <form (ngSubmit)="login(formLogin)" #formLogin="ngForm" class="login100-form validate-form">
                 <span class="login100-form-title p-b-49">
-						<img src="../assets/images/logo.png" style="max-width: 100%;" alt="">
+                        <img src="assets/images/logo.png" style="max-width: 100%;" alt="">
 					</span>
                 <div class="wrap-input100 validate-input m-b-23">
                     <span class="text-danger" *ngIf="(formLogin.submitted  || formLogin.controls['usuario']?.touched ) && formLogin.controls['usuario'].errors"><i class="fas fa-user-lock"></i> El usuario es obligatorio</span>

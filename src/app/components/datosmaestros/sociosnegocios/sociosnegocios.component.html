@@ -217,7 +217,7 @@
                                                 <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                             <div *ngIf="EstadoForm === 'N'" class=" d-flex justify-content-end">
-                                                <button *ngIf="EstadoForm === 'N' && !proceso" [disabled]="EstadoForm === 'P' || frmSocio.invalid" class="btn btn-info" (click)="CrearSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-plus"></i></span> Crear Socio</button>
+                                                <button *ngIf="(EstadoForm === 'N' && !proceso)" [disabled]="frmSocio.invalid" class="btn btn-info" (click)="CrearSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-plus"></i></span> Crear Socio</button>
                                                 <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                         </div>

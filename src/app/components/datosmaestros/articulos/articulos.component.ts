@@ -120,7 +120,7 @@ export class ArticulosComponent implements OnInit {
       return;
     }
     this.proceso = true;
-    const values: any =  { ItemCode : header.ItemCode, ItemName : header.ItemName, ItmsGrpCod: header.ItmsGrpCod, UgpEntry: header.UgpEntry, ListNum: header.ListNum, Price: header.Price, InvntItem: header.InvntItem, SellItem: header.SellItem, PrchseItem: header.PrchseItem, WTLiable: header.WTLiable, VATLiable: header.VATLiable, validFor: header.validFor, CodeBars: header.CodeBars}
+    const values: any =  { ItemCode : header.ItemCode, ItemName : header.ItemName, ItmsGrpCod: header.ItmsGrpCod, UgpEntry: header.UgpEntry, ListNum: header.ListNum, Price: header.Price, InvntItem: header.InvntItem, SellItem: header.SellItem, PrchseItem: header.PrchseItem, WTLiable: header.WTLiable, VATLiable: header.VATLiable, validFor: header.validFor, CodeBars: header.CodeBars };
     this.mdService.updateItem(this.auth.getToken(), header, props, '').subscribe(response => {
       Swal.fire({
         title: 'Artículo Actualizado',
@@ -151,7 +151,7 @@ export class ArticulosComponent implements OnInit {
       return;
     }
     this.proceso = true;
-    const values: any =  { ItemCode : header.ItemCode, ItemName : header.ItemName, ItmsGrpCod: header.ItmsGrpCod, UgpEntry: header.UgpEntry, ListNum: header.ListNum, Price: header.Price, InvntItem: header.InvntItem, SellItem: header.SellItem, PrchseItem: header.PrchseItem, WTLiable: header.WTLiable, VATLiable: header.VATLiable, validFor: header.validFor, CodeBars: header.CodeBars}
+    const values: any =  { ItemCode : header.ItemCode, ItemName : header.ItemName, ItmsGrpCod: header.ItmsGrpCod, UgpEntry: header.UgpEntry, ListNum: header.ListNum, Price: header.Price, InvntItem: header.InvntItem, SellItem: header.SellItem, PrchseItem: header.PrchseItem, WTLiable: header.WTLiable, VATLiable: header.VATLiable, validFor: header.validFor, CodeBars: header.CodeBars };
     this.mdService.createItem(this.auth.getToken(), header, props, '').subscribe(response => {
       Swal.fire({
         title: 'Artículo Creado',

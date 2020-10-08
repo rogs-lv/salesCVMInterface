@@ -212,7 +212,7 @@
                                                 <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                             <div *ngIf="estadoFrm === 'N'" class=" d-flex justify-content-end">
-                                                <button *ngIf="estadoFrm === 'N' && !proceso" [disabled]="estadoFrm === 'P' || frmArt.invalid" class="btn btn-info" (click)="CrearArticulo(frmArt, header, tabProp)"><span class="btnFomr"><i class="fas fa-cube"></i></span> Crear Artículo</button>
+                                                <button *ngIf="(estadoFrm === 'N' && !proceso)" [disabled]="frmArt.invalid" class="btn btn-info" (click)="CrearArticulo(frmArt, header, tabProp)"><span class="btnFomr"><i class="fas fa-cube"></i></span> Crear Artículo</button>
                                                 <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                         </div>

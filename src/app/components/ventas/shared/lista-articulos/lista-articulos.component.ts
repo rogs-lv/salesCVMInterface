@@ -72,13 +72,17 @@ export class ListaArticulosComponent implements OnInit {
   onQuickFilterChanged() {
     this.agGrid.api.setQuickFilter(this.quickSearchValue);
   }
+  // Se limpia campo de busqueda
+  onCleanFilter() {
+    this.quickSearchValue = '';
+    this.agGrid.api.setQuickFilter(this.quickSearchValue);
+  }
   // Se envia información cuando se hace clic sobre un registro de la lista de articulos
   /* onRowClicked(event: any) { console.log('row', event); } */
   onCellClicked(event: any) {
-    /* console.log('cell', event.data); */
+    // console.log('cell', event.data);
     this.sharedService.nextMessage(event.data);
   }
-  /* onSelectionChanged(event: any) { console.log('selection', event); } */
 
   private buildRows(data: any, whsCode: string, taxCode: string): Array<Item> {
     const rows = [];
@@ -95,7 +99,8 @@ export class ListaArticulosComponent implements OnInit {
           Quantity: 1,
           WhsCode: whsCode,
           Currency: '',
-          TaxCode: taxCode
+          TaxCode: data[i].TaxCodeAR,
+          Rate: data[i].Rate
         }
       );
     }

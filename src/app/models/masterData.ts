@@ -12,6 +12,7 @@ export class Item {
     ItemName: string;
     VATLiable: string;
     TaxCodeAR: string;
+    Rate: number;
     IndirctTax: string;
     Stock: number;
     SalUnitMsr: string;
@@ -21,4 +22,9 @@ export class Item {
     WhsCode: string;
     TaxCode: string;
     Currency: string;
+}
+
+export class Vendedor {
+    SlpCode: number;
+    SlpName: string;
 }

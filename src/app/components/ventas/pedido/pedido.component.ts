@@ -9,7 +9,9 @@ import { Document, DocSAP } from '../../../models/marketing';
 import { MktService } from '../../../services/marketing/mkt.service';
 import { AuthService } from '../../../services/authentication/auth.service';
 import { TablaArticulosComponent } from '../shared/tabla-articulos/tabla-articulos.component';
-import { SharedService } from 'src/app/services/shared/shared.service';
+import { MtrDataService } from 'src/app/services/masterData/mtr-data.service';
+import { ModalListaSNComponent } from '../shared/modal-lista-sn/modal-lista-sn.component';
+import { Vendedor } from 'src/app/models/masterData';
 
 @Component({
   selector: 'app-pedido',
@@ -29,25 +31,31 @@ export class PedidoComponent implements OnInit {
   minDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
   closeResult: string;
   list: any;
-
+  cambiarSN: boolean;
+  cargarSN: boolean;
+  slpCodeSel: number;
+  SalesEmp: Array<Vendedor>;
 
   constructor(
     private mktServices: MktService,
     private auth: AuthService,
-    private modalService: NgbModal
-    /* private sharedService: SharedService */
+    private modalService: NgbModal,
+    private mtrService: MtrDataService,
   ) {
     this.document = new Document();
     this.docSap = new DocSAP();
     this.proceso = false;
     this.procesoQt = false;
-    /* this.sharedService.sharedList.subscribe(message => this.list = message); */
+    this.cargarSN = false;
+    this.SalesEmp = new Array<Vendedor>();
   }
 
   ngOnInit() {
     const data = this.auth.getDataToken();
+    this.getVendedores(data);
     this.document.CardCode = data.CardCode;
     this.document.CardName = data.CardName;
+    this.cambiarSN = data.CambioSN === 'Y' ? true : false;
   }
   // Se ejecuta modal para cargar lista de cotizaciones
   LoadQuotations(dataQut: any) {
@@ -90,6 +98,7 @@ export class PedidoComponent implements OnInit {
       this.document = response.Header;
       let newDate = new Date(response.Header.DocDate);
       this.DateOrder = { year: newDate.getFullYear(), month: (newDate.getMonth() + 1), day: newDate.getDate() };
+      this.slpCodeSel = response.Header.SlpCode;
       // tslint:disable-next-line: forin
       for (let j in response.Detail) {
         response.Detail[j].DocEntry = result.DocEntry;
@@ -110,6 +119,7 @@ export class PedidoComponent implements OnInit {
     this.docSap.Header = this.document;
     this.docSap.Header.Status = 'I';
     this.docSap.Header.DocDate = `${this.DateOrder.year}-${this.DateOrder.month}-${this.DateOrder.day}`;
+    this.docSap.Header.SlpCode = this.slpCodeSel;
     this.docSap.Detail = this.rowDataOrder;
     if (form.invalid) {
       return;
@@ -141,12 +151,71 @@ export class PedidoComponent implements OnInit {
     this.rowDataOrder = $event;
   }
 
-  private valueDefault() {
+  valueDefault() {
     this.docSap.Header.Comments = '';
     this.docSap.Header.Reference = '';
     this.docSap.Header.DocDate = '';
-    this.DateOrder = null;
+    this.document.DocNum = 0;
+    this.document.DocEntry = 0;
+    this.document.CardCode = this.auth.getDataToken().CardCode;
+    this.document.CardName = this.auth.getDataToken().CardName;
+    this.DateOrder = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+    this.slpCodeSel = Number(this.auth.getDataToken().SlpCode);
     this.rowDataOrder = [];
   }
 
+  cancelQts() {
+    this.document = new Document();
+    this.document.CardCode = this.auth.getDataToken().CardCode;
+    this.document.CardName = this.auth.getDataToken().CardName;
+    this.DateOrder = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+    this.slpCodeSel = Number(this.auth.getDataToken().SlpCode);
+    this.rowDataOrder = [];
+  }
+
+  getSocios() {
+    this.cargarSN = true;
+    this.mtrService.getListBP(this.auth.getToken(), 4).subscribe(response => {
+      this.LoadBPs(response);
+      this.cargarSN = false;
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al cargar Socios de Negocios',
+        icon: 'error',
+        text: err.error
+      });
+      this.cargarSN = false;
+    });
+  }
+  // Abrimnos modal
+  LoadBPs(dataBP: any) {
+    const modalRef = this.modalService.open(ModalListaSNComponent,
+      {
+        scrollable: true,
+        windowClass: 'myCustomModalClass',
+        keyboard: false,
+        backdrop: 'static'
+      });
+    modalRef.componentInstance.fromParent = dataBP; // data;
+    modalRef.result.then((result) => {
+      if (!result) {
+      } else {
+        this.document.CardCode = result.CardCode;
+        this.document.CardName = result.CardName;
+      }
+    }, (reason) => {
+    });
+  }
+  getVendedores(data: any) {
+    this.mtrService.getSalesEmployee(this.auth.getToken()).subscribe(response => {
+      this.SalesEmp = response;
+      this.slpCodeSel = Number(data.SlpCode);
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al cargar vendedores',
+        icon: 'error',
+        text: err.error
+      });
+    });
+  }
 }

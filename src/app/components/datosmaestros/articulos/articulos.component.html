@@ -69,9 +69,6 @@
                                                 <select *ngIf="estadoFrm === 'N'" class="form-control" #ListNum="ngModel" id="ListNum" [(ngModel)]="header.ListNum" name="ListNum">
                                                     <option *ngFor="let l of opcionesList" [ngValue]="l.ListNum">{{l.ListName}}</option>
                                                 </select>
-                                                <!-- <div *ngIf="(UgpEntry.errors?.required) && UgpEntry.touched" class="invalid-feedback d-block">
-                                                    Este campo es requerido
-                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -82,17 +79,14 @@
                                         </div>
                                         <div class="col-sm-6 d-flex align-items-center justify-content-around">
                                             <div class="form-check form-check-inline">
-                                                <!-- <input class="form-check-input" type="checkbox" value="option1" checked="checked"> -->
                                                 <input id="InvntItem" name="InvntItem" #InvntItem="ngModel" [(ngModel)]="header.InvntItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.InvntItem}">
                                                 <label class="form-check-label" for="InvntItem">Inventario</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <!-- <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> -->
                                                 <input id="PrchseItem" name="PrchseItem" #PrchseItem="ngModel" [(ngModel)]="header.PrchseItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.PrchseItem}">
                                                 <label class="form-check-label" for="PrchseItem">Compra</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <!-- <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"> -->
                                                 <input id="SellItem" name="SellItem" #SellItem="ngModel" [(ngModel)]="header.SellItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.SellItem}">
                                                 <label class="form-check-label" for="SellItem">venta</label>
                                             </div>
@@ -101,34 +95,15 @@
                                     <div class="row justify-content-center">
                                         <div class="col-sm-5">
                                             <div class="form-check form-check-inline">
-                                                <!-- <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked="checked"> -->
                                                 <input id="WTLiable" name="WTLiable" #WTLiable="ngModel" [(ngModel)]="header.WTLiable" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.WTLiable}">
                                                 <label class="form-check-label" for="WTLiable">Retención de impuestos</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <!-- <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> -->
                                                 <input id="VATLiable" name="VATLiable" #VATLiable="ngModel" [(ngModel)]="header.VATLiable" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.VATLiable}">
                                                 <label class="form-check-label" for="VATLiable">Sujeto a impuesto</label>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <!-- <div class="custom-control custom-radio">
-                                                <input id="validForYes" type="radio" class="custom-control-input" [value]="true" name="validFor" #validFor="ngModel" [(ngModel)]="header.validFor" required>
-                                                <label class="custom-control-label" for="validForYes">Activo</label>
-                                            </div>
-
-                                            <div class="custom-control custom-radio">
-                                                <input id="validForNo" type="radio" class="custom-control-input" [value]="false" name="validFor" #validFor="ngModel" [(ngModel)]="header.validFor" required>
-                                                <label class="custom-control-label" for="validForNo">Incativo</label>
-                                            </div> -->
-                                            <!-- <div class="">
-                                                <input id="validForY" type="radio" class="custom-control-input" value="Y" name="validForY" ngModel required>
-                                                <label class="custom-control-label" for="validForY">Activo</label>
-                                            </div>
-                                            <div class="">
-                                                <input id="validForN" type="radio" class="custom-control-input" value="N" name="validForN" ngModel required>
-                                                <label class="custom-control-label" for="validForN">Inactivo</label>
-                                            </div> -->
                                         </div>
                                     </div>
                                     <hr>
@@ -167,40 +142,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-sm-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="card-icondetalle">
-                                                        <span style="font-size: 1em; color: white;"><i class="fas fa-warehouse"></i> Inventario</span>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="table-responsive-sm">
-                                                        <table class="table table-borderless">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col">Codigo</th>
-                                                                    <th scope="col">Nombre</th>
-                                                                    <th scope="col">Bloqueado</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>01</td>
-                                                                    <td>Almacén 1</td>
-                                                                    <td><input type="checkbox" checked="checked"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>02</td>
-                                                                    <td>Almacén 2</td>
-                                                                    <td><input type="checkbox" checked="checked"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                     <div class="row pt-4">
                                         <div class="col-sm-6 d-flex justify-content-end">

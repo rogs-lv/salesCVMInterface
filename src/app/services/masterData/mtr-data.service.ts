@@ -179,4 +179,17 @@ export class MtrDataService {
       })
     );
   }
+
+  getSalesEmployee(token: string) {
+    const header = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetEmpleadosVentas?type=1`;
+
+    return this.http.get(api, { headers: header }).pipe(
+      map( (response: any) => {
+          return response;
+      })
+    );
+  }
 }

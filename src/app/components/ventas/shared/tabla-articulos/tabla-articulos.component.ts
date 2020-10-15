@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 import { AgGridAngular, AgGridColumn } from 'ag-grid-angular';
 import Swal from 'sweetalert2';
+import { ToastService } from 'src/app/services/toasts/toast.service';
 
 import { Item } from 'src/app/models/masterData';
 import { SharedService } from 'src/app/services/shared/shared.service';
@@ -14,8 +15,8 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
   templateUrl: './tabla-articulos.component.html',
   styleUrls: ['./tabla-articulos.component.css']
 })
-export class TablaArticulosComponent implements OnInit {
-  @ViewChild('agGridC', {static: true}) agGridC: AgGridAngular;
+export class TablaArticulosComponent implements OnInit, OnDestroy {
+  @ViewChild('agGridC', {static: false}) agGridC: AgGridAngular;
   @Input() rowDataCot = [];
   @Output() rowDataCotEmit = new EventEmitter<any>();
 
@@ -35,7 +36,7 @@ export class TablaArticulosComponent implements OnInit {
       {headerName: 'Codigo', field: 'ItemCode', maxWidth: '150', minWidth: '50' },
       {headerName: 'Nombre', field: 'ItemName', maxWidth: '250', minWidth: '100' },
       {headerName: 'Cantidad', field: 'Quantity', maxWidth: '100', minWidth: '70', cellStyle: {textAlign: 'center'}, editable: true, type: 'numericColumn', valueSetter: this.cellValidate.bind(this)},
-      {headerName: 'Precio', field: 'Price', maxWidth: '150', minWidth: '110', cellStyle: {textAlign: 'center'}, cellRenderer: this.CurrencyCellRendererUSD, cellClass: 'grid-cell-centered' },
+      {headerName: 'Precio', field: 'Price', maxWidth: '150', minWidth: '110', cellStyle: {textAlign: 'center'}, cellRenderer: this.CurrencyCellRendererUSD, cellClass: 'grid-cell-centered', valueSetter: this.ValidPriceChange.bind(this), editable: this.EnableChangePrice() },
       {headerName: 'UM', field: 'SalUnitMsr', maxWidth: '50', minWidth: '70', cellStyle: {textAlign: 'center'}},
       {headerName: 'Almacén', field: 'WhsCode', maxWidth: '100', minWidth: '70', cellStyle: {textAlign: 'center'}, hide: true},
       {headerName: 'Cod. Impuesto', field: 'TaxCode', maxWidth: '130', minWidth: '100', cellStyle: {textAlign: 'center'}},
@@ -47,26 +48,58 @@ export class TablaArticulosComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     private auth: AuthService,
+    public toastService: ToastService
   ) {
+    const val = this.auth.getDataToken();
+    this.descuentoMax = Number(val.PDescuento);
     this.subscription = this.sharedService.sharedMessage.subscribe( response => {
       if (response !== null) {
        if (this.agGridC !== undefined) {
-         this.agGridC.api.applyTransaction({add: [ this.buildRows(response) ]});
-         this.getAllRows();
+          if (this.ExistItem(response.ItemCode) === false) {
+            this.agGridC.api.applyTransaction({add: [ this.buildRows(response) ]});
+            this.getAllRows();
+          } else {
+            const i = this.rowDataCot.findIndex(n => n.ItemCode === response.ItemCode);
+            this.rowDataCot[i].Quantity = this.rowDataCot[i].Quantity;
+            this.rowDataCot[i].Importe = this.importeFromOrder(this.rowDataCot[i]);
+            this.rowDataCot[i].Total = this.totalFromOrder(this.rowDataCot[i], this.rowDataCot[i].Importe);
+            this.rowDataCotEmit.emit(this.rowDataCot);
+            this.getAllRows();
+          }
        }
       }
     });
-    const val = this.auth.getDataToken();
-    this.descuentoMax = Number(val.PDescuento);
   }
 
   ngOnInit() {
+
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  onGridReady(params) {
+    this.agGridC = params.api;
+    // this.gridColumnApi = params.columnApi;
+  }
+  // Existe artículo en tabla
+  ExistItem(item: string): boolean {
+    let result = false;
+    this.agGridC.api.forEachNode(node => {
+      if (node.data.ItemCode === item) {
+        node.data.Quantity = node.data.Quantity + 1;
+        this.agGridC.api.applyTransaction({ update: [node.data]});
+        result = true;
+        return;
+      }
+    });
+    return result;
   }
   // construcción de registros
   private buildRows(data: Item) {
     const desc = (100 - 0) / 100;
     const PrConDesc = desc * data.Price;
-    const ImpoImpus = 0.16 * PrConDesc * 1;
+    const ImpoImpus = (data.Rate / 100) * PrConDesc * 1;
     const value = {
           DocEntry: 0,
           ItemCode: data.ItemCode,
@@ -77,6 +110,7 @@ export class TablaArticulosComponent implements OnInit {
           Discount: 0, // Number.parseFloat(inf.PDescuento),
           WhsCode: data.WhsCode,
           TaxCode: data.TaxCode,
+          Rate: data.Rate,
           Currency: '',
           Importe: ImpoImpus,
           Total: (PrConDesc + ImpoImpus)
@@ -106,7 +140,7 @@ export class TablaArticulosComponent implements OnInit {
   importeValueGetter(params: any) {
     const desc = (100 - Number.parseFloat(params.data.Discount)) / 100;
     const PrConDesc = desc * params.data.Price;
-    params.data.Importe = 0.16 * PrConDesc * params.data.Quantity;
+    params.data.Importe = (params.data.Rate / 100) * PrConDesc * params.data.Quantity;
     return params.data.Importe;
   }
   // Funcion para calcular el total de cada registro
@@ -121,6 +155,7 @@ export class TablaArticulosComponent implements OnInit {
     const regexp = /^[1-9]*(?:\.\d{1,2})?$/;
     let test = regexp.test(params.newValue);
     if (test === false) {
+      this.showDanger(`Debe ingresar una cantidad mayor a 0`);
       params.data.Quantity = Number(params.oldValue);
       return false;
     } else {
@@ -137,11 +172,13 @@ export class TablaArticulosComponent implements OnInit {
     const test = regexp.test(params.newValue);
     if (test === false) { // No es un número
       params.data.Discount = Number (params.oldValue);
+      this.showDanger(`Solo se permiten números mayores a 0`);
       return true;
     } else { // es un número
       const esMaximo = Number(params.newValue) > this.descuentoMax;
       if (esMaximo === true) { // supero el limite de descuento
         params.data.Discount = Number(params.oldValue);
+        this.showDanger(`El descuento máximo permitido es de: ${this.descuentoMax} %`);
         return true;
       } else { // No supero el limite de descuento
         params.data.Discount = Number(params.newValue);
@@ -151,6 +188,30 @@ export class TablaArticulosComponent implements OnInit {
         return true;
       }
     }
+  }
+  // Cambio de precio
+  ValidPriceChange(params: any) {
+    const regexp = /^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$/;
+    const ChangePrice = this.auth.getDataToken();
+    let test = regexp.test(params.newValue);
+    if (test === true) {
+      params.data.Price = Number(params.newValue);
+      params.data.Importe = this.importeValueGetter(params);
+      params.data.Total = this.totalValueGetter(params);
+      this.agGridC.api.applyTransaction({ update: [params.data]});
+      return true;
+    } else {
+      this.showDanger(`Debe ingresar una precio mayor a 0`);
+      return false;
+    }
+  }
+  // Habilitar cambio de precio
+  EnableChangePrice(): boolean {
+    const ChangePrice = this.auth.getDataToken();
+    if (ChangePrice.CambioPrecio === 'Y') {
+      return true;
+    }
+    return false;
   }
   // Detectamos el cambio en la celda de cantidad
   onCellValueChanged(event) {
@@ -209,13 +270,14 @@ export class TablaArticulosComponent implements OnInit {
         Discount: values[a].Discount,
         WhsCode: values[a].WhsCode,
         TaxCode: values[a].TaxCode,
+        Rate: values[a].Rate,
         Currency: values[a].Currency,
         Importe: importe,
         Total: total // (PrConDesc + ImpoImpus)
       };
       newArray.push(value);
     }
-    console.log(newArray);
+    // console.log(newArray);
     this.rowDataCot = newArray;
     this.rowDataCotEmit.emit(newArray); // notificamos al padre que se actualiza el contenido de las lineas, para que tambien contenga la columna total
     this.agGridC.api.applyTransaction({add: newArray });
@@ -225,7 +287,7 @@ export class TablaArticulosComponent implements OnInit {
   importeFromOrder(params: any) {
     const desc = (100 - Number.parseFloat(params.Discount)) / 100;
     const PrConDesc = desc * params.Price;
-    return  0.16 * PrConDesc * params.Quantity;
+    return  (params.Rate / 100) * PrConDesc * params.Quantity;
   }
 
   totalFromOrder(params: any, importe: number) {
@@ -234,4 +296,12 @@ export class TablaArticulosComponent implements OnInit {
     return (PrConDesc + importe);
   }
 
+  // Toast
+  showSuccess(mensaje: string) {
+    this.toastService.show(mensaje, { classname: 'bg-success text-light', delay: 5000 });
+  }
+
+  showDanger(mensaje: string) {
+    this.toastService.show(mensaje, { classname: 'bg-danger text-light', delay: 5000 });
+  }
 }

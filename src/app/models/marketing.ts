@@ -14,6 +14,7 @@ export class Document {
     Status: string;
     DocEntrySAP: number;
     DocNumSAP: number;
+    SlpCode: number;
 
     constructor() {
         this.DocEntry = 0;
@@ -26,6 +27,7 @@ export class Document {
         this.Status = '';
         this.DocEntrySAP = 0;
         this.DocNumSAP = 0;
+        this.SlpCode = 0;
     }
 }
 

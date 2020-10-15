@@ -24,7 +24,13 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label for="CardName">Nombre</label>
-                                                <input id="CardName" name="CardName" CardName [(ngModel)]="document.CardName" required type="text" class="form-control" placeholder="Nombre" [disabled]="true">
+                                                <div class="input-group">
+                                                    <input id="CardName" name="CardName" CardName [(ngModel)]="document.CardName" required type="text" class="form-control" placeholder="Nombre">
+                                                    <div class="input-group-append" *ngIf="cambiarSN && document.DocEntry === 0">
+                                                        <button class="btn btn-outline-secondary" *ngIf="!cargarSN" type="button" (click)="getSocios()"><span><i class="fas fa-users"></i></span></button>
+                                                        <button class="btn btn-outline-secondary" *ngIf="cargarSN" type="button"><span><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -43,7 +49,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="Reference">Referencia</label>
-                                                <input id="Reference" name="Reference" Reference [(ngModel)]="document.Reference" type="text" class="form-control" placeholder="Referencia" value="">
+                                                <input id="Reference" name="Reference" Reference [(ngModel)]="document.Reference" type="text" class="form-control" placeholder="Referencia" maxlength="11">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
@@ -61,17 +67,28 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2 btncenterrow">
-                                            <button class="btn btn-info" *ngIf="!procesoQt" (click)="getDataQuotation()"><span style="font-size: 1.5em;"><i class="fas fa-file-import"></i></span></button>
+                                            <button class="btn btn-info" *ngIf="!procesoQt" (click)="getDataQuotation()"><span style="font-size: 1.5em;"><i class="fas fa-file-import"></i></span><span class="badge badge-warning badge-pill" *ngIf="document.DocNum > 0" style = "font-size:  0.9em;">{{document.DocNum}}</span></button>
                                             <button class="btn btn-info" *ngIf="procesoQt"><span style="font-size: 1.5em;"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="SlpCode">Vendedor</label>
+                                                <select class="form-control" id="SlpCode" [(ngModel)]="slpCodeSel" name="slpCodeSel">
+                                                    <option *ngFor="let slp of SalesEmp" [ngValue]="slp.SlpCode">{{slp.SlpName}}</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <app-tabla-articulos [rowDataCot]="rowDataOrder" (rowDataCotEmit)="refreshData($event)" class="col-sm-12"></app-tabla-articulos>
                                     </div>
                                     <div class="row pt-4">
-                                        <div class="col-sm-6 d-flex justify-content-center">
+                                        <div class="col-sm-6 d-flex justify-content-end">
                                         </div>
                                         <div class="col-sm-6 d-flex justify-content-end">
+                                            <button class="btn btn-info mr-4" (click)="cancelQts()" *ngIf="document.DocEntry > 0"><span class="btnFomr"><i class="fas fa-file-excel"></i></span> Cancelar</button>
                                             <button class="btn btn-info" (click)="CreateOrder(formOrd)" *ngIf="!proceso" [disabled]="formOrd.invalid || rowDataOrder.length === 0"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span> Crear</button>
                                             <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                         </div>

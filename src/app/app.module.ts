@@ -30,6 +30,7 @@ import { EntregaPipe } from './pipes/entrega.pipe';
 import { ToastComponent } from './components/toast/toast.component';
 import { EstadosPipe } from './pipes/estados.pipe';
 import { ListaarticulosComponent } from './components/datosmaestros/shared/listaarticulos/listaarticulos.component';
+import { ModalListaSNComponent } from './components/ventas/shared/modal-lista-sn/modal-lista-sn.component';
 
 @NgModule({
   declarations: [
@@ -53,10 +54,12 @@ import { ListaarticulosComponent } from './components/datosmaestros/shared/lista
     EntregaPipe,
     ToastComponent,
     EstadosPipe,
-    ListaarticulosComponent
+    ListaarticulosComponent,
+    ModalListaSNComponent
   ],
-  entryComponents:[
-    ModalComponent
+  entryComponents: [
+    ModalComponent,
+    ModalListaSNComponent
   ],
   imports: [
     BrowserModule,

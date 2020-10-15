@@ -23,7 +23,13 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label for="CardName">Nombre</label>
-                                                <input id="CardName" name="CardName" CardName [(ngModel)]="document.CardName" required type="text" class="form-control" placeholder="Nombre" [disabled]="true">
+                                                <div class="input-group">
+                                                    <input id="CardName" name="CardName" CardName [(ngModel)]="document.CardName" required type="text" class="form-control" placeholder="Nombre">
+                                                    <div class="input-group-append" *ngIf="cambiarSN">
+                                                        <button class="btn btn-outline-secondary" *ngIf="!cargarSN" type="button" (click)="getSocios()"><span><i class="fas fa-users"></i></span></button>
+                                                        <button class="btn btn-outline-secondary" *ngIf="cargarSN" type="button"><span><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -53,14 +59,23 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
-                                                <label for="">Moneda</label>
+                                                <label for="Currency">Moneda</label>
                                                 <select class="form-control" id="Currency" [(ngModel)]="currencySel" name="currencySel">
                                                     <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="SlpCode">Vendedor</label>
+                                                <select class="form-control" id="SlpCode" [(ngModel)]="slpCodeSel" name="slpCodeSel">
+                                                    <option *ngFor="let slp of SalesEmp" [ngValue]="slp.SlpCode">{{slp.SlpName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <app-tabla-articulos [rowDataCot]="rowDataCot" (rowDataCotEmit)="refreshData($event)" class="col-sm-12"></app-tabla-articulos>
                                     </div>

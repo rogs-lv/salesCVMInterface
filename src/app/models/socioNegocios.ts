@@ -1,8 +1,10 @@
 export class BP {
     Header: SocioNegocios;
     TabDireccion: Array<Direcciones>;
+    TabContacto: Array<Contacto>;
     constructor() {
         this.TabDireccion = new Array<Direcciones>();
+        this.TabContacto = new Array<Contacto>();
     }
 }
 
@@ -14,6 +16,8 @@ export class SocioNegocios {
     LicTradNum: string;
     Currency: string;
     E_Mail: string;
+    Balance: number;
+    IntrntSite: string;
 }
 
 export class Direcciones {
@@ -30,4 +34,25 @@ export class Direcciones {
     constructor() {
         this.LineNum = -1;
     }
+}
+export class DocumentNumbering {
+    Series: number;
+    SeriesName: string;
+    NextNumber: number;
+    Code: string;
+    NumSize: number;
+}
+
+export class Contacto {
+    CntctCode: number;
+    Name: string;
+    FirstName: string;
+    Title: string;
+    MiddleName: string;
+    Position: string;
+    LastName: string;
+    Address: string;
+    Tel1: string;
+    Cellolar: string;
+    E_MailL: string;
 }

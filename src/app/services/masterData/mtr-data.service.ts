@@ -192,4 +192,30 @@ export class MtrDataService {
       })
     );
   }
+
+  getNumeracion(token: string, type: string, subtype: string) {
+    const header = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetDocumentNumbering?type=${type}&subtype=${subtype}`;
+
+    return this.http.get(api, { headers: header }).pipe(
+      map( (response: any) => {
+          return response;
+      })
+    );
+  }
+
+  getExiste(token: string, type: string, value: string) {
+    const header = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetExiste?type=${type}&value=${value}`;
+
+    return this.http.get(api, { headers: header }).pipe(
+      map( (response: any) => {
+          return response;
+      })
+    );
+  }
 }

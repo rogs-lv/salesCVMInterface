@@ -17,7 +17,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="CardCode">Código</label>
-                                                <input id="CardCode" name="CardCode" #CardCode="ngModel" [(ngModel)]="Partner.CardCode" type="text" class="form-control" placeholder="Código" maxlength="15" [disabled]="EstadoForm === 'E'" required [ngClass]="{ 'is-invalid': (CardCode.errors?.minlength || CardCode.errors?.required) && CardCode.touched }"
+                                                <input id="CardCode" name="CardCode" #CardCode="ngModel" [(ngModel)]="Partner.CardCode" type="text" class="form-control" placeholder="Código" maxlength="15" [disabled]="EstadoForm === 'E' || EstadoForm === 'N'" required [ngClass]="{ 'is-invalid': (CardCode.errors?.minlength || CardCode.errors?.required) && CardCode.touched }"
                                                     minlength="5">
                                                 <div *ngIf="(CardCode.errors?.required) && CardCode.touched" class="invalid-feedback d-block">
                                                     Este campo es requerido
@@ -38,8 +38,8 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="">Tipo</label>
-                                                <select class="form-control" #CardType="ngModel" id="CardType" [(ngModel)]="Partner.CardType" name="CardType" [ngClass]="{ 'is-invalid': (CardType.errors?.required) && CardType.touched }" required>
+                                                <label for="CardType">Tipo</label>
+                                                <select (change)="getNumeracion(Partner.CardType)" class="form-control" #CardType="ngModel" id="CardType" [(ngModel)]="Partner.CardType" name="CardType" [ngClass]="{ 'is-invalid': (CardType.errors?.required) && CardType.touched }" required>
                                                     <option *ngFor="let ty of CardTypes" [ngValue]="ty.Code">{{ty.Name}}</option>
                                                 </select>
                                                 <div *ngIf="(CardType.errors?.required) && CardType.touched" class="invalid-feedback d-block">
@@ -78,10 +78,30 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="IntrntSite">Sitio Web</label>
+                                                <input class="form-control" type="text" placeholder="Sitio Web" name="IntrntSite" [(ngModel)]="Partner.IntrntSite" #IntrntSite="ngModel">
+                                                <!-- <div *ngIf="IntrntSite.errors?.minlength" class="invalid-feedback d-block">
+                                                    Minimo {{ IntrntSite.errors.minlength.requiredLength}} caracteres
+                                                </div>
+                                                <div *ngIf="(IntrntSite.errors?.required) && IntrntSite.touched" class="invalid-feedback d-block">
+                                                    Este campo es requerido
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group mb-2">
+                                                <label for="Balance">Saldo</label>
+                                                <!-- <input class="form-control" type="text" placeholder="Saldo" name="Balance" value="" [(ngModel)]="Partner.Balance" #Balance="ngModel" readonly disabled> -->
+                                            </div>
+                                            <span>{{Partner.Balance | currency}}</span>
+                                        </div>
                                     </div>
                                     <hr>
                                     <div class="row mt-4">
                                         <div class="col-sm-6">
+                                            <!--Lista de direcciones-->
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="card-icondetalle">
@@ -114,93 +134,223 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!--Lista de contactos-->
+                                            <div class="card mt-5">
+                                                <div class="card-header">
+                                                    <div class="card-icondetalle">
+                                                        <span style="font-size: 1.2em; color: white;"><i class="fas fa-address-book"></i> Personas de Contacto</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="scroll">
+                                                        <div *ngFor="let f of PrsContacto; let j = index" class="w3-container w3-pale-blue w3-leftbar w3-border-blue mb-1">
+                                                            <div class="row">
+                                                                <div class="col-12" (click)="editarContacto(f)">
+                                                                    <p class="pf">{{f.Name}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="Address">Id de Dirección</label>
-                                                        <input id="Address" name="Address" Address [(ngModel)]="Direccion.Address" type="text" class="form-control" placeholder="Direccion" [disabled]="EstadoDir == 'E'">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <div class="form-group">
-                                                            <label for="AdresType">Tipo</label>
-                                                            <select class="form-control" id="AdresType" [(ngModel)]="Direccion.AdresType" name="AdresType" [disabled]="EstadoDir == 'E'">
+                                            <!--Tabs-->
+                                            <ul class="nav nav-tabs" id="TabSocio" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" style="color:#025F74" id="Direcciones-tab" data-toggle="tab" href="#Direcciones" role="tab" aria-controls="Direcciones" aria-selected="true">Direcciones</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" style="color:#025F74" id="Contacto-tab" data-toggle="tab" href="#Contacto" role="tab" aria-controls="Contacto" aria-selected="false">Contactos</a>
+                                                </li>
+                                            </ul>
+                                            <!--Tabs content-->
+                                            <div class="tab-content" id="TabContentSocio">
+                                                <!--Tab de direcciones-->
+                                                <div class="tab-pane fade show active" id="Direcciones" role="tabpanel" aria-labelledby="Direcciones-tab">
+                                                    <!--Formulario de direcciones-->
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Address">Id de Dirección</label>
+                                                                    <input id="Address" name="Address" Address [(ngModel)]="Direccion.Address" type="text" class="form-control" placeholder="Direccion" [disabled]="EstadoDir == 'E'">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <div class="form-group">
+                                                                        <label for="AdresType">Tipo</label>
+                                                                        <select class="form-control" id="AdresType" [(ngModel)]="Direccion.AdresType" name="AdresType" [disabled]="EstadoDir == 'E'">
                                                                 <option *ngFor="let at of AdresTypes" [ngValue]="at.Code">{{at.Name}}</option>
                                                             </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="State">Estado</label>
-                                                        <select class="form-control" id="State" [(ngModel)]="Direccion.State" name="State">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="State">Estado</label>
+                                                                    <select class="form-control" id="State" [(ngModel)]="Direccion.State" name="State">
                                                             <option *ngFor="let s of States | FilterStates: Direccion.Country" [ngValue]="s.Code">{{s.Name}}</option>
                                                         </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="Country">País</label>
-                                                    <select class="form-control" id="Country" [(ngModel)]="Direccion.Country" name="Country">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="Country">País</label>
+                                                                <select class="form-control" id="Country" [(ngModel)]="Direccion.Country" name="Country">
                                                         <option *ngFor="let c of Countrys" [ngValue]="c.Code">{{c.Name}}</option>
                                                     </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="Street">Calle</label>
-                                                        <input id="Street" name="Street" Street [(ngModel)]="Direccion.Street" type="text" class="form-control" placeholder="Calle">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="County">Municipio</label>
-                                                        <input id="County" name="County" County [(ngModel)]="Direccion.County" type="text" class="form-control" placeholder="Municipio">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="StreetNo">Num Ext</label>
-                                                        <input id="StreetNo" name="StreetNo" StreetNo [(ngModel)]="Direccion.StreetNo" type="text" class="form-control" placeholder="número">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="Block">Colonia</label>
-                                                        <input id="Block" name="Block" Block [(ngModel)]="Direccion.Block" type="text" class="form-control" placeholder="Colonia">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="form-group">
-                                                        <label for="ZipCode">CP</label>
-                                                        <input id="ZipCode" name="ZipCode" ZipCode [(ngModel)]="Direccion.ZipCode" type="text" class="form-control" placeholder="Código Postal">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 text-center p-2">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <div *ngIf="EstadoDir == 'E'">
-                                                        <div class="form-group d-flex justify-content-between">
-                                                            <button *ngIf="EstadoDir == 'E'" class="btn btn-info" [disabled]="!Direccion.Address" (click)="actualizarDireccion(Direccion, Direccion.AdresType)"><span><i class="fas fa-sync-alt"></i></span> Direccion</button>
-                                                            <button *ngIf="EstadoDir == 'E'" class="btn btn-info" [disabled]="!Direccion.Address" (click)="cancelActDireccion()"><span><i class="fas fa-window-close"></i></span> Direccion</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Street">Calle</label>
+                                                                    <input id="Street" name="Street" Street [(ngModel)]="Direccion.Street" type="text" class="form-control" placeholder="Calle">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="County">Municipio</label>
+                                                                    <input id="County" name="County" County [(ngModel)]="Direccion.County" type="text" class="form-control" placeholder="Municipio">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="StreetNo">Num Ext</label>
+                                                                    <input id="StreetNo" name="StreetNo" StreetNo [(ngModel)]="Direccion.StreetNo" type="text" class="form-control" placeholder="número">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Block">Colonia</label>
+                                                                    <input id="Block" name="Block" Block [(ngModel)]="Direccion.Block" type="text" class="form-control" placeholder="Colonia">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="ZipCode">CP</label>
+                                                                    <input id="ZipCode" name="ZipCode" ZipCode [(ngModel)]="Direccion.ZipCode" type="text" class="form-control" placeholder="Código Postal">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 text-center p-2">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2">
+                                                            </div>
+                                                            <div class="col-sm-10">
+                                                                <div *ngIf="EstadoDir == 'E'">
+                                                                    <div class="form-group d-flex justify-content-between">
+                                                                        <button *ngIf="EstadoDir == 'E'" class="btn btn-info" [disabled]="!Direccion.Address" (click)="actualizarDireccion(Direccion, Direccion.AdresType)"><span><i class="fas fa-sync-alt"></i></span> Direccion</button>
+                                                                        <button *ngIf="EstadoDir == 'E'" class="btn btn-info" [disabled]="!Direccion.Address" (click)="cancelActDireccion()"><span><i class="fas fa-window-close"></i></span> Direccion</button>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="EstadoDir == 'N'">
+                                                                    <div class="form-group d-flex justify-content-end">
+                                                                        <button *ngIf="EstadoDir == 'N'" class="btn btn-info" [disabled]="!Direccion.Address || !Partner.CardCode || !Direccion.AdresType" (click)="nuevaDireccion(Direccion, Direccion.AdresType)"><span style="font-size: 1.3em;"><i class="fas fa-plus-circle"></i></span> Dirección</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div *ngIf="EstadoDir == 'N'">
-                                                        <div class="form-group d-flex justify-content-end">
-                                                            <button *ngIf="EstadoDir == 'N'" class="btn btn-info" [disabled]="!Direccion.Address || !Partner.CardCode || !Direccion.AdresType" (click)="nuevaDireccion(Direccion, Direccion.AdresType)"><span style="font-size: 1.3em;"><i class="fas fa-plus-circle"></i></span> Dirección</button>
+                                                </div>
+                                                <!--Tab de contactos-->
+                                                <div class="tab-pane fade" id="Contacto" role="tabpanel" aria-labelledby="Contacto-tab">
+                                                    <!--Formulario de contactos-->
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Name">ID de contacto</label>
+                                                                    <input id="Name" name="Name" Name [(ngModel)]="Contacto.Name" type="text" class="form-control" placeholder="ID de Contacto" [disabled]="EstadoCnt == 'E'">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="FirstName">Nombre</label>
+                                                                    <input id="FirstName" name="FirstName" FirstName [(ngModel)]="Contacto.FirstName" type="text" class="form-control" placeholder="Nombre">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Title">Título</label>
+                                                                    <input id="Title" name="Title" Title [(ngModel)]="Contacto.Title" type="text" class="form-control" placeholder="Título">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="MiddleName">Segundo Nombre</label>
+                                                                    <input id="MiddleName" name="MiddleName" MiddleName [(ngModel)]="Contacto.MiddleName" type="text" class="form-control" placeholder="Segundo Nombre">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Position">Posición</label>
+                                                                    <input id="Position" name="Position" Position [(ngModel)]="Contacto.Position" type="text" class="form-control" placeholder="Posición">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="LastName">Apellido</label>
+                                                                    <input id="LastName" name="LastName" LastName [(ngModel)]="Contacto.LastName" type="text" class="form-control" placeholder="Apellido">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="AddressC">Dirección</label>
+                                                                    <input id="AddressC" name="AddressC" AddressC [(ngModel)]="Contacto.Address" type="text" class="form-control" placeholder="Dirección">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Tel1">Teléfono</label>
+                                                                    <input id="Tel1" name="Tel1" Tel1 [(ngModel)]="Contacto.Tel1" type="text" class="form-control" placeholder="Teléfono">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Cellolar">Celular</label>
+                                                                    <input id="Cellolar" name="Cellolar" Cellolar [(ngModel)]="Contacto.Cellolar" type="text" class="form-control" placeholder="Celular">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="E_MailL">Email</label>
+                                                                    <input id="E_MailL" name="E_MailL" E_MailL [(ngModel)]="Contacto.E_MailL" type="text" class="form-control" placeholder="Email">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-2">
+                                                            </div>
+                                                            <div class="col-sm-10">
+                                                                <div *ngIf="EstadoCnt == 'E'">
+                                                                    <div class="form-group d-flex justify-content-between">
+                                                                        <button *ngIf="EstadoCnt == 'E'" class="btn btn-info" [disabled]="!Contacto.Name" (click)="actualizarCnt(Contacto)"><span><i class="fas fa-sync-alt"></i></span> Contacto</button>
+                                                                        <button *ngIf="EstadoCnt == 'E'" class="btn btn-info" [disabled]="!Contacto.Name" (click)="cancelActCnt()"><span><i class="fas fa-window-close"></i></span> Contacto</button>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="EstadoCnt == 'N'">
+                                                                    <div class="form-group d-flex justify-content-end">
+                                                                        <button *ngIf="EstadoCnt == 'N'" class="btn btn-info" [disabled]="!Contacto.Name || !Partner.CardCode" (click)="nuevoCnt(Contacto)"><span style="font-size: 1.3em;"><i class="fas fa-plus-circle"></i></span> Contacto</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -213,11 +363,11 @@
                                         <div class="col-sm-6">
                                             <div *ngIf="EstadoForm === 'E'" [ngClass]="{'d-flex' : true , 'justify-content-between' : (EstadoForm === 'E' && !proceso), 'justify-content-end' : (EstadoForm === 'E'  && proceso)}">
                                                 <button *ngIf="EstadoForm === 'E' && !proceso" class="btn btn-info" (click)="CancelarEdicionSocio()"><span class="btnFomr"><i class="fas fa-user-slash"></i></span> Cancelar</button>
-                                                <button *ngIf="EstadoForm === 'E' && !proceso" [disabled]="frmSocio.invalid" class="btn btn-info" (click)="ActualizarSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-check"></i></span> Actualizar Socio</button>
+                                                <button *ngIf="EstadoForm === 'E' && !proceso" [disabled]="frmSocio.invalid" class="btn btn-info" (click)="ActualizarSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt, PrsContacto)"><span class="btnFomr"><i class="fas fa-user-check"></i></span> Actualizar Socio</button>
                                                 <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                             <div *ngIf="EstadoForm === 'N'" class=" d-flex justify-content-end">
-                                                <button *ngIf="(EstadoForm === 'N' && !proceso)" [disabled]="frmSocio.invalid" class="btn btn-info" (click)="CrearSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt)"><span class="btnFomr"><i class="fas fa-user-plus"></i></span> Crear Socio</button>
+                                                <button *ngIf="(EstadoForm === 'N' && !proceso)" [disabled]="frmSocio.invalid" class="btn btn-info" (click)="CrearSocio(frmSocio, Partner, DireccionesFac, DireccionesEnt, PrsContacto)"><span class="btnFomr"><i class="fas fa-user-plus"></i></span> Crear Socio</button>
                                                 <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                         </div>

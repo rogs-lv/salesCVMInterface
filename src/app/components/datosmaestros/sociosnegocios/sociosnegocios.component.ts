@@ -6,7 +6,7 @@ import { AuthService } from '../../../services/authentication/auth.service';
 
 import { MtrDataService } from '../../../services/masterData/mtr-data.service';
 import Swal from 'sweetalert2';
-import { BP, Direcciones, SocioNegocios } from 'src/app/models/socioNegocios';
+import { BP, Contacto, Direcciones, SocioNegocios } from 'src/app/models/socioNegocios';
 import { ToastService } from 'src/app/services/toasts/toast.service';
 import { ListasociosComponent } from '../shared/listasocios/listasocios.component';
 
@@ -18,7 +18,7 @@ import { ListasociosComponent } from '../shared/listasocios/listasocios.componen
 })
 export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('agGrid', {static: true}) agGrid: AgGridAngular;
-  @ViewChild(ListasociosComponent, {static: false}) childList: ListasociosComponent;
+  @ViewChild(ListasociosComponent, {static: true}) childList: ListasociosComponent;
 
   Partner: SocioNegocios;
   Series: Array<string> = ['Manual'];
@@ -31,8 +31,11 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   DireccionesFac: Array<Direcciones>;
   DireccionesEnt: Array<Direcciones>;
   Direccion: Direcciones;
+  PrsContacto: Array<Contacto>;
+  Contacto: Contacto;
   EstadoForm = 'N';
   EstadoDir = 'N';
+  EstadoCnt = 'N';
   proceso: boolean;
 
   constructor(
@@ -45,6 +48,8 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.DireccionesFac = new Array<Direcciones>();
     this.DireccionesEnt = new Array<Direcciones>();
     this.Direccion = new Direcciones();
+    this.PrsContacto = new Array<Contacto>();
+    this.Contacto = new Contacto();
     this.proceso = false;
   }
 
@@ -62,7 +67,9 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     value.Series = this.Series[0];
     this.Partner = value;
     this.Direccion = new Direcciones();
+    this.Contacto = new Contacto();
     this.getDireccionesSocio(this.Partner.CardCode);
+    this.getContactosSocio(this.Partner.CardCode);
   }
 
   getDireccionesSocio(cardcode: string) {
@@ -74,6 +81,18 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
         this.DireccionesFac = this.filtrarDirecciones('B', response);
         this.DireccionesEnt = this.filtrarDirecciones('S', response);
       }
+    }, (err) => {
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: err.status === 0 ? 'Error al obtener dirección del socio de negocios' : err.error
+      });
+    });
+  }
+  getContactosSocio(cardcode: string) {
+    this.PrsContacto = [];
+    this.mkService.getInformacionSocio(this.auth.getToken(), 5, cardcode).subscribe(response => {
+      this.PrsContacto = response;
     }, (err) => {
       Swal.fire({
         title: 'Error',
@@ -106,18 +125,37 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
       });
     });
   }
+  getNumeracion(subtype: string) {
+    if (this.EstadoForm === 'E') {
+      return;
+    }
+    if (subtype === '') {
+      return;
+    } else {
+      this.mkService.getNumeracion(this.auth.getToken(), '2', subtype).subscribe(response => {
+        if (response !== null) {
+          this.Partner.Serie = response.Series;
+          this.Partner.CardCode = response.Code;
+        }
+      }, (err) => {
+        Swal.fire({
+          title: 'Error',
+          icon: 'error',
+          text: err.status === 0 ? 'Error al obtener la numeración para socio de negocios' : err.error
+        });
+      });
+    }
+  }
 
   editarDireccion(value: Direcciones) {
     this.EstadoDir = 'E';
     this.Direccion = value;
   }
-
+  editarContacto(value: Contacto) {
+    this.EstadoCnt = 'E';
+    this.Contacto = value;
+  }
   actualizarDireccion(value: Direcciones, tipo: string) {
-    /* this.EstadoDir = 'N';
-    let index = this.Direcciones.findIndex(el => el.Address === value.Address);
-    this.Direcciones.splice(index, 1, value);
-    this.Direccion = new Direcciones();
-    this.showSuccess('Dirección actualizada'); */
     if (tipo === 'B') {
       let index = this.DireccionesFac.findIndex(el => el.Address === value.Address);
       this.DireccionesFac.splice(index, 1, value);
@@ -133,14 +171,27 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  actualizarCnt(value: Contacto) {
+    let index = this.PrsContacto.findIndex(el => el.Address === value.Address);
+    this.PrsContacto.splice(index, 1, value);
+    this.Contacto = new Contacto();
+    this.showSuccess('Contacto actualizado');
+    this.EstadoCnt = 'N';
+  }
+
   cancelActDireccion() {
     this.EstadoDir = 'N';
     this.Direccion = new Direcciones();
   }
 
+  cancelActCnt() {
+    this.EstadoCnt = 'N';
+    this.Contacto = new Contacto();
+  }
+
   nuevaDireccion(value: Direcciones, tipo: string) {
     if (value.Address === null || value.Address === '') {
-      this.showDanger('Debe ingresar almenos un nombre');
+      this.showDanger('Debe ingresar al menos un nombre');
       return false;
     }
     if (tipo === 'B') {
@@ -164,9 +215,24 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
       this.showSuccess('Dirección agregada');
       this.Direccion = new Direcciones();
     }
-    // this.Direcciones = this.Direcciones.concat([value]);
-    // this.Direcciones.push(value);
   }
+
+  nuevoCnt(value: Contacto) {
+    if (value.Name === null || value.Name === '') {
+      this.showDanger('Debe ingresar al menos un nombre');
+      return false;
+    }
+    for (const key in this.PrsContacto) {
+      if (this.PrsContacto[key].Name === value.Name) {
+        this.showDanger('El Id del contacto ya existe');
+        return false;
+      }
+    }
+    this.PrsContacto.push(value);
+    this.showSuccess('Contacto agregado');
+    this.Contacto = new Contacto();
+  }
+
   eliminarDireccion(tipo: string, index: number) {
     if (tipo === 'B') {
       this.DireccionesFac.splice(index, 1);
@@ -186,6 +252,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.EstadoForm = 'N';
   }
   CancelarEdicionSocio() {
+    console.log('cancelar', this.Partner.CardType);
     this.EstadoForm = 'N';
     this.EstadoDir = 'N';
     this.Partner = new SocioNegocios();
@@ -193,7 +260,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.DireccionesFac = new Array<Direcciones>();
     this.DireccionesEnt = new Array<Direcciones>();
   }
-  ActualizarSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>) {
+  ActualizarSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>, Cnts: Array<Contacto>) {
 
     if (frm.invalid) {
       Swal.fire({
@@ -206,6 +273,8 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
 
     this.proceso = true;
     this.BusnessP.Header = header;
+    this.BusnessP.TabContacto = [];
+    this.BusnessP.TabDireccion = [];
     // tslint:disable-next-line: forin
     for (const key in DirF) {
        this.BusnessP.TabDireccion.push(DirF[key]);
@@ -214,6 +283,11 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     for (const key in DirE) {
       this.BusnessP.TabDireccion.push(DirE[key]);
     }
+    // tslint:disable-next-line: forin
+    for (const key  in Cnts) {
+      this.BusnessP.TabContacto.push(Cnts[key]);
+    }
+
     this.mkService.updateBP(this.auth.getToken(), this.BusnessP, this.auth.getDataToken().Code).subscribe(response => {
 
       Swal.fire({
@@ -235,7 +309,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  CrearSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>) {
+  CrearSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>, Cnts: Array<Contacto>) {
 
     if (frm.invalid) {
       Swal.fire({
@@ -248,6 +322,8 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
 
     this.proceso = true;
     this.BusnessP.Header = header;
+    this.BusnessP.TabContacto = [];
+    this.BusnessP.TabDireccion = [];
     // tslint:disable-next-line: forin
     for (const key in DirF) {
        this.BusnessP.TabDireccion.push(DirF[key]);
@@ -256,6 +332,11 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     for (const key in DirE) {
       this.BusnessP.TabDireccion.push(DirE[key]);
     }
+    // tslint:disable-next-line: forin
+    for (const key in Cnts) {
+      this.BusnessP.TabContacto.push(Cnts[key]);
+    }
+
     this.mkService.createBP(this.auth.getToken(), this.BusnessP, this.auth.getDataToken().Code).subscribe(response => {
       console.log('Creacion', response);
       Swal.fire({
@@ -284,16 +365,19 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.DireccionesFac = new Array<Direcciones>();
     this.DireccionesEnt = new Array<Direcciones>();
     this.Direccion = new Direcciones();
+    this.PrsContacto = new Array<Contacto>();
+    this.Contacto = new Contacto();
     this.EstadoForm = 'N';
     this.EstadoDir = 'N';
+    this.EstadoCnt = 'N';
     /* this.States = [];
     this.Countrys = []; */
   }
   showSuccess(mensaje: string) {
-    this.toastService.show(mensaje, { classname: 'bg-success text-light', delay: 10000 });
+    this.toastService.show(mensaje, { classname: 'bg-success text-light', delay: 7000 });
   }
 
   showDanger(mensaje: string) {
-    this.toastService.show(mensaje, { classname: 'bg-danger text-light', delay: 10000 });
+    this.toastService.show(mensaje, { classname: 'bg-danger text-light', delay: 7000 });
   }
 }

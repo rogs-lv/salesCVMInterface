@@ -17,6 +17,7 @@ export class Articulo {
     VATLiable: boolean;
     validFor: boolean;
     CodeBars: string;
+    PicturName: string;
 
     constructor() {
         this.ItemCode = '';
@@ -32,6 +33,7 @@ export class Articulo {
         this.VATLiable = false;
         this.validFor = null;
         this.CodeBars = '';
+        this.PicturName = '';
     }
 }
 
@@ -39,6 +41,16 @@ export class Propiedad {
     ItmsTypCod: number;
     ItmsGrpNam: string;
     Status: boolean;
+}
+
+export class Inventario {
+    WhsCode: string;
+    WhsName: string;
+    Locked: string;
+    OnHand: number;
+    IsCommited: number;
+    OnOrder: number;
+    Disponible: number;
 }
 
 export class PriceList {
@@ -60,4 +72,16 @@ export class UoM {
 export class GrupoArticulos {
     ItmsGrpCod: number;
     ItmsGrpNam: string;
+}
+
+export class Permiso {
+    Read: string;
+    Write: string;
+    Edit: string;
+
+    constructor() {
+        this.Read = 'Y';
+        this.Write = 'N';
+        this.Edit = 'N';
+    }
 }

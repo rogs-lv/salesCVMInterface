@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 
-import { Articulo, DocArticulo, GrupoArticulos, PriceList, Propiedad, UoM } from 'src/app/models/articulo';
+import { Articulo, DocArticulo, GrupoArticulos, Inventario, Permiso, PriceList, Propiedad, UoM } from 'src/app/models/articulo';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { MtrDataService } from 'src/app/services/masterData/mtr-data.service';
 import Swal from 'sweetalert2';
@@ -15,7 +15,8 @@ import { ListaarticulosComponent } from '../shared/listaarticulos/listaarticulos
 export class ArticulosComponent implements OnInit {
   @ViewChild(ListaarticulosComponent, {static: false}) childList: ListaarticulosComponent;
   header: Articulo;
-  tabProp: Array<Propiedad>;
+  // tabProp: Array<Propiedad>;
+  tabInve: Array<Inventario>;
 
   opcionesGrp: Array<GrupoArticulos>;
   opcionesUoM: Array<UoM>;
@@ -23,6 +24,8 @@ export class ArticulosComponent implements OnInit {
 
   estadoFrm = 'N';
   proceso = false;
+  permisos: Permiso;
+  imgFile: string;
 
   constructor(
     private auth: AuthService,
@@ -30,28 +33,33 @@ export class ArticulosComponent implements OnInit {
   ) {
     // this.document = new DocArticulo();
     this.header = new Articulo();
-    this.tabProp = new Array<Propiedad>();
+    // this.tabProp = new Array<Propiedad>();
+    this.tabInve = new Array<Inventario>();
     this.opcionesGrp = new Array<GrupoArticulos>();
     this.opcionesUoM = new Array<UoM>();
     this.opcionesList = new Array<PriceList>();
+    this.permisos = new Permiso();
+    this.imgFile = '';
   }
 
   ngOnInit() {
     this.getOpciones();
     this.getPrecios(1, '', 0);
-    this.tabProp = this.buildProp([]);
+    // this.tabProp = this.buildProp([]);
   }
 
   lisenArticulo(value: any) {
     this.estadoFrm = 'E';
     this.header = value;
-    this.tabProp = new Array<Propiedad>();
-    this.createProps(value);
+    // this.tabProp = new Array<Propiedad>();
+    // this.createProps(value);
+    this.getInventario(value);
+    this.getImageFolder(value);
   }
 
   createProps(value: Articulo) {
     this.mdService.getDTItems(this.auth.getToken(), 2, value.ItemCode).subscribe(response => {
-      this.tabProp = this.buildProp(response);
+      // this.tabProp = this.buildProp(response);
     }, (err) => {
       Swal.fire({
         title: 'Error',
@@ -61,6 +69,31 @@ export class ArticulosComponent implements OnInit {
     });
   }
 
+  getInventario(value: Articulo) {
+    this.mdService.getDTItems(this.auth.getToken(), 3, value.ItemCode).subscribe(response => {
+      this.tabInve = response;
+    }, (err) => {
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: err.status === 0 ? 'No se cargargo el inventario para el artículo' : err.error
+      });
+    });
+  }
+
+  getImageFolder(value: Articulo) {
+    if (value.PicturName !== '') {
+      this.mdService.getImage(this.auth.getToken(), value.PicturName).subscribe(response => {
+        this.imgFile = response;
+      }, (err) => {
+        Swal.fire({
+          title: 'Error',
+          icon: 'error',
+          text: err.status === 0 ? 'Error al cargar imagen' : err.error
+        });
+      });
+    }
+  }
   buildProp(propSap: Array<Propiedad>) {
     const newArray = [];
     for (let index = 0; index < 64; index++) {
@@ -106,7 +139,7 @@ export class ArticulosComponent implements OnInit {
   CancelarEdicionArticulo(frmArt: NgForm) {
     this.estadoFrm = 'N';
     this.header = new Articulo();
-    this.tabProp = this.buildProp([]);
+    // this.tabProp = this.buildProp([]);
     frmArt.resetForm();
   }
 
@@ -174,7 +207,7 @@ export class ArticulosComponent implements OnInit {
 
   valueDefault() {
     this.estadoFrm = 'N';
-    this.tabProp = new Array<Propiedad>();
-    this.tabProp = this.buildProp([]);
+    /* this.tabProp = new Array<Propiedad>();
+    this.tabProp = this.buildProp([]); */
   }
 }

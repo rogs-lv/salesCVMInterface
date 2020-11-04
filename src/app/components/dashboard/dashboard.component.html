@@ -66,6 +66,46 @@
                     </div>
                 </div>
             </div>
+            <div class="card bxcard mt-5">
+                <div class="card-body">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-file"></i> Cotizaciones</span>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div *ngIf="DtsCotizaciones.length === 0" class="d-flex justify-content-center">
+                            <span style="color: tomato;"><i class="fas fa-bullhorn"></i> No hay cotizaciones abiertas</span>
+                        </div>
+                        <div *ngIf="DtsCotizaciones.length > 0" class="megaTras">
+                            <table class='headerTras'>
+                                <tr>
+                                    <td class="colTH6 letrasTabla">#</td>
+                                    <td class="colTH5 letrasTabla">Documento</td>
+                                    <td class="colTH5 letrasTabla">Codigo Cliente</td>
+                                    <td class="colTH2 letrasTabla">Nombre Cliente</td>
+                                    <td class="colTH3 letrasTabla">Fecha Documento</td>
+                                    <td class="colTH2 letrasTabla">Referencia</td>
+                                    <td class="colTH2 letrasTabla">Comentario</td>
+                                </tr>
+                            </table>
+                            <table style="width:100%; margin-top:45px;">
+                                <tbody>
+                                    <tr *ngFor="let inv of DtsCotizaciones; let i = index">
+                                        <td class="colTT6">{{i + 1}}</td>
+                                        <td class="colTT5">{{inv.DocNum}}</td>
+                                        <td class="colTT5">{{inv.CardCode}}</td>
+                                        <td class="colTT2">{{inv.CardName}}</td>
+                                        <td class="colTT3">{{inv.TaxDate | date}}</td>
+                                        <td class="colTT2">{{inv.Reference}}</td>
+                                        <td class="colTT2">{{inv.Comments}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- <app-toast aria-live="polite" aria-atomic="true"></app-toast> -->
     </div>

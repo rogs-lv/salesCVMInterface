@@ -76,6 +76,18 @@ export class MtrDataService {
     );
   }
 
+  getPagos(token: string, accion: number) {
+    const headersDs = new HttpHeaders()
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetPagos?accion=${accion}&cardcode=''`;
+
+    return this.http.get(api, { headers: headersDs }).pipe(
+      map( (response: any) => {
+          return response;
+      })
+    );
+  }
+
   createBP(token: string, documento: BP, usuario: string) {
     const headersMk = new HttpHeaders()
     .set('Content-Type', 'application/json')
@@ -114,6 +126,18 @@ export class MtrDataService {
     const headersItem = new HttpHeaders()
     .set('Authorization', token);
     const api = `${this.endpoint}salesCVM/MasterData/GetItems?type=${type}&itemcode=${itemcode}`;
+
+    return this.http.get(api, { headers: headersItem }).pipe(
+      map( (response: any) => {
+          return response;
+      })
+    );
+  }
+
+  getImage(token: string, PictureName: string) {
+    const headersItem = new HttpHeaders()
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetImage?PictureName=${PictureName}`;
 
     return this.http.get(api, { headers: headersItem }).pipe(
       map( (response: any) => {
@@ -185,6 +209,18 @@ export class MtrDataService {
     .set('Content-Type', 'application/json')
     .set('Authorization', token);
     const api = `${this.endpoint}salesCVM/MasterData/GetEmpleadosVentas?type=1`;
+
+    return this.http.get(api, { headers: header }).pipe(
+      map( (response: any) => {
+          return response;
+      })
+    );
+  }
+  getPersonasDir(token: string, cardCode: string) {
+    const header = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/MasterData/GetPersonaContacto?type=2&cardcode=${cardCode}`;
 
     return this.http.get(api, { headers: header }).pipe(
       map( (response: any) => {

@@ -11,7 +11,7 @@ import { AuthService } from '../../../services/authentication/auth.service';
 import { TablaArticulosComponent } from '../shared/tabla-articulos/tabla-articulos.component';
 import { MtrDataService } from 'src/app/services/masterData/mtr-data.service';
 import { ModalListaSNComponent } from '../shared/modal-lista-sn/modal-lista-sn.component';
-import { Vendedor } from 'src/app/models/masterData';
+import { ContactPerson, DireccionEntrega, Vendedor } from 'src/app/models/masterData';
 
 @Component({
   selector: 'app-pedido',
@@ -28,6 +28,7 @@ export class PedidoComponent implements OnInit {
   docSap: DocSAP;
   rowDataOrder = [];
   DateOrder: NgbDateStruct = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+  TaxDate: NgbDateStruct = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
   minDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
   closeResult: string;
   list: any;
@@ -35,6 +36,9 @@ export class PedidoComponent implements OnInit {
   cargarSN: boolean;
   slpCodeSel: number;
   SalesEmp: Array<Vendedor>;
+  prsContacto: Array<ContactPerson>;
+  dirsEntrega: Array<DireccionEntrega>;
+  dirComplet = '';
 
   constructor(
     private mktServices: MktService,
@@ -48,6 +52,8 @@ export class PedidoComponent implements OnInit {
     this.procesoQt = false;
     this.cargarSN = false;
     this.SalesEmp = new Array<Vendedor>();
+    this.prsContacto = new Array<ContactPerson>();
+    this.dirsEntrega = new Array<DireccionEntrega>();
   }
 
   ngOnInit() {
@@ -56,7 +62,9 @@ export class PedidoComponent implements OnInit {
     this.document.CardCode = data.CardCode;
     this.document.CardName = data.CardName;
     this.cambiarSN = data.CambioSN === 'Y' ? true : false;
+    this.getPersonasDirs(data.CardCode);
   }
+
   // Se ejecuta modal para cargar lista de cotizaciones
   LoadQuotations(dataQut: any) {
     const modalRef = this.modalService.open(ModalComponent,
@@ -96,8 +104,11 @@ export class PedidoComponent implements OnInit {
   getQuotationSAP(result: Document) {
     this.mktServices.getDocumentSAP(this.auth.getToken(), result.DocEntry).subscribe(response => {
       this.document = response.Header;
+      this.dirCompleta(this.document.ShipToCode);
       let newDate = new Date(response.Header.DocDate);
       this.DateOrder = { year: newDate.getFullYear(), month: (newDate.getMonth() + 1), day: newDate.getDate() };
+      let newTaxDate = new Date(response.Header.TaxDate);
+      this.TaxDate = { year: newTaxDate.getFullYear(), month: (newTaxDate.getMonth() + 1), day: newTaxDate.getDate() };
       this.slpCodeSel = response.Header.SlpCode;
       // tslint:disable-next-line: forin
       for (let j in response.Detail) {
@@ -119,6 +130,7 @@ export class PedidoComponent implements OnInit {
     this.docSap.Header = this.document;
     this.docSap.Header.Status = 'I';
     this.docSap.Header.DocDate = `${this.DateOrder.year}-${this.DateOrder.month}-${this.DateOrder.day}`;
+    this.docSap.Header.TaxDate = `${this.TaxDate.year}-${this.TaxDate.month}-${this.TaxDate.day}`;
     this.docSap.Header.SlpCode = this.slpCodeSel;
     this.docSap.Detail = this.rowDataOrder;
     if (form.invalid) {
@@ -146,9 +158,24 @@ export class PedidoComponent implements OnInit {
       });
     }
   }
-
+  getPersonasDirs(cardCode: string) {
+    this.mtrService.getPersonasDir(this.auth.getToken(), cardCode).subscribe(response => {
+      this.prsContacto = response.contactos;
+      this.dirsEntrega = response.direcciones;
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al cargar personas de contacto o vendedores',
+        icon: 'error',
+        text: err.error
+      });
+    });
+  }
   refreshData($event) {
     this.rowDataOrder = $event;
+  }
+
+  dirCompleta(value) {
+    this.dirComplet = this.dirsEntrega.filter((val) => val.Address === value)[0].Direccion;
   }
 
   valueDefault() {
@@ -160,8 +187,13 @@ export class PedidoComponent implements OnInit {
     this.document.CardCode = this.auth.getDataToken().CardCode;
     this.document.CardName = this.auth.getDataToken().CardName;
     this.DateOrder = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+    this.TaxDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     this.slpCodeSel = Number(this.auth.getDataToken().SlpCode);
     this.rowDataOrder = [];
+    this.document.CntctCode = 0;
+    this.document.ShipToCode = '';
+    this.dirComplet = '';
+    this.getPersonasDirs(this.auth.getDataToken().CardCode);
   }
 
   cancelQts() {
@@ -200,8 +232,11 @@ export class PedidoComponent implements OnInit {
     modalRef.result.then((result) => {
       if (!result) {
       } else {
+        this.dirComplet = '';
+        this.document.ShipToCode = '';
         this.document.CardCode = result.CardCode;
         this.document.CardName = result.CardName;
+        this.getPersonasDirs(result.CardCode);
       }
     }, (reason) => {
     });

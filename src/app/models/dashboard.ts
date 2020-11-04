@@ -12,3 +12,15 @@ export class GraficaX {
 export class GraficaY {
 
 }
+
+export class Cotizacion {
+    DocEntry: number;
+    DocNum: number;
+    CardCode: string;
+    CardName: string;
+    DocDate: Date;
+    DocDueDate: Date;
+    TaxDate: Date;
+    Reference: string;
+    Comments: string;
+}

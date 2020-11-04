@@ -9,7 +9,7 @@ import { DocSAP, Document } from 'src/app/models/marketing';
 import { MktService } from '../../../services/marketing/mkt.service';
 import { MtrDataService } from '../../../services/masterData/mtr-data.service';
 import { AuthService } from '../../../services/authentication/auth.service';
-import { Vendedor } from 'src/app/models/masterData';
+import { ContactPerson, DireccionEntrega, Vendedor } from 'src/app/models/masterData';
 
 @Component({
   selector: 'app-cotizacion',
@@ -24,6 +24,7 @@ export class CotizacionComponent implements OnInit {
   procesoSave: boolean;
   rowDataCot = [];
   model: NgbDateStruct = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+  TaxDate: NgbDateStruct = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
   currencies = ['MXP', 'USD', '$'];
   currencySel = this.currencies[0];
   slpCodeSel: number;
@@ -31,6 +32,8 @@ export class CotizacionComponent implements OnInit {
   maxDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
   cambiarSN: boolean;
   cargarSN: boolean;
+  prsContacto: Array<ContactPerson>;
+  dirsEntrega: Array<DireccionEntrega>;
 
   constructor(
     private mktService: MktService,
@@ -44,11 +47,14 @@ export class CotizacionComponent implements OnInit {
     this.proceso = false;
     this.procesoSave = false;
     this.cargarSN = false;
+    this.prsContacto = new Array<ContactPerson>();
+    this.dirsEntrega = new Array<DireccionEntrega>();
   }
 
   ngOnInit() {
     const data = this.auth.getDataToken();
     this.getVendedores(data);
+    this.getPersonasDirs(data.CardCode);
     this.document.CardCode = data.CardCode;
     this.document.CardName = data.CardName;
     this.cambiarSN = data.CambioSN === 'Y' ? true : false;
@@ -89,6 +95,7 @@ export class CotizacionComponent implements OnInit {
     this.doc.Header = this.document;
     this.doc.Header.Status = 'I';
     this.doc.Header.DocDate = `${this.model.year}-${this.model.month}-${this.model.day}`;
+    this.doc.Header.TaxDate = `${this.TaxDate.year}-${this.TaxDate.month}-${this.TaxDate.day}`;
     this.doc.Header.SlpCode = this.slpCodeSel;
     this.doc.Detail = this.rowDataCot;
     if (form.invalid) {
@@ -157,6 +164,7 @@ export class CotizacionComponent implements OnInit {
       } else {
         this.document.CardCode = result.CardCode;
         this.document.CardName = result.CardName;
+        this.getPersonasDirs(result.CardCode);
       }
     }, (reason) => {
     });
@@ -174,6 +182,19 @@ export class CotizacionComponent implements OnInit {
       });
     });
   }
+
+  getPersonasDirs(cardCode: string) {
+    this.mtrService.getPersonasDir(this.auth.getToken(), cardCode).subscribe(response => {
+      this.prsContacto = response.contactos;
+      this.dirsEntrega = response.direcciones;
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al cargar personas de contacto o vendedores',
+        icon: 'error',
+        text: err.error
+      });
+    });
+  }
   private valueDefault() {
     this.doc.Header.Comments = '';
     this.doc.Header.Reference = '';
@@ -183,6 +204,9 @@ export class CotizacionComponent implements OnInit {
     this.document.CardCode = this.auth.getDataToken().CardCode;
     this.document.CardName = this.auth.getDataToken().CardName;
     this.model = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
+    this.TaxDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     this.rowDataCot = [];
+    this.document.CntctCode = 0;
+    // this.getPersonasDirs(this.auth.getDataToken().CardCode);
   }
 }

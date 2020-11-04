@@ -18,6 +18,8 @@ export class SocioNegocios {
     E_Mail: string;
     Balance: number;
     IntrntSite: string;
+    FormaPago: string;
+    MetodoPago: string;
 }
 
 export class Direcciones {
@@ -30,7 +32,7 @@ export class Direcciones {
     Block: string;
     Street: string;
     StreetNo: string;
-    ZipCode: number;
+    ZipCode: string;
     constructor() {
         this.LineNum = -1;
     }
@@ -55,4 +57,14 @@ export class Contacto {
     Tel1: string;
     Cellolar: string;
     E_MailL: string;
+}
+
+export class FormaPago {
+    IdFormaPago: string;
+    DescFormaPago: string;
+}
+
+export class MetodoPago {
+    IdMetodoPago: string;
+    DescMetodoPago: string;
 }

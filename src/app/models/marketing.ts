@@ -9,12 +9,15 @@ export class Document {
     CardCode: string;
     CardName: string;
     DocDate: string;
+    TaxDate: string;
     Reference: string;
     Comments: string;
     Status: string;
     DocEntrySAP: number;
     DocNumSAP: number;
     SlpCode: number;
+    ShipToCode: string;
+    CntctCode: number;
 
     constructor() {
         this.DocEntry = 0;
@@ -28,6 +31,8 @@ export class Document {
         this.DocEntrySAP = 0;
         this.DocNumSAP = 0;
         this.SlpCode = 0;
+        this.ShipToCode = '';
+        this.CntctCode = 0;
     }
 }
 

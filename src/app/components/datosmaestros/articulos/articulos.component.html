@@ -17,7 +17,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="ItemCode">Código</label>
-                                                <input [disabled]="estadoFrm === 'E'" id="ItemCode" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="header.ItemCode" type="text" class="form-control" placeholder="Código" maxlength="15" [disabled]="" required [ngClass]="{ 'is-invalid': (ItemCode.errors?.minlength || ItemCode.errors?.required) && ItemCode.touched }"
+                                                <input [disabled]="estadoFrm === 'E' || permisos.Read === 'Y'" id="ItemCode" name="ItemCode" #ItemCode="ngModel" [(ngModel)]="header.ItemCode" type="text" class="form-control" placeholder="Código" maxlength="15" [disabled]="" required [ngClass]="{ 'is-invalid': (ItemCode.errors?.minlength || ItemCode.errors?.required) && ItemCode.touched }"
                                                     minlength="5">
                                                 <div *ngIf="(ItemCode.errors?.required) && ItemCode.touched" class="invalid-feedback d-block">
                                                     Este campo es requerido
@@ -30,7 +30,8 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="ItemName">Descripción</label>
-                                                <input id="ItemName" name="ItemName" #ItemName="ngModel" [(ngModel)]="header.ItemName" type="text" class="form-control" placeholder="Descripcion" maxlength="100" required [ngClass]="{ 'is-invalid': (ItemName.errors?.minlength || ItemName.errors?.required) && ItemName.touched }">
+                                                <input id="ItemName" name="ItemName" #ItemName="ngModel" [(ngModel)]="header.ItemName" type="text" class="form-control" placeholder="Descripcion" maxlength="100" required [ngClass]="{ 'is-invalid': (ItemName.errors?.minlength || ItemName.errors?.required) && ItemName.touched }"
+                                                    [disabled]="permisos.Read === 'Y'">
                                                 <div *ngIf="(ItemName.errors?.required) && ItemName.touched" class="invalid-feedback d-block">
                                                     Este campo es requerido
                                                 </div>
@@ -39,7 +40,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="ItmsGrpCod">Grupo Artículos</label>
-                                                <select class="form-control" #ItmsGrpCod="ngModel" id="ItmsGrpCod" [(ngModel)]="header.ItmsGrpCod" name="ItmsGrpCod" [ngClass]="{ 'is-invalid': (ItmsGrpCod.errors?.required) && ItmsGrpCod.touched }" required>
+                                                <select class="form-control" #ItmsGrpCod="ngModel" id="ItmsGrpCod" [(ngModel)]="header.ItmsGrpCod" name="ItmsGrpCod" [ngClass]="{ 'is-invalid': (ItmsGrpCod.errors?.required) && ItmsGrpCod.touched }" required [disabled]="permisos.Read === 'Y'">
                                                     <option *ngFor="let ty of opcionesGrp" [ngValue]="ty.ItmsGrpCod">{{ty.ItmsGrpNam}}</option>
                                                 </select>
                                                 <div *ngIf="(ItmsGrpCod.errors?.required) && ItmsGrpCod.touched" class="invalid-feedback d-block">
@@ -50,7 +51,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="UgpEntry">Unidad de Medida</label>
-                                                <select class="form-control" #UgpEntry="ngModel" id="UgpEntry" [(ngModel)]="header.UgpEntry" name="UgpEntry" [ngClass]="{ 'is-invalid': (UgpEntry.errors?.required) && UgpEntry.touched }" required>
+                                                <select class="form-control" #UgpEntry="ngModel" id="UgpEntry" [(ngModel)]="header.UgpEntry" name="UgpEntry" [ngClass]="{ 'is-invalid': (UgpEntry.errors?.required) && UgpEntry.touched }" required [disabled]="permisos.Read === 'Y'">
                                                     <option *ngFor="let um of opcionesUoM" [ngValue]="um.UgpEntry">{{um.UgpName}}</option>
                                                 </select>
                                                 <div *ngIf="(UgpEntry.errors?.required) && UgpEntry.touched" class="invalid-feedback d-block">
@@ -63,10 +64,10 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="ListNum">Lista de precios</label>
-                                                <select *ngIf="estadoFrm === 'E'" class="form-control" #ListNum="ngModel" id="ListNum" [(ngModel)]="header.ListNum" name="ListNum" (change)="getPrecios(2, header.ItemCode, header.ListNum)">
+                                                <select *ngIf="estadoFrm === 'E'" class="form-control" #ListNum="ngModel" id="ListNum" [(ngModel)]="header.ListNum" name="ListNum" (change)="getPrecios(2, header.ItemCode, header.ListNum)" [disabled]="permisos.Read === 'Y'">
                                                     <option *ngFor="let l of opcionesList" [ngValue]="l.ListNum">{{l.ListName}}</option>
                                                 </select>
-                                                <select *ngIf="estadoFrm === 'N'" class="form-control" #ListNum="ngModel" id="ListNum" [(ngModel)]="header.ListNum" name="ListNum">
+                                                <select *ngIf="estadoFrm === 'N'" class="form-control" #ListNum="ngModel" id="ListNum" [(ngModel)]="header.ListNum" name="ListNum" [disabled]="permisos.Read === 'Y'">
                                                     <option *ngFor="let l of opcionesList" [ngValue]="l.ListNum">{{l.ListName}}</option>
                                                 </select>
                                             </div>
@@ -74,25 +75,25 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="Price">Precio</label>
-                                                <input id="Price" name="Price" #Price="ngModel" [(ngModel)]="header.Price" type="text" class="form-control" placeholder="Precio">
+                                                <input id="Price" name="Price" #Price="ngModel" [(ngModel)]="header.Price" type="text" class="form-control" placeholder="Precio" [disabled]="permisos.Read === 'Y'">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 d-flex align-items-center justify-content-around">
                                             <div class="form-check form-check-inline">
-                                                <input id="InvntItem" name="InvntItem" #InvntItem="ngModel" [(ngModel)]="header.InvntItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.InvntItem}">
+                                                <input id="InvntItem" name="InvntItem" #InvntItem="ngModel" [(ngModel)]="header.InvntItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.InvntItem}" [disabled]="permisos.Read === 'Y'">
                                                 <label class="form-check-label" for="InvntItem">Inventario</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input id="PrchseItem" name="PrchseItem" #PrchseItem="ngModel" [(ngModel)]="header.PrchseItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.PrchseItem}">
+                                                <input id="PrchseItem" name="PrchseItem" #PrchseItem="ngModel" [(ngModel)]="header.PrchseItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.PrchseItem}" [disabled]="permisos.Read === 'Y'">
                                                 <label class="form-check-label" for="PrchseItem">Compra</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input id="SellItem" name="SellItem" #SellItem="ngModel" [(ngModel)]="header.SellItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.SellItem}">
+                                                <input id="SellItem" name="SellItem" #SellItem="ngModel" [(ngModel)]="header.SellItem" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.SellItem}" [disabled]="permisos.Read === 'Y'">
                                                 <label class="form-check-label" for="SellItem">venta</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row justify-content-center">
+                                    <!-- <div class="row justify-content-center">
                                         <div class="col-sm-5">
                                             <div class="form-check form-check-inline">
                                                 <input id="WTLiable" name="WTLiable" #WTLiable="ngModel" [(ngModel)]="header.WTLiable" class="form-check-input" type="checkbox" [ngClass]="{ 'checked' : header.WTLiable}">
@@ -105,10 +106,56 @@
                                         </div>
                                         <div class="col-sm-3">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <hr>
-                                    <!-- Sección detalle -->
+                                    <!--Sección de Inventario-->
                                     <div class="row mt-4">
+                                        <div class="col-sm-9">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <div class="card-icondetalle">
+                                                        <span style="font-size: 1em; color: white;"><i class="fas fa-warehouse"></i> Inventario</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="megaTras">
+                                                        <table class='headerTras'>
+                                                            <tr>
+                                                                <td class="colTH6 letrasTabla">#</td>
+                                                                <td class="colTH2 letrasTabla">Codigo del Almacén</td>
+                                                                <td class="colTH2 letrasTabla">Nombre del Almacén</td>
+                                                                <td class="colTH5 letrasTabla">Bloqueado</td>
+                                                                <td class="colTH5 letrasTabla">Stock</td>
+                                                                <td class="colTH3 letrasTabla">Comprometido</td>
+                                                                <td class="colTH5 letrasTabla">Pedido</td>
+                                                                <td class="colTH5 letrasTabla">Disponible</td>
+                                                            </tr>
+                                                        </table>
+                                                        <table style="width:100%; margin-top:45px;">
+                                                            <tbody>
+                                                                <tr *ngFor="let inv of tabInve; let i = index">
+                                                                    <td class="colTT6">{{i + 1}}</td>
+                                                                    <td class="colTT2">{{inv.WhsCode}}</td>
+                                                                    <td class="colTT2">{{inv.WhsName}}</td>
+                                                                    <td class="colTT5">{{inv.Locked}}</td>
+                                                                    <td class="colTT5">{{inv.OnHand | number}}</td>
+                                                                    <td class="colTT3">{{inv.IsCommited | number}}</td>
+                                                                    <td class="colTT5">{{inv.OnOrder | number}}</td>
+                                                                    <td class="colTT5">{{inv.Disponible | number}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <span *ngIf="!imgFile" style="font-size: 5em;"><i class="fas fa-image"></i></span>
+                                            <img *ngIf="imgFile" [src]="imgFile" alt="" class="img-thumbnail">
+                                        </div>
+                                    </div>
+                                    <!-- Sección Propiedades -->
+                                    <!-- <div class="row mt-4">
                                         <div class="col-sm-12">
                                             <div class="card">
                                                 <div class="card-header">
@@ -142,8 +189,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row pt-4">
+                                    </div> -->
+                                    <!-- <div class="row pt-4">
                                         <div class="col-sm-6 d-flex justify-content-end">
                                         </div>
                                         <div class="col-sm-6">
@@ -157,7 +204,7 @@
                                                 <button class="btn btn-info" *ngIf="proceso"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
                         </div>

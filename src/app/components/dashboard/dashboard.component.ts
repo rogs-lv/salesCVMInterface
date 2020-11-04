@@ -4,7 +4,7 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { DashService } from '../../services/dashboard/dash.service';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import Swal from 'sweetalert2';
-import { Anuncio } from 'src/app/models/dashboard';
+import { Anuncio, Cotizacion } from 'src/app/models/dashboard';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +14,7 @@ import { Anuncio } from 'src/app/models/dashboard';
 export class DashboardComponent implements OnInit {
   DtsNoticas: Array<Anuncio>;
   DtsPromo: Array<Anuncio>;
+  DtsCotizaciones: Array<Cotizacion>;
   // Valores para llenar la tabla
   public lineChartData: ChartDataSets[] = [
     { data: [], label: 'Cuotas' },
@@ -116,11 +117,14 @@ export class DashboardComponent implements OnInit {
   ) {
     this.DtsNoticas = new Array<Anuncio>();
     this.DtsPromo = new Array<Anuncio>();
+    this.DtsCotizaciones = new Array<Cotizacion>();
   }
 
   ngOnInit() {
     this.getProm();
+    this.getNot();
     this.getGrafica();
+    this.getCoti();
   }
 
   getProm() {
@@ -141,7 +145,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getNot() {
-    this.services.getNoticias(this.auth.getToken(), '').subscribe(response => {
+    const usr = this.auth.getDataToken();
+    this.services.getNoticias(this.auth.getToken(), usr.Code).subscribe(response => {
       if (response.codigo === 0) {
         this.DtsNoticas = response.mensaje;
       } else {
@@ -180,6 +185,22 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  getCoti() {
+    const usr = this.auth.getDataToken();
+    this.services.getCoti(this.auth.getToken(), usr.Code).subscribe(response => {
+      if (response.codigo === 0) {
+        this.DtsCotizaciones = response.mensaje;
+      } else {
+        return;
+      }
+    }, (err) => {
+      Swal.fire({
+        title: 'Error al obtener las promociones',
+        icon: 'error',
+        text: err.error.ExceptionMessage ? err.error.ExceptionMessage : err.error.Message
+      });
+    });
+  }
   actualizarGrafica() {
     this.getGrafica();
   }

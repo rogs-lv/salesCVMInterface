@@ -1,4 +1,4 @@
-.table1-fixed {
+    /* .table1-fixed {
     width: 100%;
     background-color: #f3f3f3;
 }
@@ -25,4 +25,162 @@
     float: left;
     background-color: #F8F8F8;
     border-color: #F8F8F8;
-}
+} */
+    
+    .letrasTabla {
+        font-size: small;
+        font-weight: bold;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    }
+    
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+    
+    .megaTras {
+        height: 250px;
+        margin: 0px;
+        width: 100%;
+        overflow: auto;
+        background: #fafafa;
+        word-wrap: break-word;
+        background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+        background: -moz-linear-gradient(top, #fbfbfb, #fafafa);
+        position: relative;
+    }
+    
+    .headerTras {
+        position: absolute;
+        width: 100%;
+        height: 40px;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        word-wrap: break-word;
+        font-weight: bold;
+        background: #ededed;
+        background: -webkit-gradient(linear, left top, left bottom, from(#F8F8F8), to(#F8F8F8));
+        background: -moz-linear-gradient(top, #F8F8F8, #F8F8F8);
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .headerTras+* {
+        margin-top: 30px;
+    }
+    /*estilos de encabezados*/
+    
+    .colTH1 {
+        width: 100px;
+        text-align: center;
+    }
+    
+    .colTH2 {
+        width: 170px;
+        text-align: center;
+    }
+    
+    .colTH3 {
+        width: 120px;
+        text-align: center;
+    }
+    
+    .colTH4 {
+        width: 70px;
+        text-align: center;
+    }
+    
+    .colTH5 {
+        width: 80px;
+        text-align: center;
+    }
+    
+    .colTH6 {
+        width: 45px;
+        text-align: center;
+    }
+    
+    .colTH7 {
+        width: 30px;
+        text-align: center;
+    }
+    /*estilos para td del body*/
+    
+    .colTT1 {
+        width: 100px;
+        text-align: center;
+        word-wrap: break-word;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        font-style: normal;
+        font-size: 17px;
+    }
+    
+    .colTT2 {
+        width: 170px;
+        text-align: center;
+        word-wrap: break-word;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        font-style: normal;
+        font-size: 17px;
+    }
+    
+    .colTT3 {
+        width: 120px;
+        text-align: center;
+        word-wrap: break-word;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        font-style: normal;
+        font-size: 17px;
+    }
+    
+    .colTT4 {
+        width: 70px;
+        text-align: center;
+        word-wrap: break-word;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        font-style: normal;
+        font-size: 17px;
+    }
+    
+    .colTT5 {
+        width: 80px;
+        text-align: center;
+        word-wrap: break-word;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        font-style: normal;
+        font-size: 17px;
+    }
+    
+    .colTT6 {
+        width: 45px;
+        text-align: center;
+        word-wrap: break-word;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        font-style: normal;
+        font-size: 17px;
+    }
+    
+    .colTT7 {
+        width: 30px;
+        text-align: center;
+        word-wrap: break-word;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-right: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        font-style: normal;
+        font-size: 17px;
+    }

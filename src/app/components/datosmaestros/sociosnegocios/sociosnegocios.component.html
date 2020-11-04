@@ -98,6 +98,24 @@
                                             <span>{{Partner.Balance | currency}}</span>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="FormaPago">Forma de Pago</label>
+                                                <select class="form-control" id="FormaPago" [(ngModel)]="Partner.FormaPago" name="FormaPago">
+                                                    <option *ngFor="let fp of FormasPago" [ngValue]="fp.IdFormaPago">{{fp.DescFormaPago}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="MetodoPago">Método de Pago</label>
+                                                <select class="form-control" id="MetodoPago" [(ngModel)]="Partner.MetodoPago" name="MetodoPago">
+                                                    <option *ngFor="let mp of MetodosPago" [ngValue]="mp.IdMetodoPago">{{mp.DescMetodoPago}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <hr>
                                     <div class="row mt-4">
                                         <div class="col-sm-6">

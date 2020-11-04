@@ -28,3 +28,12 @@ export class Vendedor {
     SlpCode: number;
     SlpName: string;
 }
+
+export class ContactPerson {
+    CntctCode: number;
+    Name: string;
+}
+export class DireccionEntrega {
+    Address: string;
+    Direccion: string;
+}

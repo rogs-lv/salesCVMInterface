@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   menu: MenuOpciones;
   adicional: Adicional;
+  nombreUsr: string;
 
   constructor(
     private auth: AuthService,
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
     this.menu = new MenuOpciones();
     this.adicional = new Adicional();
     this.loadConfiMenu();
+    this.nombreUsr = this.getNombreUsuario();
   }
 
   ngOnInit() {
@@ -49,5 +51,10 @@ export class HomeComponent implements OnInit {
         text: err.error.Message
       });
     });
+  }
+
+  getNombreUsuario() {
+    let jwt = jwt_decode(this.auth.getToken());
+    return jwt.Name;
   }
 }

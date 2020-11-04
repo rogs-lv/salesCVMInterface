@@ -34,7 +34,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="DocDate">Fecha</label>
+                                                <label for="DocDate">Fecha de contabilización</label>
                                                 <div class="input-group mb-3">
                                                     <input class="form-control" placeholder="Fecha" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" [maxDate]="maxDate" required readonly>
                                                     <div class="input-group-append">
@@ -51,7 +51,36 @@
                                                 <input id="Reference" name="Reference" Reference [(ngModel)]="document.Reference" type="text" class="form-control" placeholder="Referencia" maxlength="11">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <label for="CntctCode">Persona de Contacto</label>
+                                                <select class="form-control" id="CntctCode" [(ngModel)]="document.CntctCode" name="CntctCode">
+                                                    <option *ngFor="let pr of prsContacto" [ngValue]="pr.CntctCode">{{pr.Name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="TaxDate">Fecha de documento</label>
+                                                <div class="input-group mb-3">
+                                                    <input class="form-control" placeholder="Fecha" name="dpT" [(ngModel)]="TaxDate" ngbDatepicker #dT="ngbDatepicker" required readonly>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary calendar" (click)="dT.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="SlpCode">Vendedor</label>
+                                                <select class="form-control" id="SlpCode" [(ngModel)]="slpCodeSel" name="slpCodeSel">
+                                                    <option *ngFor="let slp of SalesEmp" [ngValue]="slp.SlpCode">{{slp.SlpName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label for="Comments">Comentarios</label>
                                                 <textarea id="Comments" name="Comments" Comments [(ngModel)]="document.Comments" class="form-control" placeholder="comentarios"></textarea>
@@ -62,16 +91,6 @@
                                                 <label for="Currency">Moneda</label>
                                                 <select class="form-control" id="Currency" [(ngModel)]="currencySel" name="currencySel">
                                                     <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label for="SlpCode">Vendedor</label>
-                                                <select class="form-control" id="SlpCode" [(ngModel)]="slpCodeSel" name="slpCodeSel">
-                                                    <option *ngFor="let slp of SalesEmp" [ngValue]="slp.SlpCode">{{slp.SlpName}}</option>
                                                 </select>
                                             </div>
                                         </div>

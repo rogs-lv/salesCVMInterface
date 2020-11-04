@@ -6,7 +6,7 @@ import { AuthService } from '../../../services/authentication/auth.service';
 
 import { MtrDataService } from '../../../services/masterData/mtr-data.service';
 import Swal from 'sweetalert2';
-import { BP, Contacto, Direcciones, SocioNegocios } from 'src/app/models/socioNegocios';
+import { BP, Contacto, Direcciones, FormaPago, MetodoPago, SocioNegocios } from 'src/app/models/socioNegocios';
 import { ToastService } from 'src/app/services/toasts/toast.service';
 import { ListasociosComponent } from '../shared/listasocios/listasocios.component';
 
@@ -37,6 +37,8 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   EstadoDir = 'N';
   EstadoCnt = 'N';
   proceso: boolean;
+  FormasPago: Array<FormaPago>;
+  MetodosPago: Array<MetodoPago>;
 
   constructor(
     private mkService: MtrDataService,
@@ -51,10 +53,13 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.PrsContacto = new Array<Contacto>();
     this.Contacto = new Contacto();
     this.proceso = false;
+    this.FormasPago = new Array<FormaPago>();
+    this.MetodosPago = new Array<MetodoPago>();
   }
 
   ngOnInit() {
     this.getDestinos();
+    this.getPagos();
   }
   // tslint:disable-next-line: use-lifecycle-interface
   ngOnDestroy() {
@@ -122,6 +127,21 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
         title: 'Error',
         icon: 'error',
         text: err.status === 0 ? 'Error al obtener destinos para socio de negocios' : err.error
+      });
+    });
+  }
+
+  getPagos() {
+    this.mkService.getPagos(this.auth.getToken(), 3).subscribe(response => {
+      if (response !== null) {
+        this.FormasPago = response.FormaPago;
+        this.MetodosPago = response.MetodoPago;
+      }
+    }, (err) => {
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: err.status === 0 ? 'Error al obtener pagos para socio de negocios' : err.error
       });
     });
   }

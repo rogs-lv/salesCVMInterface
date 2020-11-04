@@ -54,4 +54,19 @@ export class DashService {
       })
     );
   }
+
+  getCoti(token: string, usuario: string) {
+    const headersD = new HttpHeaders()
+    .set('Authorization', token);
+    const api = `${this.endpoint}salesCVM/Dashboard/GetCotizaciones?usuario=${usuario}`;
+
+    return this.http.get(
+      api,
+      { headers: headersD }
+    ).pipe(
+      map( (response: any) => {
+        return response;
+      })
+    );
+  }
 }

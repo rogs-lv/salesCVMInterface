@@ -5,7 +5,7 @@ import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-b
 import Swal from 'sweetalert2';
 import { ModalComponent } from '../shared/modal/modal.component';
 
-import { Document, DocSAP } from '../../../models/marketing';
+import { Document, DocSAP, ImpSN } from '../../../models/marketing';
 import { MktService } from '../../../services/marketing/mkt.service';
 import { AuthService } from '../../../services/authentication/auth.service';
 import { TablaArticulosComponent } from '../shared/tabla-articulos/tabla-articulos.component';
@@ -39,6 +39,7 @@ export class PedidoComponent implements OnInit {
   prsContacto: Array<ContactPerson>;
   dirsEntrega: Array<DireccionEntrega>;
   dirComplet = '';
+  ImpSN: ImpSN;
 
   constructor(
     private mktServices: MktService,
@@ -54,6 +55,7 @@ export class PedidoComponent implements OnInit {
     this.SalesEmp = new Array<Vendedor>();
     this.prsContacto = new Array<ContactPerson>();
     this.dirsEntrega = new Array<DireccionEntrega>();
+    this.ImpSN = new ImpSN();
   }
 
   ngOnInit() {
@@ -62,6 +64,8 @@ export class PedidoComponent implements OnInit {
     this.document.CardCode = data.CardCode;
     this.document.CardName = data.CardName;
     this.cambiarSN = data.CambioSN === 'Y' ? true : false;
+    this.ImpSN.TaxCodeAR = data.TaxCode;
+    this.ImpSN.Rate = data.Rate;
     this.getPersonasDirs(data.CardCode);
   }
 
@@ -79,6 +83,7 @@ export class PedidoComponent implements OnInit {
       if (!result) {
       } else {
         this.rowDataOrder = []; // Para actualizar los datos antes de entrar a la modal, así evitamos que mantenga los datos del anterior
+        this.getPersonasDirs(result.CardCode);
         this.getQuotationSAP(result);
       }
     }, (reason) => {
@@ -110,6 +115,8 @@ export class PedidoComponent implements OnInit {
       let newTaxDate = new Date(response.Header.TaxDate);
       this.TaxDate = { year: newTaxDate.getFullYear(), month: (newTaxDate.getMonth() + 1), day: newTaxDate.getDate() };
       this.slpCodeSel = response.Header.SlpCode;
+      this.ImpSN.TaxCodeAR = response.Header.TaxCode;
+      this.ImpSN.Rate = response.Header.Rate;
       // tslint:disable-next-line: forin
       for (let j in response.Detail) {
         response.Detail[j].DocEntry = result.DocEntry;
@@ -175,7 +182,11 @@ export class PedidoComponent implements OnInit {
   }
 
   dirCompleta(value) {
-    this.dirComplet = this.dirsEntrega.filter((val) => val.Address === value)[0].Direccion;
+    let index = this.dirsEntrega.findIndex(val => val.Address === value);
+    if (index !== -1) {
+      this.dirComplet = this.dirsEntrega[index].Direccion;
+    }
+    // this.dirComplet = this.dirsEntrega.filter((val) => val.Address === value)[0].Direccion;
   }
 
   valueDefault() {
@@ -193,6 +204,8 @@ export class PedidoComponent implements OnInit {
     this.document.CntctCode = 0;
     this.document.ShipToCode = '';
     this.dirComplet = '';
+    this.ImpSN.TaxCodeAR = this.auth.getDataToken().TaxCode;
+    this.ImpSN.Rate = this.auth.getDataToken().Rate;
     this.getPersonasDirs(this.auth.getDataToken().CardCode);
   }
 
@@ -236,6 +249,8 @@ export class PedidoComponent implements OnInit {
         this.document.ShipToCode = '';
         this.document.CardCode = result.CardCode;
         this.document.CardName = result.CardName;
+        this.ImpSN.TaxCodeAR = result.TaxCode;
+        this.ImpSN.Rate = result.Rate;
         this.getPersonasDirs(result.CardCode);
       }
     }, (reason) => {

@@ -272,13 +272,14 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     this.EstadoForm = 'N';
   }
   CancelarEdicionSocio() {
-    console.log('cancelar', this.Partner.CardType);
+    // console.log('cancelar', this.Partner.CardType);
     this.EstadoForm = 'N';
     this.EstadoDir = 'N';
     this.Partner = new SocioNegocios();
     this.Direccion = new Direcciones();
     this.DireccionesFac = new Array<Direcciones>();
     this.DireccionesEnt = new Array<Direcciones>();
+    this.PrsContacto = new Array<Contacto>();
   }
   ActualizarSocio(frm: NgForm, header: SocioNegocios, DirF: Array<Direcciones>, DirE: Array<Direcciones>, Cnts: Array<Contacto>) {
 

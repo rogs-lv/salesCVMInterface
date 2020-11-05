@@ -146,7 +146,7 @@ export class DashboardComponent implements OnInit {
 
   getNot() {
     const usr = this.auth.getDataToken();
-    this.services.getNoticias(this.auth.getToken(), usr.Code).subscribe(response => {
+    this.services.getNoticias(this.auth.getToken(), usr.Sucursal).subscribe(response => {
       if (response.codigo === 0) {
         this.DtsNoticas = response.mensaje;
       } else {

@@ -18,6 +18,8 @@ export class Document {
     SlpCode: number;
     ShipToCode: string;
     CntctCode: number;
+    TaxCode: string;
+    Rate: number;
 
     constructor() {
         this.DocEntry = 0;
@@ -33,6 +35,8 @@ export class Document {
         this.SlpCode = 0;
         this.ShipToCode = '';
         this.CntctCode = 0;
+        this.TaxCode = '';
+        this.Rate = 0;
     }
 }
 
@@ -47,4 +51,9 @@ export class DocumentLines {
     Discount: number;
     Currency: string;
     TaxCode: string;
+}
+
+export class ImpSN {
+    TaxCodeAR: string;
+    Rate: number;
 }

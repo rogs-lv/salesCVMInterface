@@ -34,11 +34,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="DocDate">Fecha de contabilización</label>
+                                                <label for="TaxDate">Fecha de documento</label>
                                                 <div class="input-group mb-3">
-                                                    <input class="form-control" placeholder="Fecha" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" [maxDate]="maxDate" required readonly>
+                                                    <input class="form-control" placeholder="Fecha" name="dpT" [(ngModel)]="TaxDate" ngbDatepicker #dT="ngbDatepicker" required readonly>
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
+                                                        <button class="btn btn-outline-secondary calendar" (click)="dT.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -61,11 +61,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="TaxDate">Fecha de documento</label>
+                                                <label for="DocDate">Fecha de Entrega</label>
                                                 <div class="input-group mb-3">
-                                                    <input class="form-control" placeholder="Fecha" name="dpT" [(ngModel)]="TaxDate" ngbDatepicker #dT="ngbDatepicker" required readonly>
+                                                    <input class="form-control" placeholder="Fecha" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" required readonly>
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary calendar" (click)="dT.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
+                                                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,7 +119,7 @@
         <!-- Sección artículos -->
         <div class="col-md-4 pt-4">
             <div class="card bxcard">
-                <app-lista-articulos class="col-sm-12"></app-lista-articulos>
+                <app-lista-articulos [impChildSN]="ImpSN" class="col-sm-12"></app-lista-articulos>
             </div>
         </div>
     </div>

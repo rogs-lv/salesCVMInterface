@@ -148,3 +148,11 @@ body {
     transform: translate(-50%, 0px);
     z-index: 9999;
 }
+
+.classTopSR {
+    margin-top: 0px;
+}
+
+.classTopCR {
+    margin-top: -90px;
+}

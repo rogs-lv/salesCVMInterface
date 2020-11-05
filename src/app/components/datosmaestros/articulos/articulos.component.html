@@ -122,26 +122,26 @@
                                                         <table class='headerTras'>
                                                             <tr>
                                                                 <td class="colTH6 letrasTabla">#</td>
-                                                                <td class="colTH2 letrasTabla">Codigo del Almacén</td>
+                                                                <td class="colTH5 letrasTabla">Código</td>
                                                                 <td class="colTH2 letrasTabla">Nombre del Almacén</td>
-                                                                <td class="colTH5 letrasTabla">Bloqueado</td>
                                                                 <td class="colTH5 letrasTabla">Stock</td>
                                                                 <td class="colTH3 letrasTabla">Comprometido</td>
                                                                 <td class="colTH5 letrasTabla">Pedido</td>
                                                                 <td class="colTH5 letrasTabla">Disponible</td>
+                                                                <td class="colTH5 letrasTabla">Bloqueado</td>
                                                             </tr>
                                                         </table>
                                                         <table style="width:100%; margin-top:45px;">
                                                             <tbody>
                                                                 <tr *ngFor="let inv of tabInve; let i = index">
                                                                     <td class="colTT6">{{i + 1}}</td>
-                                                                    <td class="colTT2">{{inv.WhsCode}}</td>
+                                                                    <td class="colTT5">{{inv.WhsCode}}</td>
                                                                     <td class="colTT2">{{inv.WhsName}}</td>
-                                                                    <td class="colTT5">{{inv.Locked}}</td>
                                                                     <td class="colTT5">{{inv.OnHand | number}}</td>
                                                                     <td class="colTT3">{{inv.IsCommited | number}}</td>
                                                                     <td class="colTT5">{{inv.OnOrder | number}}</td>
                                                                     <td class="colTT5">{{inv.Disponible | number}}</td>
+                                                                    <td class="colTT5">{{inv.Locked}}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

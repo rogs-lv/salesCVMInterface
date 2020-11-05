@@ -5,7 +5,7 @@ import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ModalListaSNComponent } from '../shared/modal-lista-sn/modal-lista-sn.component';
 
-import { DocSAP, Document } from 'src/app/models/marketing';
+import { DocSAP, Document, ImpSN } from 'src/app/models/marketing';
 import { MktService } from '../../../services/marketing/mkt.service';
 import { MtrDataService } from '../../../services/masterData/mtr-data.service';
 import { AuthService } from '../../../services/authentication/auth.service';
@@ -34,7 +34,7 @@ export class CotizacionComponent implements OnInit {
   cargarSN: boolean;
   prsContacto: Array<ContactPerson>;
   dirsEntrega: Array<DireccionEntrega>;
-
+  ImpSN: ImpSN;
   constructor(
     private mktService: MktService,
     private auth: AuthService,
@@ -49,6 +49,7 @@ export class CotizacionComponent implements OnInit {
     this.cargarSN = false;
     this.prsContacto = new Array<ContactPerson>();
     this.dirsEntrega = new Array<DireccionEntrega>();
+    this.ImpSN = new ImpSN();
   }
 
   ngOnInit() {
@@ -58,6 +59,8 @@ export class CotizacionComponent implements OnInit {
     this.document.CardCode = data.CardCode;
     this.document.CardName = data.CardName;
     this.cambiarSN = data.CambioSN === 'Y' ? true : false;
+    this.ImpSN.TaxCodeAR = data.TaxCode;
+    this.ImpSN.Rate = data.Rate;
   }
 
   refreshData($event) {
@@ -164,6 +167,8 @@ export class CotizacionComponent implements OnInit {
       } else {
         this.document.CardCode = result.CardCode;
         this.document.CardName = result.CardName;
+        this.ImpSN.TaxCodeAR = result.TaxCode;
+        this.ImpSN.Rate = result.Rate;
         this.getPersonasDirs(result.CardCode);
       }
     }, (reason) => {
@@ -207,6 +212,8 @@ export class CotizacionComponent implements OnInit {
     this.TaxDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     this.rowDataCot = [];
     this.document.CntctCode = 0;
+    this.ImpSN.TaxCodeAR = this.auth.getDataToken().TaxCode;
+    this.ImpSN.Rate = this.auth.getDataToken().Rate;
     // this.getPersonasDirs(this.auth.getDataToken().CardCode);
   }
 }

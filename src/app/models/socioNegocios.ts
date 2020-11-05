@@ -20,6 +20,8 @@ export class SocioNegocios {
     IntrntSite: string;
     FormaPago: string;
     MetodoPago: string;
+    TaxCode: string;
+    Rate: number;
 }
 
 export class Direcciones {

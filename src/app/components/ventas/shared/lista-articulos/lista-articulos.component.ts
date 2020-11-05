@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { Grid, GridOptions } from 'ag-grid-community';
 import { FormBuilder } from '@angular/forms';
@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 import { MtrDataService } from 'src/app/services/masterData/mtr-data.service';
 import { Item } from 'src/app/models/masterData';
 import { SharedService } from 'src/app/services/shared/shared.service';
+import { ImpSN } from 'src/app/models/marketing';
 
 
 
@@ -19,7 +20,7 @@ import { SharedService } from 'src/app/services/shared/shared.service';
 })
 export class ListaArticulosComponent implements OnInit {
   @ViewChild('agGrid', {static: true}) agGrid: AgGridAngular;
-
+  @Input() impChildSN: ImpSN;
   columnDefs = [
     {headerName: '#', valueGetter: 'node.rowIndex + 1', maxWidth: '60'},
     {headerName: 'Codigo', field: 'ItemCode', maxWidth: '150', minWidth: '50' },
@@ -80,8 +81,22 @@ export class ListaArticulosComponent implements OnInit {
   // Se envia información cuando se hace clic sobre un registro de la lista de articulos
   /* onRowClicked(event: any) { console.log('row', event); } */
   onCellClicked(event: any) {
+    // console.log('Impuesto SN', this.impChildSN, 'Articulo', event.data);
+    if (event.data.VATLiable === 'Y' && event.data.IndirctTax === 'N') { // sujeto a impuesto (Impuesto del SN)
+      event.data.TaxCode = this.impChildSN.TaxCodeAR;
+      event.data.Rate = this.impChildSN.Rate;
+      this.sharedService.nextMessage(event.data);
+      return;
+    } else if (event.data.IndirctTax === 'Y' && event.data.VATLiable === 'Y') { // Impuesto IEPS (Impuesto del artículo)
+      this.sharedService.nextMessage(event.data);
+      return;
+    } else { // Impuesto B00 - 0
+      event.data.TaxCode = 'B00';
+      event.data.Rate = 0;
+      this.sharedService.nextMessage(event.data);
+      return;
+    }
     // console.log('cell', event.data);
-    this.sharedService.nextMessage(event.data);
   }
 
   private buildRows(data: any, whsCode: string, taxCode: string): Array<Item> {

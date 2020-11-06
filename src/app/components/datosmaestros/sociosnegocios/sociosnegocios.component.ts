@@ -39,6 +39,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
   proceso: boolean;
   FormasPago: Array<FormaPago>;
   MetodosPago: Array<MetodoPago>;
+  Impuestos: [];
 
   constructor(
     private mkService: MtrDataService,
@@ -121,6 +122,7 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
       if (response !== null) {
         this.Countrys = response.country;
         this.States = response.state;
+        this.Impuestos = response.impuestos;
       }
     }, (err) => {
       Swal.fire({

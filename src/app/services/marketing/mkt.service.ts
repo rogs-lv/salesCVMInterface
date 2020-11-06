@@ -58,14 +58,14 @@ export class MktService {
     );
   }
 
-  getDocumentSAP(token: string, docEntry: number) {
+  getDocumentSAP(token: string, docEntry: number, cardcode: string, usuario: string) {
     const headersDocSAP = new HttpHeaders()
     .set('Authorization', token);
     let api = '';
     if (docEntry > 0) {
       api = `${this.endpoint}salesCVM/Marketing/GetDocumentSAP?docEntry=${docEntry}`;
     } else {
-      api = `${this.endpoint}salesCVM/Marketing/GetDocumentSAP`;
+      api = `${this.endpoint}salesCVM/Marketing/GetDocumentSAP?docEntry=${docEntry}&cardcode=${cardcode}&usuario=${usuario}`;
     }
 
     return this.http.get(api, {headers: headersDocSAP }).pipe(

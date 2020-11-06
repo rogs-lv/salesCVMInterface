@@ -209,17 +209,19 @@
                                                         <div class="row">
                                                             <div class="col-6">
                                                                 <div class="form-group">
-                                                                    <label for="State">Estado</label>
-                                                                    <select class="form-control" id="State" [(ngModel)]="Direccion.State" name="State">
-                                                            <option *ngFor="let s of States | FilterStates: Direccion.Country" [ngValue]="s.Code">{{s.Name}}</option>
-                                                        </select>
+                                                                    <label for="Country">País</label>
+                                                                    <select class="form-control" id="Country" [(ngModel)]="Direccion.Country" name="Country">
+                                                                        <option *ngFor="let c of Countrys" [ngValue]="c.Code">{{c.Name}}</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6">
-                                                                <label for="Country">País</label>
-                                                                <select class="form-control" id="Country" [(ngModel)]="Direccion.Country" name="Country">
-                                                        <option *ngFor="let c of Countrys" [ngValue]="c.Code">{{c.Name}}</option>
-                                                    </select>
+                                                                <div class="form-group">
+                                                                    <label for="State">Estado</label>
+                                                                    <select class="form-control" id="State" [(ngModel)]="Direccion.State" name="State">
+                                                                        <option *ngFor="let s of States | FilterStates: Direccion.Country" [ngValue]="s.Code">{{s.Name}}</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -257,7 +259,13 @@
                                                                     <input id="ZipCode" name="ZipCode" ZipCode [(ngModel)]="Direccion.ZipCode" type="text" class="form-control" placeholder="Código Postal">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-6 text-center p-2">
+                                                            <div class="col-6">
+                                                                <div class="form-group" *ngIf="Direccion.AdresType === 'S'">
+                                                                    <label for="TaxCode">Impuesto</label>
+                                                                    <select class="form-control" id="Country" [(ngModel)]="Direccion.TaxCode" name="TaxCode">
+                                                                        <option *ngFor="let t of Impuestos" [ngValue]="t.Code">{{t.Code}}-{{t.Name}}</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">

@@ -35,8 +35,18 @@ export class Direcciones {
     Street: string;
     StreetNo: string;
     ZipCode: string;
+    TaxCode: string;
     constructor() {
         this.LineNum = -1;
+        this.Address = '';
+        this.AdresType = '';
+        this.Country = '';
+        this.State = '';
+        this.Block = '';
+        this.Street = '';
+        this.StreetNo = '';
+        this.ZipCode = '';
+        this.TaxCode = '';
     }
 }
 export class DocumentNumbering {

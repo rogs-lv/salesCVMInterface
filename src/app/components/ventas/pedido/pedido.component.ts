@@ -91,13 +91,21 @@ export class PedidoComponent implements OnInit {
   }
   // Lista de cotizaciones abiertas
   getDataQuotation() {
+    if (this.document.CardCode === '') {
+      Swal.fire({
+        title: 'Error al cargar cotizaciones',
+        icon: 'error',
+        text: 'Primero debe seleccionar un socio de negocios'
+      });
+      return;
+    }
     this.procesoQt = true;
-    this.mktServices.getDocumentSAP(this.auth.getToken(), 0).subscribe(response => {
+    this.mktServices.getDocumentSAP(this.auth.getToken(), 0, this.document.CardCode, this.auth.getDataToken().Code).subscribe(response => {
       this.LoadQuotations(response);
       this.procesoQt = false;
     }, (err) => {
       Swal.fire({
-        title: 'Error al obtener cotizaciones abiertas',
+        title: 'El cliente no tiene cotizaciones abiertas',
         icon: 'error',
         text: err.error
       });
@@ -107,7 +115,7 @@ export class PedidoComponent implements OnInit {
   }
   // Recuperamos contización especifica para cargar en el form
   getQuotationSAP(result: Document) {
-    this.mktServices.getDocumentSAP(this.auth.getToken(), result.DocEntry).subscribe(response => {
+    this.mktServices.getDocumentSAP(this.auth.getToken(), result.DocEntry, '', '').subscribe(response => {
       this.document = response.Header;
       this.dirCompleta(this.document.ShipToCode);
       let newDate = new Date(response.Header.DocDate);

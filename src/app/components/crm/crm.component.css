@@ -1,3 +1,65 @@
 .btnfont {
-    font-size: 1.5em;
+    font-size: 1.3em;
+}
+
+.content-container {
+    position: relative;
+    z-index: 0;
+    padding: 20px;
+    /* max-width: 728px; */
+    margin: 0 auto;
+    overflow: hidden;
+    transition: all 300ms ease-in-out;
+}
+
+
+/* -- Media Queries -- */
+
+@media (max-width: 991px) {
+    .content-container {
+        /* max-width: 480px; */
+    }
+}
+
+@media (max-width: 767px) {
+    .content-container {
+        max-width: 100%;
+        margin: 30px auto 0;
+    }
+    #menu-toggle:checked~.content-container {
+        padding-left: 0;
+    }
+    .slideout-sidebar ul {
+        text-align: center;
+        max-width: 200px;
+        margin: 30px auto 0;
+    }
+    .menu-icon {
+        left: 20px
+    }
+    #menu-toggle:checked~.slideout-sidebar {
+        width: 100%;
+    }
+    #menu-toggle:checked+.menu-icon {
+        left: 87%;
+        color: #fafafa;
+    }
+    @media screen and (max-width: 736px) and (orientation: landscape) {
+        .slideout-sidebar {
+            padding: 0;
+        }
+        .slideout-sidebar ul {
+            max-width: 100%;
+            margin: 60px auto 0;
+        }
+        .slideout-sidebar ul li {
+            display: inline-block;
+            border-bottom: 0;
+            width: 72px;
+            padding: 18px 24px;
+            margin: 0 6px 12px;
+            color: #ffffff;
+            background-color: #777;
+        }
+    }
 }

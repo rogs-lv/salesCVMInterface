@@ -1,7 +1,7 @@
-<div class="animated fadeIn fast">
+<div class="ml-5 animated fadeIn fast">
     <div class="row">
         <!-- Sección de formulario -->
-        <div class="col-sm-8 pt-4">
+        <div class="col-md-8 pt-4">
             <div class="card bxcard">
                 <div class="card-body">
                     <div class="progress">
@@ -10,32 +10,42 @@
                     <div class="container pt-3">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form action="">
+                                <form [formGroup]="formOpp">
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="cardcode">Nombre Oportunidad</label>
-                                                <input id="cardcode" type="text" class="form-control" placeholder="Nom Oportunidad" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <label for="docdate">Fecha Inicio</label>
-                                                <div class="input-group mb-3">
-                                                    <input id="docdate" type="text" class="form-control" placeholder="Fecha" disabled>
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
-                                                    </div>
+                                                <label for="OppName">Nombre Oportunidad</label>
+                                                <input id="OppName" type="text" class="form-control" placeholder="Nombre de Oportunidad" formControlName="name" [ngClass]="{ 'is-invalid': (submitted || f.name.errors) && f.name.touched}">
+                                                <div *ngIf="(submitted || f.name.errors) && f.name.touched" class="invalid-feedback">
+                                                    <div *ngIf="f.name.errors.required">El nombre es requerido</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="docdate">Fecha cierre</label>
+                                                <label for="TaxDate">Fecha de Inicio</label>
                                                 <div class="input-group mb-3">
-                                                    <input id="docdate" type="text" class="form-control" placeholder="Fecha" disabled>
+                                                    <input class="form-control" placeholder="Fecha" ngbDatepicker #OpenCalendar="ngbDatepicker" readonly formControlName="openDate" [ngClass]="{ 'is-invalid': (submitted || f.openDate.errors)
+                                                    && f.openDate.touched}" (dateSelect)="onChangeDate()">
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
+                                                        <button class="btn btn-outline-secondary calendar" (click)="OpenCalendar.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="(submitted || f.openDate.errors) && f.openDate.touched" class="invalid-feedback">
+                                                    <div *ngIf="f.openDate.errors.required">La fecha es requerida</div>
+                                                </div>
+                                                <div *ngIf="durationValid === 1" style="color: red; font-size: 80%;">
+                                                    <div>La fecha no puede ser mayor que la de cierre</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="">Fecha cierre</label>
+                                                <div class="input-group mb-3">
+                                                    <input id="" type="text" class="form-control" placeholder="Fecha Cierre" disabled>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary" type="button" id="btnFecha" disabled><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -44,43 +54,43 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label for="cardcode">Cliente</label>
-                                                <input id="cardcode" type="text" class="form-control" placeholder="Cliente" value="">
+                                                <label for="CardCode">Cliente</label>
+                                                <input id="CardCode" type="text" class="form-control" placeholder="Cliente" disabled formControlName="cardCode" [ngClass]="{ 'is-invalid': (submitted || f.cardCode.errors) && f.cardCode.touched}">
+                                                <div *ngIf="(submitted || f.cardCode.errors) && f.cardCode.touched" class="invalid-feedback">
+                                                    <div *ngIf="f.cardCode.errors.required">El campo es requerido</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
-                                                <label for="cardcode">Nombre</label>
-                                                <input id="cardcode" type="text" class="form-control" placeholder="Nombre" value="">
+                                                <label for="CardName">Nombre</label>
+                                                <input id="CardName" type="text" class="form-control" placeholder="Nombre" formControlName="cardName">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="">Persona de Contacto</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>Persona 1</option>
-                                                    <option>Persona 2</option>
-                                                  </select>
+                                                <label for="CprCode">Persona de Contacto</label>
+                                                <select class="form-control" id="CprCode" formControlName="cprCode">
+                                                   <option *ngFor="let pc of optsOpp.ListPrsContacto" [ngValue]="pc.CntctCode">{{pc.Name}}</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="">Territorio SN</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>Dato 1</option>
-                                                    <option>Dato 2</option>
-                                                  </select>
+                                                <label for="Territory">Territorio SN</label>
+                                                <select class="form-control" id="Territory" formControlName="territory">
+                                                    <option *ngFor="let t of optsOpp.ListTerritorio" [ngValue]="t.territryID">{{t.descript}}</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label for="">Vendedor</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>Dato 1</option>
-                                                    <option>Dato 2</option>
-                                                  </select>
+                                                <label for="slpCode">Vendedor</label>
+                                                <select class="form-control" id="SlpCode" formControlName="slpCode">
+                                                    <option *ngFor="let s of optsOpp.ListVendedor" [ngValue]="s.SlpCode">{{s.SlpName}}</option>    
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -126,20 +136,33 @@
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="fpcierre">Fecha prevista cierre</label>
-                                                                <input id="cierre" type="text" class="form-control" placeholder="Fecha cierre" value="" disabled>
+                                                                <label for="PredDate">Fecha prevista cierre</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input id="PredDate" type="text" class="form-control" placeholder="Fecha cierre" ngbDatepicker #PredDate="ngbDatepicker" readonly formControlName="predDate" (dateSelect)="onChangeDate()">
+                                                                    <div class="input-group-append">
+                                                                        <button class="btn btn-outline-secondary" type="button" id="PredDateBtn" (click)="PredDate.toggle()"><span><i class="fas fa-calendar"></i></span></button>
+                                                                    </div>
+                                                                    <div *ngIf="durationValid === -1" style="color: red; font-size: 80%;">
+                                                                        <div>La fecha no puede ser menor que la de inicio</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group text-center">
+                                                                <label for="ClosePrev">Cierre previsto</label>
+                                                                <p *ngIf="duration > 0 && durationValid === 0"><span>{{duration}} días</span></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="cprevisto">Cierre previsto</label>
-                                                                <input id="cprevisto" type="text" class="form-control" placeholder="Cierre previsto" value="0 días">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group">
-                                                                <label for="Montop">Monto Potencial</label>
-                                                                <input id="Montop" type="number" class="form-control" placeholder="Monto" value="">
+                                                                <label for="DMaxSumLoc">Monto Potencial</label>
+                                                                <input id="DMaxSumLoc" type="number" class="form-control" placeholder="Monto" formControlName="maxSumLoc" [ngClass]="{ 'is-invalid': (submitted || f.maxSumLoc.errors) && f.maxSumLoc.touched}">
+                                                                <p style="margin-left: 0.5em;">{{ f.maxSumLoc.value | currency}}</p>
+                                                                <div *ngIf="(submitted || f.maxSumLoc.errors) && f.maxSumLoc.touched" class="invalid-feedback">
+                                                                    <div *ngIf="f.maxSumLoc.errors.required">El monto es requerido</div>
+                                                                    <div *ngIf="f.maxSumLoc.errors.min">El monto debe ser mayor a 0</div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -149,28 +172,25 @@
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="">Proyecto SN</label>
-                                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                                    <option>P1</option>
-                                                                    <option>P2</option>
+                                                                <label for="ProySN">Proyecto SN</label>
+                                                                <select class="form-control" id="ProySN" formControlName="prjCode">
+                                                                    <option *ngFor="let ps of optsTabGral.ListProyectoSN" [ngValue]="ps.PrjCode">{{ps.PrjName}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="">Fuente de Información</label>
-                                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                                    <option>Inf1</option>
-                                                                    <option>Inf2</option>
+                                                                <label for="Source">Fuente de Información</label>
+                                                                <select class="form-control" id="Source" formControlName="source">
+                                                                    <option *ngFor="let ps of optsTabGral.ListaInformacion" [ngValue]="ps.Num">{{ps.Descript}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="">Industria</label>
-                                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                                    <option>Ind1</option>
-                                                                    <option>Ind2</option>
+                                                                <label for="Industry">Industria</label>
+                                                                <select class="form-control" id="Industry" formControlName="industry">
+                                                                    <option *ngFor="let ps of optsTabGral.ListIndustria" [ngValue]="ps.IndCode">{{ps.IndName}} - {{ps.IndDesc}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -179,7 +199,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="observaciones">Observaciones</label>
-                                                                <textarea class="form-control" id="observaciones" placeholder="observaciones"></textarea>
+                                                                <textarea class="form-control" id="observaciones" placeholder="observaciones" formControlName="memo"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -404,7 +424,7 @@
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="">Razone</label>
+                                                                <label for="">Razones</label>
                                                                 <select class="form-control" id="exampleFormControlSelect1">
                                                                     <option>1</option>
                                                                     <option>2</option>
@@ -440,7 +460,7 @@
                                             <!-- <button class="btn btn-light btnLimon"><span><i class="fas fa-times"></i></span></button> -->
                                         </div>
                                         <div class="col-sm-6 d-flex justify-content-center">
-                                            <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                            <button class="btn btn-light btnLimon" (click)="CreateOpp()"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
                                         </div>
                                     </div>
                                 </form>
@@ -452,6 +472,7 @@
         </div>
         <!-- Sección de listas -->
         <div class="col-sm-4 pt-4">
+            <!--Lista de Oportunidades-->
             <div class="card bxcard">
                 <div class="card-header">
                     <div class="card-iconCRM">
@@ -487,40 +508,9 @@
                     </div>
                 </div>
             </div>
+            <!-- Lista Socios de Artículos -->
             <div class="card bxcard mt-5">
-                <div class="card-header">
-                    <div class="card-iconCRM">
-                        <span style="font-size: 1.5em; color: white;"><i class="fas fa-users"></i> Clientes</span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Codigo SN</th>
-                                                <th scope="col">Nombre SN</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">C001</th>
-                                                <td>Socio 01</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">C002</th>
-                                                <td>Socio 02</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <app-lista-crm-socios (socioSel)="listenPartner($event)"></app-lista-crm-socios>
             </div>
         </div>
     </div>

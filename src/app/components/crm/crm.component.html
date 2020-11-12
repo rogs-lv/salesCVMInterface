@@ -2,12 +2,14 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-warning btnfont" routerLinkActive="active" [routerLink]="['crm-oportunidad']">Oportunidades</button>
-                <button type="button" class="btn btn-warning btnfont" routerLinkActive="active" [routerLink]="['crm-actividad']">Actividades</button>
+                <button type="button" class="btn btn-outline-danger btnfont" routerLinkActive="active" [routerLink]="['crm-oportunidad']">Oportunidades</button>
+                <button type="button" class="btn btn-outline-danger btnfont" routerLinkActive="active" [routerLink]="['crm-actividad']">Actividades</button>
             </div>
         </div>
     </div>
 </div>
-<div class="container pt-3">
-    <router-outlet></router-outlet>
+<div class="content-container">
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
 </div>

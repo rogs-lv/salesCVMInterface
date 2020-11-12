@@ -8,8 +8,15 @@
                         <div class="row"></div>
                         <div class="col-sm-12">
                             <form action="">
+                                <div class="row" *ngIf="true">
+                                    <div class="col-sm-12 text-center">
+                                        <div class="form-group">
+                                            <span class="badge badge-success" style="font-size: 1em;">Opp1 - Oportunidad 1</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3" *ngIf="false">
                                         <div class="form-group">
                                             <label for="">Etapa</label>
                                             <select class="form-control" id="exampleFormControlSelect1">
@@ -45,6 +52,15 @@
                                               </select>
                                         </div>
                                     </div>
+                                    <div class="col-sm-3" *ngIf="true">
+                                        <div class="form-group">
+                                            <label for="">Contacto</label>
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                                <option>Persona 1</option>
+                                                <option>Persona 2</option>
+                                              </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -57,15 +73,6 @@
                                         <div class="form-group">
                                             <label for="cardname">Nombre SN</label>
                                             <input id="cardname" type="text" class="form-control" placeholder="Nombre SN" value="" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="">Contacto</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>Persona 1</option>
-                                                <option>Persona 2</option>
-                                              </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -158,12 +165,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="comentarios">Comentarios</label>
-                                                            <textarea class="form-control" id="comentarios" placeholder="Comentarios"></textarea>
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade" id="contenido" role="tabpanel" aria-labelledby="contenido-tab">

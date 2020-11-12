@@ -7,6 +7,7 @@ import { ChartsModule} from 'ng2-charts';
 import { AgGridModule } from 'ag-grid-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routes';
+import { CurrencyPipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -31,6 +32,8 @@ import { ToastComponent } from './components/toast/toast.component';
 import { EstadosPipe } from './pipes/estados.pipe';
 import { ListaarticulosComponent } from './components/datosmaestros/shared/listaarticulos/listaarticulos.component';
 import { ModalListaSNComponent } from './components/ventas/shared/modal-lista-sn/modal-lista-sn.component';
+import { ListaOppComponent } from './components/crm/shared/lista-opp/lista-opp.component';
+import { ListaCRMSociosComponent } from './components/crm/shared/lista-crm-socios/lista-crm-socios.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,9 @@ import { ModalListaSNComponent } from './components/ventas/shared/modal-lista-sn
     ToastComponent,
     EstadosPipe,
     ListaarticulosComponent,
-    ModalListaSNComponent
+    ModalListaSNComponent,
+    ListaOppComponent,
+    ListaCRMSociosComponent
   ],
   entryComponents: [
     ModalComponent,
@@ -72,6 +77,7 @@ import { ModalListaSNComponent } from './components/ventas/shared/modal-lista-sn
     AgGridModule.withComponents([])
   ],
   providers: [
+    CurrencyPipe
     /* {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

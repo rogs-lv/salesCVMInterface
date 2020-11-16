@@ -9,6 +9,9 @@ class Opportunity {
     CprCode: number;
     Territory: number;
     OpenDate: Date;
+    Status: string;
+    DocType: string;
+    DocNum: number;
     constructor() {
         this.OpprId = 0;
         this.Name = '';
@@ -20,6 +23,9 @@ class Opportunity {
         this.CprCode  = 0;
         this.Territory = 0;
         this.OpenDate = new Date();
+        this.Status = '';
+        this.DocType = '';
+        this.DocNum = 0;
     }
 }
 
@@ -194,15 +200,41 @@ export class OptionsHeaderOpp {
         this.ListVendedor    = new Array<Vendedor>();
     }
 }
+export class Razones {
+    Num: number;
+    Descript: string;
+    constructor() {
+        this.Num = 0;
+        this.Descript = '';
+    }
+}
+export class Relacion {
+    OrlCode: number;
+    OrlDesc: string;
+    constructor() {
+        this.OrlCode = 0;
+        this.OrlDesc = '';
+    }
+}
 export class OptionsTabGralOpp {
     ListProyectoSN: Array<ProyectoSN>;
     ListaInformacion: Array<FuenteInformacion>;
     ListIndustria: Array<Industria>;
-
+    ListVendedor: Array<Vendedor>;
+    ListEtapa: Array<OptsEtapas>;
+    ListRelacion: Array<Relacion>;
+    ListCompetidor: Array<Competidores>;
+    ListPartner: Array<Partner>;
+    ListRazones: Array<Razones>;
     constructor() {
         this.ListProyectoSN = new Array<ProyectoSN>();
         this.ListaInformacion = new Array<FuenteInformacion>();
         this.ListIndustria = new Array<Industria>();
+        this.ListVendedor = new Array<Vendedor>();
+        this.ListEtapa = new Array<OptsEtapas>();
+        this.ListRelacion = new Array<Relacion>();
+        this.ListCompetidor = new Array<Competidores>();
+        this.ListPartner = new Array<Partner>();
     }
 }
 
@@ -242,4 +274,23 @@ export class OpportunitySAP {
 export class BusinessP {
     CardCode: string;
     CardName: string;
+    SlpCode: number;
+    constructor() {
+        this.CardCode = '';
+        this.CardName = '';
+        this.SlpCode = 0;
+    }
+}
+
+export class OptsEtapas {
+    Num: number;
+    Descript: string;
+    StepId: number;
+    CloPrcnt: number;
+    constructor() {
+        this.Num = 0;
+        this.Descript = '';
+        this.StepId = 0;
+        this.CloPrcnt = 0;
+    }
 }

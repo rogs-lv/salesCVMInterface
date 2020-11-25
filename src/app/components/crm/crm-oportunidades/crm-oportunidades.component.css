@@ -1,3 +1,21 @@
+/* body {
+    position: relative
+} */
+
+
+/* .overflow-box {
+    padding: 5px;
+    height: 100px;
+    border: 1px solid #999;
+    overflow: hidden;
+}
+
+.scrollable-box {
+    position: relative;
+    height: 400px;
+    overflow: auto;
+} */
+
 .atabs {
     padding-top: 0.5em;
     padding-right: 0.3em;

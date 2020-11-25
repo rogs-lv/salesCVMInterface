@@ -2,18 +2,21 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Direcciones } from '../models/socioNegocios';
 
 @Pipe({
-  name: 'facturacion'
+  name: 'amenaza'
 })
 export class FacturacionPipe implements PipeTransform {
 
-  transform(values: Array<Direcciones>): Array<Direcciones> {
-    const dirTipoF = [];
-    for (const key in values) {
-      if (values[key].AdresType === 'B') {
-        dirTipoF.push(values[key]);
-      }
+  transform(values: string): string {
+    switch (values) {
+      case '1':
+        return 'Bajo';
+      case '2':
+        return 'Medio';
+      case '3':
+        return 'Alto';
+      default:
+        return '';
     }
-    return dirTipoF;
   }
 
 }

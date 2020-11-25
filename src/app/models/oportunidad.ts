@@ -1,4 +1,21 @@
-class Opportunity {
+export class OpenDocs {
+    DocEntry: number;
+    DocNum: number;
+    CardCode: string;
+    CardName: string;
+    DocDueDate: Date;
+    DocDate: Date;
+
+    constructor() {
+        this.DocEntry = 0;
+        this.DocNum = 0;
+        this.CardCode = '';
+        this.CardName = '';
+        this.DocDueDate = new Date();
+        this.DocDate = new Date();
+    }
+}
+export class Opportunity {
     OpprId: number;
     Name: string;
     CardCode: string;
@@ -12,6 +29,8 @@ class Opportunity {
     Status: string;
     DocType: string;
     DocNum: number;
+    ReasondId: number;
+    CloseDate: Date;
     constructor() {
         this.OpprId = 0;
         this.Name = '';
@@ -23,9 +42,11 @@ class Opportunity {
         this.CprCode  = 0;
         this.Territory = 0;
         this.OpenDate = new Date();
-        this.Status = '';
+        this.Status = 'O';
         this.DocType = '';
         this.DocNum = 0;
+        this.ReasondId = -1;
+        this.CloseDate = new Date();
     }
 }
 
@@ -62,11 +83,12 @@ export class Etapas {
     CloseDate: Date;
     Step_Id: number;
     Descript: string;
-    ClosePrcn: number;
+    ClosePrcnt: number;
     WtSumLoc: number;
     ObjType: number;
     DocNumber: number;
     LineNum: number;
+    Status: string;
     constructor() {
         this.SlpCode = 0;
         this.SlpName = '';
@@ -74,15 +96,17 @@ export class Etapas {
         this.CloseDate = new Date();
         this.Step_Id = 0;
         this.Descript = '';
-        this.ClosePrcn = 0;
+        this.ClosePrcnt = 0;
         this.WtSumLoc = 0;
         this.ObjType = 0;
         this.DocNumber = 0;
         this.LineNum = -1;
+        this.Status = '';
     }
 }
 
 export class Partner {
+    Line: number;
     ParterId: number;
     Name: string;
     OrlCode: number;
@@ -91,6 +115,7 @@ export class Partner {
     Memo: string ;
 
     constructor() {
+        this.Line = -1;
         this.ParterId = 0;
         this.Name = '';
         this.OrlCode = 0;
@@ -100,20 +125,22 @@ export class Partner {
 }
 
 export class Competidores {
+    Line: number;
     CompetId: number;
     NameCompet: string;
     ThreatLevi: string;
     Name: string;
     Memo: string;
-    Won: string;
+    Won: boolean;
 
     constructor() {
+        this.Line       = -1;
         this.CompetId   = 0;
         this.NameCompet = '';
         this.ThreatLevi = '';
         this.Name       = '';
         this.Memo       = '';
-        this.Won        = ' ';
+        this.Won        = false;
     }
 }
 
@@ -121,16 +148,16 @@ export class Resumen {
     Status: string;
     ReasondId: number;
     Descript: string;
-    DocType: string;
+    DocType: number;
     Name: string;
-    DocNum: string;
+    DocNum: number;
     constructor() {
         this.Status = '';
         this.ReasondId = 0;
         this.Descript = '';
-        this.DocType = '';
+        this.DocType = 0;
         this.Name = '';
-        this.DocNum = '';
+        this.DocNum = 0;
     }
 }
 

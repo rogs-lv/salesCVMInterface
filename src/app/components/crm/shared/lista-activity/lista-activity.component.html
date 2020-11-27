@@ -1,0 +1,27 @@
+<div class="card-body">
+    <div class="card-header">
+        <div class="card-icon">
+            <span style="font-size: 1.5em; color: white;"><i class="fas fa-clipboard-list"></i> Actividades</span>
+        </div>
+    </div>
+    <div>
+        <div class="example-header">
+            N° Paginas:
+            <select (change)="onPageSizeChanged(pagSize)" [(ngModel)]="pagSize">
+              <option value="10" selected="">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="col-sm-9 pr-0">
+                <input class="form-control" type="text" (keyup)="onQuickFilterChanged()" [(ngModel)]="quickSearchValue" placeholder="Buscar..." />
+            </div>
+            <div class="col-sm-3 pl-0 text-center">
+                <button class="btn btn-warning" (click)="onCleanFilter()"><span><i class="fas fa-ban"></i></span></button>
+            </div>
+        </div>
+        <ag-grid-angular #agGrid id="agGrid" style="width: auto; height: 300px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [pagination]="true" [paginationPageSize]="pagSize" [defaultColDef]=" { resizable: true }" (cellClicked)='onCellClicked($event)'>
+        </ag-grid-angular>
+    </div>
+</div>

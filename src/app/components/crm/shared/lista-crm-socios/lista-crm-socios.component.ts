@@ -19,6 +19,7 @@ export class ListaCRMSociosComponent implements OnInit {
   quickSearchValue = '';
 
   columnDefs = [
+    {headerName: '#', valueGetter: 'node.rowIndex + 1', maxWidth: '50'},
     {headerName: 'Codigo', field: 'CardCode'},
     {headerName: 'Nombre', field: 'CardName'},
     {headerName: 'Tipo', field: 'CardType', hide: true},

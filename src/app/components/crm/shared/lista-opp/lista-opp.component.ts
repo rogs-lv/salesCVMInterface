@@ -44,7 +44,7 @@ export class ListaOppComponent implements OnInit {
       this.agGrid.api.onFilterChanged();
     }, (err) => {
       Swal.fire({
-        title: 'Mensaje de sistema',
+        title: 'Error',
         icon: 'error',
         text: err.status === 0 ? 'Error al obtener socios de negocio' : err.error
       });

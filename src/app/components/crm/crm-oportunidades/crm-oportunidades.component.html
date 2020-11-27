@@ -51,7 +51,7 @@
                                                 <div class="input-group mb-3">
                                                     <input class="form-control" placeholder="Fecha Cierre" ngbDatepicker #CloseDCalendar="ngbDatepicker" formControlName="CloseDate" readonly>
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary" type="button" id="btnFecha" disabled><span><i class="fas fa-calendar"></i></span></button>
+                                                        <button class="btn btn-outline-secondary calendar" type="button" id="btnFecha" (click)="CloseDCalendar.toggle()"><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
                                                 </div>
                                             </div>

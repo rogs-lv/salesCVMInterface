@@ -72,7 +72,7 @@ export class CrmOportunidadesComponent implements OnInit {
       CloPrcnt:  new FormControl(this.docSap.Header.CloPrcnt),
       Name:      new FormControl(this.docSap.Header.Name, Validators.required),
       OpenDate:  new FormControl(this.OpenDate, Validators.required),
-      CloseDate: new FormControl( {value: this.CloseDate, disabled: true}),
+      CloseDate: new FormControl( {value: this.CloseDate, disabled: false}),
       CardCode:  new FormControl(this.docSap.Header.CardCode, Validators.required),
       CardName:  new FormControl(this.docSap.Header.CardName),
       CprCode:   new FormControl(this.docSap.Header.CprCode),
@@ -199,7 +199,6 @@ export class CrmOportunidadesComponent implements OnInit {
 
   // lisen clic on list partner
   listenPartner(value: any) {
-    console.log(this.f.OpprId.value);
     if (this.f.OpprId.value !== '' && this.f.OpprId.value !== null && this.f.OpprId.value > 0) { // Si estamos editando una oportunidad
         this.showDanger('El socio de negocios no puede ser modificado');
     } else { // Si estamos creando una oportunidad
@@ -366,14 +365,17 @@ export class CrmOportunidadesComponent implements OnInit {
     } else {
       const Opp = new OpportunitySAP();
       Opp.Header = this.formOpp.value;
-      Opp.Header.OpenDate = this.formatDate(this.formOpp.value.OpenDate, 'A');
+      Opp.Header.OpenDate = new Date(`${this.formOpp.controls.OpenDate.value.year}/${this.formOpp.controls.OpenDate.value.month}/${this.formOpp.controls.OpenDate.value.day}`.toString()); // this.formatDate(this.formOpp.value.OpenDate, 'A');
       Opp.Header.CloseDate = this.formOpp.value.CloseDate ? this.formatDate(this.formOpp.value.CloseDate, 'A') : null;
       Opp.Detail.TabPotencial = this.formOpp.controls['TabPotencial'].value;
-      Opp.Detail.TabPotencial.PredDate = this.formatDate(this.tPot.value.PredDate, 'A');
+      // console.log(new Date(`${this.tPot.value.PredDate.year}/${this.tPot.value.PredDate.month}/${this.tPot.value.PredDate.day}`.toString()));
+      Opp.Detail.TabPotencial.PredDate = new Date(`${this.tPot.value.PredDate.year}/${this.tPot.value.PredDate.month}/${this.tPot.value.PredDate.day}`.toString()); // this.formatDate(this.tPot.value.PredDate, 'A');
+      // console.log(Opp.Detail.TabPotencial.PredDate);
       Opp.Detail.TabGeneral = this.formOpp.controls['TabGeneral'].value;
       Opp.Detail.TableEtapas = this.docSap.Detail.TableEtapas;
       Opp.Detail.TablePartner = this.docSap.Detail.TablePartner;
       Opp.Detail.TableCompet = this.docSap.Detail.TableCompet;
+      // console.log(Opp);
       this.service.createOpp(this.auth.getToken(), Opp, '').subscribe(response => {
         Swal.fire({
           title: 'Oportunidad creada',
@@ -451,7 +453,6 @@ export class CrmOportunidadesComponent implements OnInit {
     const cierre = `${this.tPot.value.PredDate.year}-${this.tPot.value.PredDate.month}-${this.tPot.value.PredDate.day}`;
     const cierreDate = new Date(cierre.toString()).getTime(); // - new Date(apertura.toString()).getTime();
     const apertDate = new Date(apertura.toString()).getTime();
-
     if (cierreDate < apertDate) { // Si la fecha de cierre es menor a la fecha de incio
       this.durationValid = -1;
     } else if (apertDate > cierreDate) { // Si la fecha de apertura es mayor a la fecha de cierre

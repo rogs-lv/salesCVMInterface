@@ -361,7 +361,6 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     this.mkService.createBP(this.auth.getToken(), this.BusnessP, this.auth.getDataToken().Code).subscribe(response => {
-      console.log('Creacion', response);
       Swal.fire({
         title: 'Socio Creado',
         icon: 'success',
@@ -372,7 +371,6 @@ export class SociosnegociosComponent implements OnInit, OnDestroy, OnChanges {
       frm.resetForm();
       this.childList.refreshListBP();
     }, (err) => {
-      console.log('Creacion err', err);
       Swal.fire({
         title: 'Error al crear socio',
         icon: 'error',

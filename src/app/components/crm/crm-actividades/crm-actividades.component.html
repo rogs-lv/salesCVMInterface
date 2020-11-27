@@ -4,81 +4,93 @@
         <div class="col-sm-8 pt-4">
             <div class="card bxcard">
                 <div class="card-body">
+                    <div class="card-header" *ngIf="document.ClgCode > 0">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5em; color: white;"><i class="fas fa-clipboard-check"></i> Actividad: {{document.ClgCode}}</span>
+                        </div>
+                    </div>
                     <div class="container pt-3">
-                        <div class="row"></div>
                         <div class="col-sm-12">
-                            <form action="">
-                                <div class="row" *ngIf="true">
-                                    <div class="col-sm-12 text-center">
-                                        <div class="form-group">
-                                            <span class="badge badge-success" style="font-size: 1em;">Opp1 - Oportunidad 1</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3" *ngIf="false">
-                                        <div class="form-group">
-                                            <label for="">Etapa</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>E 1</option>
-                                                <option>E 2</option>
-                                              </select>
-                                        </div>
-                                    </div>
+                            <form class="needs-validation" #frmAct="ngForm" novalidate="">
+                                <div class="row d-flex justify-content-around">
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label for="">Actividad</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>A 1</option>
-                                                <option>A 2</option>
-                                              </select>
+                                            <label for="" class="mb-0">Oportunidad</label>
+                                            <ng-select [virtualScroll]="true" placeholder="¿Documento?" notFoundText="No hay documentos" [(ngModel)]="document.OprId" name="OprId" (change)="onChangeDocumentOpp()">
+                                                <ng-option *ngFor="let o of ListOppAct" [value]="o.OpprId">{{o.OpprId}} - {{o.Name}}</ng-option>
+                                            </ng-select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label for="">Tipo</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>Tipo 1</option>
-                                                <option>Tipo 2</option>
-                                              </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="">Asunto</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>Asunto 1</option>
-                                                <option>Asunto 2</option>
-                                              </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3" *ngIf="true">
-                                        <div class="form-group">
-                                            <label for="">Contacto</label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>Persona 1</option>
-                                                <option>Persona 2</option>
-                                              </select>
+                                            <label for="" class="mb-0">Etapa</label>
+                                            <ng-select [virtualScroll]="true" placeholder="¿Etapa?" notFoundText="No hay etapas" [(ngModel)]="document.OprLine" name="OprLine" [disabled]="!document.OprId">
+                                                <ng-option *ngFor="let o of ListStageAct" [value]="o.Line">{{o.SlpName}} - {{o.Descript}} - {{o.ClosePrcnt}}</ng-option>
+                                            </ng-select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label for="cardcode">Codigo SN</label>
-                                            <input id="cardcode" type="text" class="form-control" placeholder="Codigo SN" value="" disabled>
+                                            <label for="Action">Actividad</label>
+                                            <select class="form-control" #Action="ngModel" [(ngModel)]="document.Action" name="Action">
+                                                <option *ngFor="let a of ListActividad" [ngValue]="a.Code">{{a.Name}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label for="cardname">Nombre SN</label>
-                                            <input id="cardname" type="text" class="form-control" placeholder="Nombre SN" value="" disabled>
+                                            <label for="CntctType">Tipo</label>
+                                            <select class="form-control" #CntctType="ngModel" [(ngModel)]="document.CntctType" name="CntctType">
+                                                <option *ngFor="let t of ListTipo" [ngValue]="t.Code">{{t.Name}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label for="phone">Teléfono</label>
-                                            <input id="phone" type="text" class="form-control" placeholder="Teléfono" value="">
+                                            <label for="CntctSbjct">Asunto</label>
+                                            <select class="form-control" #CntctSbjct="ngModel" [(ngModel)]="document.CntctSbjct" name="CntctSbjct">
+                                                <option *ngFor="let s of ListAsunto" [ngValue]="s.Code">{{s.Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="CardCode">Codigo SN</label>
+                                            <input id="CardCode" name="CardCode" class="form-control" required [(ngModel)]="document.CardCode" #CardCode="ngModel" placeholder="Codigo" type="text" [disabled]="true">
+                                            <div *ngIf="CardCode.invalid && (CardCode.touched || CardCode.dirty)" class="invalid-feedback d-block">
+                                                <div *ngIf="CardCode.errors.required">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="CardName">Nombre SN</label>
+                                            <input [(ngModel)]="CardName" #cardName="ngModel" name="CardName" class="form-control" placeholder="Nombre" type="text" required [disabled]="true">
+                                            <div *ngIf="cardName.invalid && (cardName.touched || cardName.dirty)" class="invalid-feedback d-block">
+                                                <div *ngIf="cardName.errors.required">
+                                                    Este campo es requerido
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="CntctCode">Contacto</label>
+                                            <select class="form-control" #CntctCode="ngModel" [(ngModel)]="document.CntctCode" name="CntctCode" (change)="onChangeContact()">
+                                                <option *ngFor="let c of ListPersonas" [ngValue]="c.CntctCode">{{c.Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="Tel">Teléfono</label>
+                                            <input class="form-control" #Tel="ngModel" [(ngModel)]="document.Tel" placeholder="Teléfono" type="text" name="Tel">
                                         </div>
                                     </div>
                                 </div>
@@ -103,11 +115,22 @@
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
-                                                            <label for="fcierre">Fecha Inicio</label>
+                                                            <label for="Recontact">Fecha de Inicio</label>
                                                             <div class="input-group mb-3">
-                                                                <input id="fcierre" type="text" class="form-control" placeholder="Fecha Inicio" value="">
+                                                                <input class="form-control" (ngModelChange)="onChangeDateBegin($event)" placeholder="Fecha Inicio" name="Recontact" [(ngModel)]="Recontact" ngbDatepicker #r="ngbDatepicker" required readonly>
                                                                 <div class="input-group-append">
-                                                                    <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
+                                                                    <button class="btn btn-outline-secondary calendar" (click)="r.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="endDate">Fecha Fin</label>
+                                                            <div class="input-group mb-3">
+                                                                <input class="form-control" (ngModelChange)="onChangeDateEnd($event)" placeholder="Fecha Fin" name="endD" [(ngModel)]="endDate" ngbDatepicker #ed="ngbDatepicker" required readonly>
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-secondary calendar" (click)="ed.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -115,52 +138,37 @@
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
                                                             <label for="hinicio">Hora Inicio</label>
-                                                            <input id="hinicio" type="text" class="form-control" placeholder="Hora Inicio" value="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <label for="ffin">Fecha Fin</label>
-                                                            <div class="input-group mb-3">
-                                                                <input id="ffin" type="text" class="form-control" placeholder="Fecha Fin" value="">
-                                                                <div class="input-group-append">
-                                                                    <button class="btn btn-outline-secondary" type="button" id="btnFecha"><span><i class="fas fa-calendar"></i></span></button>
-                                                                </div>
-                                                            </div>
+                                                            <ngb-timepicker (ngModelChange)="onChangeTimeInicio($event)" [(ngModel)]="BeginTime" name="HIni" [meridian]="true"></ngb-timepicker>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
                                                             <label for="hfin">Hora Fin</label>
-                                                            <input id="hfin" type="text" class="form-control" placeholder="Hora Fin" value="">
+                                                            <ngb-timepicker (ngModelChange)="onChangeTimeFin($event)" [(ngModel)]="ENDTime" name="endtime" [meridian]="true"></ngb-timepicker>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <!-- <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="Duration">Duración</label>
+                                                            <input [(ngModel)]="Duration" #duration="ngModel" name="Duration" class="form-control" placeholder="Duración" [disabled]="true" type="text">
+                                                        </div>
+                                                    </div> -->
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
-                                                            <label for="fcierre">Duración</label>
-                                                            <input id="fcierre" type="text" class="form-control" placeholder="Duración" value="">
+                                                            <label for="Priority">Prioridad</label>
+                                                            <select class="form-control" #Priority="ngModel" [(ngModel)]="document.Priority" type="text" name="Priority">
+                                                                <option *ngFor="let p of ListPrioridad" [ngValue]="p.Code">{{p.Name}}</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
-                                                            <label for="">Prioridad</label>
-                                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                                <option>Bajo</option>
-                                                                <option>Medio</option>
-                                                                <option>Alto</option>
-                                                              </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <label for="">Localidad</label>
-                                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                                <option>L1</option>
-                                                                <option>L2</option>
-                                                                <option>L3</option>
-                                                              </select>
+                                                            <label for="Location">Localidad</label>
+                                                            <select class="form-control" #Location="ngModel" [(ngModel)]="document.Location" type="text" name="Location">
+                                                                <option *ngFor="let lo of ListLocalidad" [ngValue]="lo.Code">{{lo.Name}}</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -173,8 +181,8 @@
                                                 <div class="row">
                                                     <div class="col-md-10">
                                                         <div class="form-group">
-                                                            <label for="observaciones"></label>
-                                                            <textarea class="form-control" id="observaciones" placeholder="Contenido"></textarea>
+                                                            <label for="Notes"></label>
+                                                            <textarea class="form-control" placeholder="Contenido" #Notes="ngModel" [(ngModel)]="document.Notes" type="text" name="Contenido"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -184,12 +192,18 @@
                                 </div>
                                 <br>
                                 <div class="row pt-4">
-                                    <div class="col-sm-6 d-flex justify-content-center">
-                                        <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-pencil-alt"></i></span></button>
-                                        <!-- <button class="btn btn-light btnLimon"><span><i class="fas fa-times"></i></span></button> -->
+                                    <div class="col-sm-6 d-flex justify-content-end">
                                     </div>
-                                    <div class="col-sm-6 d-flex justify-content-center">
-                                        <button class="btn btn-light btnLimon"><span class="btnFomr"><i class="fas fa-paper-plane"></i></span></button>
+                                    <div class="col-sm-6">
+                                        <div *ngIf="document.ClgCode > 0" [ngClass]="{'d-flex' : true, 'justify-content-between' : (document.ClgCode && !submit), 'justify-content-end' : (document.ClgCode > 0 && submit)}">
+                                            <button *ngIf="document.ClgCode > 0 && !submit" class="btn btn-info" (click)="onCancelActivity()"><span class="btnFomr"><i class="fas fa-calendar-times"></i></span> Cancelar</button>
+                                            <button *ngIf="document.ClgCode > 0 && !submit" [disabled]="frmAct.invalid" class="btn btn-info" (click)="onUpdateActivity(frmAct)"><span class="btnFomr"><i class="fas fa-sync"></i></span> Actualizar Actividad</button>
+                                            <button class="btn btn-info" *ngIf="submit"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                        </div>
+                                        <div *ngIf="document.ClgCode === -1" class=" d-flex justify-content-end">
+                                            <button *ngIf="(document.ClgCode === -1 && !submit)" [disabled]="frmAct.invalid || !document.CardCode" class="btn btn-info" (click)="onCreateActivity(frmAct)"><span class="btnFomr"><i class="fas fa-calendar-check"></i></span> Crear Actividad</button>
+                                            <button class="btn btn-info" *ngIf="submit"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -200,76 +214,15 @@
         </div>
         <!-- Seccion de listas -->
         <div class="col-sm-4 pt-4">
+            <!--Lista de Actvidades-->
             <div class="card bxcard">
-                <div class="card-header">
-                    <div class="card-iconCRM">
-                        <span style="font-size: 1.5em; color: white;"><i class="fas fa-money-check-alt"></i> Oportunidades de Vta</span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">No Oport.</th>
-                                                <th scope="col">Nombre</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Oportunidad 1</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Oportunidad 2</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <app-lista-activity (actSel)="onListenActivity($event)"></app-lista-activity>
             </div>
+            <!-- Lista Socios de negocios -->
             <div class="card bxcard mt-5">
-                <div class="card-header">
-                    <div class="card-iconCRM">
-                        <span style="font-size: 1.5em; color: white;"><i class="fas fa-users"></i> Clientes</span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="table-responsive-xl">
-                                    <table class="table table-borderless">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Codigo SN</th>
-                                                <th scope="col">Nombre SN</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">C001</th>
-                                                <td>Socio 01</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">C002</th>
-                                                <td>Socio 02</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <app-lista-crm-socios (socioSel)="onLisenPartner($event)"></app-lista-crm-socios>
             </div>
         </div>
     </div>
+    <app-toast aria-live="polite" aria-atomic="true"></app-toast>
 </div>

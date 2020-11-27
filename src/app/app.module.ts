@@ -35,6 +35,7 @@ import { ListaarticulosComponent } from './components/datosmaestros/shared/lista
 import { ModalListaSNComponent } from './components/ventas/shared/modal-lista-sn/modal-lista-sn.component';
 import { ListaOppComponent } from './components/crm/shared/lista-opp/lista-opp.component';
 import { ListaCRMSociosComponent } from './components/crm/shared/lista-crm-socios/lista-crm-socios.component';
+import { ListaActivityComponent } from './components/crm/shared/lista-activity/lista-activity.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { ListaCRMSociosComponent } from './components/crm/shared/lista-crm-socio
     ListaarticulosComponent,
     ModalListaSNComponent,
     ListaOppComponent,
-    ListaCRMSociosComponent
+    ListaCRMSociosComponent,
+    ListaActivityComponent
   ],
   entryComponents: [
     ModalComponent,

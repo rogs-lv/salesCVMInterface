@@ -25,3 +25,7 @@
     background-color: #17a2b8;
     border-color: #dee2e6 #dee2e6 #fff;
 }
+
+.ng-invalid.ng-touched:not(form) {
+    border: 1px solid red;
+}

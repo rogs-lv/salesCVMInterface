@@ -48,10 +48,10 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="">Fecha cierre</label>
-                                                <div class="input-group mb-3">
-                                                    <input class="form-control" placeholder="Fecha Cierre" ngbDatepicker #CloseDCalendar="ngbDatepicker" formControlName="CloseDate" readonly>
+                                                <div class="input-group mb-3" *ngIf="formOpp.value.Status === 'W' || formOpp.value.Status === 'L'">
+                                                    <input class="form-control" placeholder="Fecha Cierre" ngbDatepicker #CloseDCalendar="ngbDatepicker" readonly formControlName="CloseDate">
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary calendar" type="button" id="btnFecha" (click)="CloseDCalendar.toggle()"><span><i class="fas fa-calendar"></i></span></button>
+                                                        <button class="btn btn-outline-secondary calendar" (click)="CloseDCalendar.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
                                                 </div>
                                             </div>

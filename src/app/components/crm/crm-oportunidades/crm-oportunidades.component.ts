@@ -59,6 +59,7 @@ export class CrmOportunidadesComponent implements OnInit {
     this.tEtOpenDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     this.tEtCloseDate = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
   }
+
   ngOnInit() {
     this.createForm();
     this.onChangeDate();
@@ -72,7 +73,7 @@ export class CrmOportunidadesComponent implements OnInit {
       CloPrcnt:  new FormControl(this.docSap.Header.CloPrcnt),
       Name:      new FormControl(this.docSap.Header.Name, Validators.required),
       OpenDate:  new FormControl(this.OpenDate, Validators.required),
-      CloseDate: new FormControl( {value: this.CloseDate, disabled: false}),
+      CloseDate: new FormControl(this.CloseDate),
       CardCode:  new FormControl(this.docSap.Header.CardCode, Validators.required),
       CardName:  new FormControl(this.docSap.Header.CardName),
       CprCode:   new FormControl(this.docSap.Header.CprCode),

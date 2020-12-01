@@ -21,6 +21,19 @@
                 <button class="btn btn-warning" (click)="onCleanFilter()"><span><i class="fas fa-ban"></i></span></button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12 d-flex justify-content-around">
+                <label for="">Lista de precios: </label>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="Default" name="Default" class="custom-control-input" [(ngModel)]="listDeft" [value]="true" (ngModelChange)="onChangeRadio($event)">
+                    <label class="custom-control-label" for="Default">Default</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="Cliente" name="Default" class="custom-control-input" [(ngModel)]="listDeft" [value]="false" (ngModelChange)="onChangeRadio($event)">
+                    <label class="custom-control-label" for="Cliente">Cliente</label>
+                </div>
+            </div>
+        </div>
         <ag-grid-angular #agGrid id="agGrid" style="width: auto; height: 500px;" class="ag-theme-alpine" [columnDefs]="columnDefs" [pagination]="true" [paginationPageSize]="pageSize" [defaultColDef]=" { resizable: true }" (cellClicked)='onCellClicked($event)'>
         </ag-grid-angular>
     </div>

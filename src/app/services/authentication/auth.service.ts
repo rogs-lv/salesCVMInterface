@@ -76,6 +76,7 @@ export class AuthService {
 
   doLogout() {
     const removeToken = localStorage.removeItem('access_token');
+    localStorage.removeItem('LP');
     if (removeToken == null) {
       this.router.navigateByUrl('/login');
     }
@@ -111,5 +112,13 @@ export class AuthService {
       msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(msg);
+  }
+
+  setConfLisArt(listPric: string) {
+    localStorage.setItem('LP', listPric);
+  }
+
+  getConfListArt() {
+    return localStorage.getItem('LP');
   }
 }

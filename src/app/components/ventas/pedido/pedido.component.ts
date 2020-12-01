@@ -12,6 +12,8 @@ import { TablaArticulosComponent } from '../shared/tabla-articulos/tabla-articul
 import { MtrDataService } from 'src/app/services/masterData/mtr-data.service';
 import { ModalListaSNComponent } from '../shared/modal-lista-sn/modal-lista-sn.component';
 import { ContactPerson, DireccionEntrega, Vendedor } from 'src/app/models/masterData';
+import { ReporteService } from 'src/app/services/reporte/reporte.service';
+import { ListaArticulosComponent } from '../shared/lista-articulos/lista-articulos.component';
 
 @Component({
   selector: 'app-pedido',
@@ -20,6 +22,8 @@ import { ContactPerson, DireccionEntrega, Vendedor } from 'src/app/models/master
 })
 export class PedidoComponent implements OnInit {
   @ViewChild(TablaArticulosComponent, {static: false}) childTable: TablaArticulosComponent;
+  @ViewChild(ListaArticulosComponent, {static: false}) childListArt: ListaArticulosComponent;
+
   currencies = ['MXP', 'USD', '$'];
   currencySel = this.currencies[0];
   proceso: boolean;
@@ -46,6 +50,7 @@ export class PedidoComponent implements OnInit {
     private auth: AuthService,
     private modalService: NgbModal,
     private mtrService: MtrDataService,
+    private rptService: ReporteService,
   ) {
     this.document = new Document();
     this.docSap = new DocSAP();
@@ -161,8 +166,10 @@ export class PedidoComponent implements OnInit {
           icon: 'success',
           text: String(response.DocNum)
         });
+        this.printDocument(response.DocNum, 17);
         this.proceso = false;
         this.valueDefault();
+        this.childListArt.onChangeRadio(false);
       }, (err) => {
         Swal.fire({
           title: 'Error al crear orden',
@@ -215,6 +222,8 @@ export class PedidoComponent implements OnInit {
     this.ImpSN.TaxCodeAR = this.auth.getDataToken().TaxCode;
     this.ImpSN.Rate = this.auth.getDataToken().Rate;
     this.getPersonasDirs(this.auth.getDataToken().CardCode);
+    /*this.childListArt.listDeft = true;
+    this.childListArt.getListItems();*/
   }
 
   cancelQts() {
@@ -224,6 +233,7 @@ export class PedidoComponent implements OnInit {
     this.DateOrder = { year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate() };
     this.slpCodeSel = Number(this.auth.getDataToken().SlpCode);
     this.rowDataOrder = [];
+    this.childListArt.onCancelOrder(false, this.auth.getDataToken().CardCode);
   }
 
   getSocios() {
@@ -260,6 +270,8 @@ export class PedidoComponent implements OnInit {
         this.ImpSN.TaxCodeAR = result.TaxCode;
         this.ImpSN.Rate = result.Rate;
         this.getPersonasDirs(result.CardCode);
+        this.onClearTable();
+        this.childListArt.onChangeRadio(false);
       }
     }, (reason) => {
     });
@@ -275,5 +287,16 @@ export class PedidoComponent implements OnInit {
         text: err.error
       });
     });
+  }
+
+  private printDocument(idDoc: number, type: number) {
+    this.rptService.printReport(this.auth.getToken(), idDoc, type).subscribe(response => {
+      const fileURL = URL.createObjectURL(response);
+      window.open(fileURL, '_blank');
+    });
+  }
+
+  onClearTable() {
+    this.rowDataOrder = [];
   }
 }

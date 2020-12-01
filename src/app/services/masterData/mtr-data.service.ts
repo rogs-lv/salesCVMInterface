@@ -17,10 +17,10 @@ export class MtrDataService {
   ) {
   }
 
-  getItems(token: string, type: number, whsCode: string, priceList: string) {
+  getItems(token: string, type: number, whsCode: string, priceList: string, cardCode: string = '') {
     const headersItem = new HttpHeaders()
     .set('Authorization', token);
-    const api = `${this.endpoint}salesCVM/MasterData/GetMasterData?type=${type}&priceList=${priceList}&whsCode=${whsCode}`;
+    const api = `${this.endpoint}salesCVM/MasterData/GetMasterData?type=${type}&priceList=${priceList}&whsCode=${whsCode}&cardCode=${cardCode}`;
 
     return this.http.get(api, { headers: headersItem }).pipe(
       map( (response: Response) => {

@@ -10,6 +10,8 @@ import { MktService } from '../../../services/marketing/mkt.service';
 import { MtrDataService } from '../../../services/masterData/mtr-data.service';
 import { AuthService } from '../../../services/authentication/auth.service';
 import { ContactPerson, DireccionEntrega, Vendedor } from 'src/app/models/masterData';
+import { ReporteService } from '../../../services/reporte/reporte.service';
+import { ListaArticulosComponent } from '../shared/lista-articulos/lista-articulos.component';
 
 @Component({
   selector: 'app-cotizacion',
@@ -17,6 +19,7 @@ import { ContactPerson, DireccionEntrega, Vendedor } from 'src/app/models/master
   styleUrls: ['./cotizacion.component.css']
 })
 export class CotizacionComponent implements OnInit {
+  @ViewChild(ListaArticulosComponent, {static: true}) childListArt: ListaArticulosComponent;
 
   document: Document;
   doc: DocSAP;
@@ -39,6 +42,7 @@ export class CotizacionComponent implements OnInit {
     private mktService: MktService,
     private auth: AuthService,
     private mtrService: MtrDataService,
+    private rptService: ReporteService,
     private modalService: NgbModal
   ) {
     this.document = new Document();
@@ -114,8 +118,10 @@ export class CotizacionComponent implements OnInit {
           icon: 'success',
           text: String(response.DocNum)
         });
+        this.printDocument(response.DocNum, 23);
         this.proceso = false;
         this.valueDefault();
+        this.childListArt.onChangeRadio(false);
       }, (err) => {
         Swal.fire({
           title: 'Error al crear cotización',
@@ -170,6 +176,8 @@ export class CotizacionComponent implements OnInit {
         this.ImpSN.TaxCodeAR = result.TaxCode;
         this.ImpSN.Rate = result.Rate;
         this.getPersonasDirs(result.CardCode);
+        this.onClearTable();
+        this.childListArt.onChangeRadio(false);
       }
     }, (reason) => {
     });
@@ -215,5 +223,19 @@ export class CotizacionComponent implements OnInit {
     this.ImpSN.TaxCodeAR = this.auth.getDataToken().TaxCode;
     this.ImpSN.Rate = this.auth.getDataToken().Rate;
     // this.getPersonasDirs(this.auth.getDataToken().CardCode);
+    // actualizamos lista articulos
+    /* this.childListArt.listDeft = true;
+    this.childListArt.getListItems(); */
+  }
+
+  private printDocument(idDoc: number, type: number) {
+    this.rptService.printReport(this.auth.getToken(), idDoc, type).subscribe(response => {
+      const fileURL = URL.createObjectURL(response);
+      window.open(fileURL, '_blank');
+    });
+  }
+
+  onClearTable() {
+    this.rowDataCot = [];
   }
 }

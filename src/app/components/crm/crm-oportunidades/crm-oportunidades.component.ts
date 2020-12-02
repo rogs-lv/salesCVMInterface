@@ -512,7 +512,7 @@ export class CrmOportunidadesComponent implements OnInit {
   });
   }
 
-  onChangePartner(id: number): void {
+  onChangePartner(): void {
     let idx = this.optsTabGral.ListPartner.findIndex(val => val.ParterId === this.tP.value.ParterId);
     if (idx !== -1) {
       this.tP.get('RelatCard').patchValue(this.optsTabGral.ListPartner[idx].RelatCard);

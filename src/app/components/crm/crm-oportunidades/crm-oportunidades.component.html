@@ -4,56 +4,56 @@
         <div class="col-md-8 pt-4">
             <div class="card bxcard">
                 <div class="card-body">
-                    <div class="card-header" *ngIf="f.OpprId.value">
+                    <!-- <div class="card-header" *ngIf="f.OpprId.value">
                         <div class="card-icon">
                             <span style="font-size: 1.5em; color: white;"><i class="fas fa-handshake"></i> Oportunidad: {{f.OpprId.value}}</span>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="progress">
-                        <div class="progress-bar" [ngClass]="{'bg-info': progress <= 6, 'bg-success': progress > 6 && progress <= 20, 'bg-warning': progress > 20 && progress <= 50,'bg-orange': progress > 50 && progress <= 60,'bg-carmin': progress > 60 && progress <= 80,'bg-danger': progress > 80 && progress <= 100}"
-                            role="progressbar" [ngStyle]="{'width': progress + '%'}" aria-valuemin="0" aria-valuemax="100">{{progress}}%</div>
+                        <!-- <div class="progress-bar" [ngClass]="{'bg-info': progress <= 6, 'bg-success': progress > 6 && progress <= 20, 'bg-warning': progress > 20 && progress <= 50,'bg-orange': progress > 50 && progress <= 60,'bg-carmin': progress > 60 && progress <= 80,'bg-danger': progress > 80 && progress <= 100}"
+                            role="progressbar" [ngStyle]="{'width': progress + '%'}" aria-valuemin="0" aria-valuemax="100">{{progress}}%</div> -->
                     </div>
                     <div class="container pt-3">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form [formGroup]="formOpp">
+                                <form>
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="OppName">Nombre Oportunidad</label>
-                                                <input id="OppName" type="text" class="form-control" placeholder="Nombre de Oportunidad" formControlName="Name" [ngClass]="{ 'is-invalid': (f.Name.errors) && f.Name.touched}">
+                                                <!-- <input id="OppName" type="text" class="form-control" placeholder="Nombre de Oportunidad" formControlName="Name" [ngClass]="{ 'is-invalid': (f.Name.errors) && f.Name.touched}">
                                                 <div *ngIf="(submitted || f.Name.errors) && f.Name.touched" class="invalid-feedback">
                                                     <div *ngIf="f.Name.errors?.required">El nombre es requerido</div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="TaxDate">Fecha de Inicio</label>
                                                 <div class="input-group mb-3">
-                                                    <input class="form-control" placeholder="Fecha" ngbDatepicker #OpenCalendar="ngbDatepicker" readonly formControlName="OpenDate" [ngClass]="{ 'is-invalid': (submitted || f.OpenDate.errors)
+                                                    <!-- <input class="form-control" placeholder="Fecha" ngbDatepicker #OpenCalendar="ngbDatepicker" readonly formControlName="OpenDate" [ngClass]="{ 'is-invalid': (submitted || f.OpenDate.errors)
                                                     && f.OpenDate.touched}" (dateSelect)="onChangeDate()">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline-secondary calendar" (click)="OpenCalendar.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div *ngIf="(submitted || f.OpenDate.errors) && f.OpenDate.touched" class="invalid-feedback">
+                                                <!-- <div *ngIf="(submitted || f.OpenDate.errors) && f.OpenDate.touched" class="invalid-feedback">
                                                     <div *ngIf="f.OpenDate.errors?.required">La fecha es requerida</div>
                                                 </div>
                                                 <div *ngIf="durationValid === 1" style="color: red; font-size: 80%;">
                                                     <div>La fecha no puede ser mayor que la de cierre</div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="">Fecha cierre</label>
-                                                <div class="input-group mb-3" *ngIf="formOpp.value.Status === 'W' || formOpp.value.Status === 'L'">
+                                                <!-- <div class="input-group mb-3" *ngIf="formOpp.value.Status === 'W' || formOpp.value.Status === 'L'">
                                                     <input class="form-control" placeholder="Fecha Cierre" ngbDatepicker #CloseDCalendar="ngbDatepicker" readonly formControlName="CloseDate">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-outline-secondary calendar" (click)="CloseDCalendar.toggle()" type="button"><span><i class="fas fa-calendar"></i></span></button>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -61,24 +61,24 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="CardCode">Cliente</label>
-                                                <input id="CardCode" type="text" class="form-control" placeholder="Cliente" disabled formControlName="CardCode" [ngClass]="{ 'is-invalid': (submitted || f.CardCode.errors) && f.CardCode.touched}">
+                                                <!-- <input id="CardCode" type="text" class="form-control" placeholder="Cliente" disabled formControlName="CardCode" [ngClass]="{ 'is-invalid': (submitted || f.CardCode.errors) && f.CardCode.touched}">
                                                 <div *ngIf="(submitted || f.CardCode.errors) && f.CardCode.touched" class="invalid-feedback">
                                                     <div *ngIf="f.CardCode.errors.required">El campo es requerido</div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label for="CardName">Nombre</label>
-                                                <input id="CardName" type="text" class="form-control" placeholder="Nombre" formControlName="CardName" disabled>
+                                                <!-- <input id="CardName" type="text" class="form-control" placeholder="Nombre" formControlName="CardName" disabled> -->
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="CprCode">Persona de Contacto</label>
-                                                <select class="form-control" id="CprCode" formControlName="CprCode">
+                                                <!--  <select class="form-control" id="CprCode" formControlName="CprCode">
                                                    <option *ngFor="let pc of optsOpp.ListPrsContacto" [ngValue]="pc.CntctCode">{{pc.Name}}</option>
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
                                     </div>
@@ -86,17 +86,17 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="Territory">Territorio SN</label>
-                                                <select class="form-control" id="Territory" formControlName="Territory">
+                                                <!-- <select class="form-control" id="Territory" formControlName="Territory">
                                                     <option *ngFor="let t of optsOpp.ListTerritorio" [ngValue]="t.territryID">{{t.descript}}</option>
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="slpCode">Vendedor</label>
-                                                <select class="form-control" id="SlpCode" formControlName="SlpCode">
+                                                <!-- <select class="form-control" id="SlpCode" formControlName="SlpCode">
                                                     <option *ngFor="let s of optsOpp.ListVendedor" [ngValue]="s.SlpCode">{{s.SlpName}}</option>    
-                                                </select>
+                                                </select> -->
                                             </div>
                                         </div>
                                     </div>
@@ -137,68 +137,62 @@
                                                 </li>
                                             </ul>
                                             <div class="tab-content" id="myTabContent">
-                                                <div class="tab-pane fade show active" id="potencial" role="tabpanel" aria-labelledby="potencial-tab" formGroupName="TabPotencial">
+                                                <div class="tab-pane fade show active" id="potencial" role="tabpanel" aria-labelledby="potencial-tab">
                                                     <br>
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="PredDate">Fecha prevista cierre</label>
                                                                 <div class="input-group mb-3">
-                                                                    <input id="PredDate" type="text" class="form-control" placeholder="Fecha cierre" ngbDatepicker #PredDate="ngbDatepicker" readonly formControlName="PredDate" (dateSelect)="onChangeDate()">
+                                                                    <!-- <input id="PredDate" type="text" class="form-control" placeholder="Fecha cierre" ngbDatepicker #PredDate="ngbDatepicker" readonly formControlName="PredDate" (dateSelect)="onChangeDate()">
                                                                     <div class="input-group-append">
                                                                         <button class="btn btn-outline-secondary" type="button" id="PredDateBtn" (click)="PredDate.toggle()"><span><i class="fas fa-calendar"></i></span></button>
                                                                     </div>
                                                                     <div *ngIf="durationValid === -1" style="color: red; font-size: 80%;">
                                                                         <div>La fecha no puede ser menor que la de inicio</div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group text-center">
                                                                 <label for="ClosePrev">Cierre previsto</label>
-                                                                <p *ngIf="duration > 0 && durationValid === 0"><span>{{duration}} días</span></p>
+                                                                <!-- <p *ngIf="duration > 0 && durationValid === 0"><span>{{duration}} días</span></p> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="DMaxSumLoc">Monto Potencial</label>
-                                                                <p *ngIf="docSap.Detail.TableEtapas.length > 0">{{docSap.Detail.TableEtapas[(docSap.Detail.TableEtapas.length - 1)].WtSumLoc | currency}}</p>
-                                                                <!--  <input id="DMaxSumLoc" type="number" class="form-control" placeholder="Monto" formControlName="MaxSumLoc" [ngClass]="{ 'is-invalid': (submitted || formOpp.controls['TabPotencial'].get('MaxSumLoc').errors) && formOpp.controls['TabPotencial'].get('MaxSumLoc').touched}">
-                                                                <p style="margin-left: 0.5em;">{{ formOpp.controls['TabPotencial'].get('MaxSumLoc').value | currency}}</p>
-                                                                <div *ngIf="(submitted || formOpp.controls['TabPotencial'].get('MaxSumLoc').errors) && formOpp.controls['TabPotencial'].get('MaxSumLoc').touched" class="invalid-feedback">
-                                                                    <div *ngIf="formOpp.get('TabPotencial.MaxSumLoc').errors?.required">El monto es requerido</div>
-                                                                    <div *ngIf="formOpp.get('TabPotencial.MaxSumLoc').errors?.min">El monto debe ser mayor a 0</div>
-                                                                </div> -->
+                                                                <!-- <p *ngIf="docSap.Detail.TableEtapas.length > 0">{{docSap.Detail.TableEtapas[(docSap.Detail.TableEtapas.length - 1)].WtSumLoc | currency}}</p> -->
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general-tab" formGroupName="TabGeneral">
+                                                <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general-tab">
                                                     <br>
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="ProySN">Proyecto SN</label>
-                                                                <select class="form-control" id="ProySN" formControlName="PrjCode">
+                                                                <!--  <select class="form-control" id="ProySN" formControlName="PrjCode">
                                                                     <option *ngFor="let ps of optsTabGral.ListProyectoSN" [ngValue]="ps.PrjCode">{{ps.PrjName}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="Source">Fuente de Información</label>
-                                                                <select class="form-control" id="Source" formControlName="Source">
+                                                                <!--  <select class="form-control" id="Source" formControlName="Source">
                                                                     <option *ngFor="let ps of optsTabGral.ListaInformacion" [ngValue]="ps.Num">{{ps.Descript}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="Industry">Industria</label>
-                                                                <select class="form-control" id="Industry" formControlName="Industry">
+                                                                <!--  <select class="form-control" id="Industry" formControlName="Industry">
                                                                     <option *ngFor="let ps of optsTabGral.ListIndustria" [ngValue]="ps.IndCode">{{ps.IndName}} - {{ps.IndDesc}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -206,21 +200,21 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="observaciones">Observaciones</label>
-                                                                <textarea class="form-control" id="observaciones" placeholder="observaciones" formControlName="Memo"></textarea>
+                                                                <!-- <textarea class="form-control" id="observaciones" placeholder="observaciones" formControlName="Memo"></textarea> -->
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="etapas" role="tabpanel" aria-labelledby="etapas-tab" formGroupName="tabEtapas">
+                                                <div class="tab-pane fade" id="etapas" role="tabpanel" aria-labelledby="etapas-tab">
                                                     <div class="row">
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="inicioDateEtp">Inicio</label>
                                                                 <div class="input-group mb-3">
-                                                                    <input id="inicioDateEtp" type="text" class="form-control" placeholder="Fecha Inicio" ngbDatepicker #TabEtOpenDate="ngbDatepicker" readonly formControlName="OpenDate" (dateSelect)="onChangeDateEtp('O')">
+                                                                    <!-- <input id="inicioDateEtp" type="text" class="form-control" placeholder="Fecha Inicio" ngbDatepicker #TabEtOpenDate="ngbDatepicker" readonly formControlName="OpenDate" (dateSelect)="onChangeDateEtp('O')">
                                                                     <div class="input-group-append">
                                                                         <button class="btn btn-outline-secondary" type="button" id="TabEtOpenDateBtn" (click)="TabEtOpenDate.toggle()"><span><i class="fas fa-calendar"></i></span></button>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -228,30 +222,30 @@
                                                             <div class="form-group">
                                                                 <label for="cierreDateEtp">Cierre</label>
                                                                 <div class="input-group mb-3">
-                                                                    <input id="cierreDateEtp" type="text" class="form-control" placeholder="Fecha Inicio" ngbDatepicker #TabEtCloseDate="ngbDatepicker" readonly formControlName="CloseDate" (dateSelect)="onChangeDateEtp('C')">
+                                                                    <!--  <input id="cierreDateEtp" type="text" class="form-control" placeholder="Fecha Inicio" ngbDatepicker #TabEtCloseDate="ngbDatepicker" readonly formControlName="CloseDate" (dateSelect)="onChangeDateEtp('C')">
                                                                     <div class="input-group-append">
                                                                         <button class="btn btn-outline-secondary" type="button" id="TabEtCloseDateBtn" (click)="TabEtCloseDate.toggle()"><span><i class="fas fa-calendar"></i></span></button>
                                                                     </div>
                                                                     <div *ngIf="duratValidEtp === -1" style="color: red; font-size: 80%;">
                                                                         <div>La fecha no puede ser menor que la de inicio</div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="Sale">Vendedor</label>
-                                                                <select class="form-control" id="Sale" formControlName="SlpCode">
+                                                                <!--  <select class="form-control" id="Sale" formControlName="SlpCode">
                                                                     <option *ngFor="let e of optsTabGral.ListVendedor" [ngValue]="e.SlpCode">{{e.SlpName}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="StepId">Etapas</label>
-                                                                <select class="form-control" id="StepId" formControlName="Step_Id">
+                                                                <!-- <select class="form-control" id="StepId" formControlName="Step_Id">
                                                                     <option *ngFor="let e of optsTabGral.ListEtapa" [ngValue]="e.StepId">{{e.Descript}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -259,34 +253,34 @@
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="WtSumLoc">Monto Especial</label>
-                                                                <input id="WtSumLoc" type="number" class="form-control" placeholder="Monto" formControlName="WtSumLoc" [ngClass]="{ 'is-invalid': (submitted || formOpp.controls['tabEtapas'].get('WtSumLoc').errors) && formOpp.controls['tabEtapas'].get('WtSumLoc').touched}">
+                                                                <!--  <input id="WtSumLoc" type="number" class="form-control" placeholder="Monto" formControlName="WtSumLoc" [ngClass]="{ 'is-invalid': (submitted || formOpp.controls['tabEtapas'].get('WtSumLoc').errors) && formOpp.controls['tabEtapas'].get('WtSumLoc').touched}">
                                                                 <p style="margin-left: 0.5em;">{{ tE.value.WtSumLoc | currency}}</p>
                                                                 <div *ngIf="(submitted || formOpp.controls['tabEtapas'].get('WtSumLoc').errors) && formOpp.controls['tabEtapas'].get('WtSumLoc').touched" class="invalid-feedback">
                                                                     <div *ngIf="formOpp.get('tabEtapas.WtSumLoc').errors?.required">El monto es requerido</div>
                                                                     <div *ngIf="formOpp.get('tabEtapas.WtSumLoc').errors?.min">El monto debe ser mayor a 0</div>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
                                                                 <label for="ResDocType">Tipo Docto</label>
-                                                                <select class="form-control" id="ResDocType" placeholder="Tipo Docto" formControlName="ObjType" (change)="onChangeDocument()">
+                                                                <!-- <select class="form-control" id="ResDocType" placeholder="Tipo Docto" formControlName="ObjType" (change)="onChangeDocument()">
                                                                     <option *ngFor="let t of ListTypeDoc" [ngValue]="t.Code">{{t.Name}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="ResDocNum" class="mb-0">No. Docto</label>
-                                                                <ng-select [virtualScroll]="true" placeholder="¿Documento?" formControlName="DocNumber" notFoundText="No hay documentos">
+                                                                <!--  <ng-select [virtualScroll]="true" placeholder="¿Documento?" formControlName="DocNumber" notFoundText="No hay documentos">
                                                                     <ng-option *ngFor="let d of ListDocStage" [value]="d.DocEntry">{{d.DocNum}} - {{d.CardCode}}</ng-option>
-                                                                </ng-select>
+                                                                </ng-select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2 d-flex align-items-center justify-content-between">
-                                                            <button class="btn btn-info" *ngIf="!UpdRowEtapa" (click)="createRow('EN', tE.value)" [disabled]="!tE.value.SlpCode || !tE.value.Step_Id || !f.CardCode.value"><span><i class="fas fa-plus"></i></span></button>
+                                                            <!-- <button class="btn btn-info" *ngIf="!UpdRowEtapa" (click)="createRow('EN', tE.value)" [disabled]="!tE.value.SlpCode || !tE.value.Step_Id || !f.CardCode.value"><span><i class="fas fa-plus"></i></span></button>
                                                             <button class="btn btn-info" *ngIf="UpdRowEtapa" (click)="updateRowEtp('URE', tE.value)"><span><i class="fas fa-sync-alt"></i></span></button>
-                                                            <button class="btn btn-info" *ngIf="UpdRowEtapa" (click)="onCancelUpdRow()"><span><i class="fas fa-times"></i></span></button>
+                                                            <button class="btn btn-info" *ngIf="UpdRowEtapa" (click)="onCancelUpdRow()"><span><i class="fas fa-times"></i></span></button> -->
                                                         </div>
                                                     </div>
                                                     <div class="row mt-4">
@@ -314,7 +308,7 @@
                                                                         </table>
                                                                         <table style="width:100%; margin-top:45px;">
                                                                             <tbody>
-                                                                                <tr (click)="onClicRow(i)" *ngFor="let rowEt of docSap.Detail.TableEtapas; let i = index">
+                                                                                <!--  <tr (click)="onClicRow(i)" *ngFor="let rowEt of docSap.Detail.TableEtapas; let i = index">
                                                                                     <td class="colTT6" [ngStyle]="{'background': docSap.Detail.TableEtapas.length === 1 || (this.docSap.Detail.TableEtapas.length - 1) === i ? '#fff' : '#b3b3b3' }">{{i + 1}}</td>
                                                                                     <td class="colTT2" [ngStyle]="{'background': docSap.Detail.TableEtapas.length === 1 || (this.docSap.Detail.TableEtapas.length - 1) === i ? '#fff' : '#b3b3b3' }">{{rowEt.SlpName}}</td>
                                                                                     <td class="colTT2" [ngStyle]="{'background': docSap.Detail.TableEtapas.length === 1 || (this.docSap.Detail.TableEtapas.length - 1) === i ? '#fff' : '#b3b3b3' }">{{rowEt.OpenDate | date: 'd/M/yyyy'}}</td>
@@ -324,7 +318,7 @@
                                                                                     <td class="colTT3" [ngStyle]="{'background': docSap.Detail.TableEtapas.length === 1 || (this.docSap.Detail.TableEtapas.length - 1) === i ? '#fff' : '#b3b3b3' }">{{rowEt.WtSumLoc | currency}}</td>
                                                                                     <td class="colTT3" [ngStyle]="{'background': docSap.Detail.TableEtapas.length === 1 || (this.docSap.Detail.TableEtapas.length - 1) === i ? '#fff' : '#b3b3b3' }">{{rowEt.ObjType | typeDoc}}</td>
                                                                                     <td class="colTT5" [ngStyle]="{'background': docSap.Detail.TableEtapas.length === 1 || (this.docSap.Detail.TableEtapas.length - 1) === i ? '#fff' : '#b3b3b3' }">{{rowEt.DocNumber}}</td>
-                                                                                </tr>
+                                                                                </tr> -->
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -333,28 +327,28 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="partner" role="tabpanel" aria-labelledby="partner-tab" formGroupName="tabPartner">
+                                                <div class="tab-pane fade" id="partner" role="tabpanel" aria-labelledby="partner-tab">
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="tPtSlpCode">Nombre</label>
-                                                                <select class="form-control" id="tPtSlpCode" formControlName="ParterId" (change)="onChangePartner()">
+                                                                <!--   <select class="form-control" id="tPtSlpCode" formControlName="ParterId" (change)="onChangePartner()">
                                                                     <option *ngFor="let p of optsTabGral.ListPartner" [ngValue]="p.ParterId">{{p.Name}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="tPtCardCode">SN Relación</label>
-                                                                <input id="tPtCardCode" type="text" class="form-control" placeholder="Socio de Negocios" formControlName="RelatCard" disabled>
+                                                                <!-- <input id="tPtCardCode" type="text" class="form-control" placeholder="Socio de Negocios" formControlName="RelatCard" disabled> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="tPOrlCode">Relacion</label>
-                                                                <select class="form-control" id="tPOrlCode" formControlName="OrlCode">
+                                                                <!--  <select class="form-control" id="tPOrlCode" formControlName="OrlCode">
                                                                     <option *ngFor="let p of optsTabGral.ListRelacion" [ngValue]="p.OrlCode">{{p.OrlDesc}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -362,15 +356,15 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="observaciones">Observaciones</label>
-                                                                <textarea class="form-control" id="observaciones" placeholder="Observaciones" formControlName="Memo"></textarea>
+                                                                <!-- <textarea class="form-control" id="observaciones" placeholder="Observaciones" formControlName="Memo"></textarea> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                         </div>
                                                         <div class="col-sm-2 d-flex align-items-center justify-content-between">
-                                                            <button class="btn btn-info" *ngIf="!UpdRowPatner" (click)="createRow('P', tP.value)" [disabled]="!tP.value.ParterId && !tP.value.OrlCode"><span><i class="fas fa-plus"></i></span></button>
+                                                            <!--  <button class="btn btn-info" *ngIf="!UpdRowPatner" (click)="createRow('P', tP.value)" [disabled]="!tP.value.ParterId && !tP.value.OrlCode"><span><i class="fas fa-plus"></i></span></button>
                                                             <button class="btn btn-info" *ngIf="UpdRowPatner" (click)="updateRowPartner(tP.value)"><span><i class="fas fa-sync-alt"></i></span></button>
-                                                            <button class="btn btn-info" *ngIf="UpdRowPatner" (click)="onCancelUpdPtn()"><span><i class="fas fa-times"></i></span></button>
+                                                            <button class="btn btn-info" *ngIf="UpdRowPatner" (click)="onCancelUpdPtn()"><span><i class="fas fa-times"></i></span></button> -->
                                                         </div>
                                                     </div>
                                                     <div class="row mt-4">
@@ -394,13 +388,13 @@
                                                                         </table>
                                                                         <table style="width:100%; margin-top:45px;">
                                                                             <tbody>
-                                                                                <tr (click)="onClicRowPtn(i)" *ngFor="let rowEPt of docSap.Detail.TablePartner; let i = index">
+                                                                                <!--  <tr (click)="onClicRowPtn(i)" *ngFor="let rowEPt of docSap.Detail.TablePartner; let i = index">
                                                                                     <td class="colTT6">{{i + 1}}</td>
                                                                                     <td class="colTT5">{{rowEPt.Name}}</td>
                                                                                     <td class="colTT5">{{rowEPt.OrlDesc}}</td>
                                                                                     <td class="colTT5">{{rowEPt.RelatCard}}</td>
                                                                                     <td class="colTT5">{{rowEPt.Memo}}</td>
-                                                                                </tr>
+                                                                                </tr> -->
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -409,28 +403,28 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="competidores" role="tabpanel" aria-labelledby="competidores-tab" formGroupName="tabCompetidores">
+                                                <div class="tab-pane fade" id="competidores" role="tabpanel" aria-labelledby="competidores-tab">
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="tCoCompetId">Nombre</label>
-                                                                <select class="form-control" id="tCoCompetId" formControlName="CompetId" (change)="onChangeCompet()">
+                                                                <!--  <select class="form-control" id="tCoCompetId" formControlName="CompetId" (change)="onChangeCompet()">
                                                                     <option *ngFor="let l of optsTabGral.ListCompetidor" [ngValue]="l.CompetId">{{l.NameCompet}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="tCoThreatLevl">Nivel Amenaza</label>
-                                                                <select class="form-control" id="tCoThreatLevl" formControlName="ThreatLevi">
+                                                                <!-- <select class="form-control" id="tCoThreatLevl" formControlName="ThreatLevi">
                                                                     <option *ngFor="let a of ListAmenazas" [ngValue]="a.Code">{{a.Name}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="tCompWon">Ganado</label>
-                                                                <input type="checkbox" id="tCompWon" class="form-control" formControlName="Won" [checked]="tC.value.Won">
+                                                                <!-- <input type="checkbox" id="tCompWon" class="form-control" formControlName="Won" [checked]="tC.value.Won"> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -438,15 +432,14 @@
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <label for="observaciones">Comentario</label>
-                                                                <textarea class="form-control" id="observaciones" placeholder="Observaciones" formControlName="Memo"></textarea>
+                                                                <!-- <textarea class="form-control" id="observaciones" placeholder="Observaciones" formControlName="Memo"></textarea> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4"></div>
                                                         <div class="col-sm-2 d-flex align-items-center justify-content-between">
-                                                            <button class="btn btn-info" *ngIf="!UpdRowCompet" (click)="createRow('C', tC.value)" [disabled]="!tC.value.CompetId && !tC.value.ThreatLevi"><span><i class="fas fa-plus"></i></span></button>
-                                                            <!-- <button class="btn btn-info" *ngIf="!UpdRowCompet" (click)="createRow('P', tP.value)" [disabled]="!tP.value.ParterId && !tP.value.OrlCode"><span><i class="fas fa-plus"></i></span></button> -->
+                                                            <!-- <button class="btn btn-info" *ngIf="!UpdRowCompet" (click)="createRow('C', tC.value)" [disabled]="!tC.value.CompetId && !tC.value.ThreatLevi"><span><i class="fas fa-plus"></i></span></button>
                                                             <button class="btn btn-info" *ngIf="UpdRowCompet" (click)="updateRowCompet(tC.value)"><span><i class="fas fa-sync-alt"></i></span></button>
-                                                            <button class="btn btn-info" *ngIf="UpdRowCompet" (click)="onCancelUpdCom()"><span><i class="fas fa-times"></i></span></button>
+                                                            <button class="btn btn-info" *ngIf="UpdRowCompet" (click)="onCancelUpdCom()"><span><i class="fas fa-times"></i></span></button> -->
                                                         </div>
                                                     </div>
                                                     <div class="row mt-4">
@@ -470,7 +463,7 @@
                                                                         </table>
                                                                         <table style="width:100%; margin-top:45px;">
                                                                             <tbody>
-                                                                                <tr (click)="onClicRowComp(i)" *ngFor="let rowCom of docSap.Detail.TableCompet; let i = index">
+                                                                                <!--  <tr (click)="onClicRowComp(i)" *ngFor="let rowCom of docSap.Detail.TableCompet; let i = index">
                                                                                     <td class="colTT7">{{i + 1}}</td>
                                                                                     <td class="colTT5">{{rowCom.NameCompet}}</td>
                                                                                     <td class="colTT5">{{rowCom.ThreatLevi | amenaza}}</td>
@@ -479,7 +472,7 @@
                                                                                         <span *ngIf="rowCom.Won" style="color: dodgerblue"><i class="fas fa-check-square"></i></span>
                                                                                         <span *ngIf="!rowCom.Won" style="color: red"><i class="fas fa-times"></i></span>
                                                                                     </td>
-                                                                                </tr>
+                                                                                </tr> -->
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
@@ -493,9 +486,9 @@
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="ResEstatus">Estatus</label>
-                                                                <select class="form-control" id="ResEstatus" formControlName="Status" (change)="isDisabled()">
+                                                                <!--  <select class="form-control" id="ResEstatus" formControlName="Status" (change)="isDisabled()">
                                                                     <option *ngFor="let s of ListStatusOpp" [ngValue]="s.Code">{{s.Name}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
@@ -511,23 +504,17 @@
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="ResDocType">Tipo Docto</label>
-                                                                <select class="form-control" id="ResDocType" placeholder="Tipo Docto" formControlName="DocType" (change)="onChangeDocumentRes()" disabled>
+                                                                <!--  <select class="form-control" id="ResDocType" placeholder="Tipo Docto" formControlName="DocType" (change)="onChangeDocumentRes()" disabled>
                                                                     <option *ngFor="let t of ListTypeDoc" [ngValue]="t.Code">{{t.Name}}</option>
-                                                                </select>
+                                                                </select> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="ResDocNum" class="mb-0">No. Docto</label>
-                                                                <ng-select [virtualScroll]="true" placeholder="¿Documento?" formControlName="DocNum" notFoundText="No hay documentos" disabled>
+                                                                <!-- <ng-select [virtualScroll]="true" placeholder="¿Documento?" formControlName="DocNum" notFoundText="No hay documentos" disabled>
                                                                     <ng-option *ngFor="let d of ListDocResum" [value]="d.DocEntry">{{d.DocNum}} - {{d.CardCode}}</ng-option>
-                                                                </ng-select>
-                                                                <!-- <div class="input-group mb-3">
-                                                                    <input id="ResDocNum" type="text" class="form-control" placeholder="No. Docto" formControlName="docNum" disabled readonly>
-                                                                    <div class="input-group-append">
-                                                                        <button class="btn btn-outline-secondary" type="button" id="ResDocNumBtn"><span><i class="fas fa-file-alt"></i></span></button>
-                                                                    </div>
-                                                                </div> -->
+                                                                </ng-select> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -540,7 +527,7 @@
                                         <div class="col-sm-6 d-flex justify-content-end">
                                         </div>
                                         <div class="col-sm-6">
-                                            <div *ngIf="f.OpprId.value" [ngClass]="{'d-flex' : true , 'justify-content-between' : (f.OpprId.value && !submitted), 'justify-content-end' : (f.OpprId.value  && submitted)}">
+                                            <!--  <div *ngIf="f.OpprId.value" [ngClass]="{'d-flex' : true , 'justify-content-between' : (f.OpprId.value && !submitted), 'justify-content-end' : (f.OpprId.value  && submitted)}">
                                                 <button *ngIf="f.OpprId.value && !submitted" class="btn btn-info" (click)="CancelUpdOpp()"><span class="btnFomr"><i class="fas fa-calendar-times"></i></span> Cancelar</button>
                                                 <button *ngIf="f.OpprId.value && !submitted" [disabled]="!formOpp.valid" class="btn btn-info" (click)="UpdOpp()"><span class="btnFomr"><i class="fas fa-clipboard-check"></i></span> Actualizar</button>
                                                 <button class="btn btn-info" *ngIf="submitted"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
@@ -548,7 +535,7 @@
                                             <div *ngIf="!f.OpprId.value" class=" d-flex justify-content-end">
                                                 <button class="btn btn-info" (click)="CreateOpp()" *ngIf="!submitted" [disabled]='!formOpp.valid'><span class="btnFomr"><i class="fas fa-file-signature"></i></span> Crear</button>
                                                 <button class="btn btn-info" *ngIf="submitted"><span class="btnFomr"><i class="fas fa-spinner fa-pulse"></i></span></button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </form>
@@ -562,11 +549,13 @@
         <div class="col-sm-4 pt-4">
             <!--Lista de Oportunidades-->
             <div class="card bxcard">
-                <app-lista-opp (oppSel)="listenOpps($event)"></app-lista-opp>
+                <!-- <app-lista-opp (oppSel)="listenOpps($event)"></app-lista-opp> -->
+                <app-lista-opp></app-lista-opp>
             </div>
             <!-- Lista Socios de Artículos -->
             <div class="card bxcard mt-5">
-                <app-lista-crm-socios (socioSel)="listenPartner($event)"></app-lista-crm-socios>
+                <!-- <app-lista-crm-socios (socioSel)="listenPartner($event)"></app-lista-crm-socios> -->
+                <app-lista-crm-socios></app-lista-crm-socios>
             </div>
         </div>
     </div>

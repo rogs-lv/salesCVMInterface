@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { BusinessP } from 'src/app/models/oportunidad';
+import { PartnerOpp } from 'src/app/models/oportunidad';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { OportunidadService } from 'src/app/services/oportunidades/oportunidad.service';
 import Swal from 'sweetalert2';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class ListaCRMSociosComponent implements OnInit {
   @ViewChild('agGrid', {static: true}) agGrid: AgGridAngular;
-  @Output() socioSel = new EventEmitter<BusinessP>();
+  @Output() socioSel = new EventEmitter<PartnerOpp>();
 
   rowData = [];
   pagSize = 10;

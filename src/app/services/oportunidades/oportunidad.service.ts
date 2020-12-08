@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { OpportunitySAP } from '../../models/oportunidad';
+/* import { OpportunitySAP } from '../../models/oportunidad'; */
+import { Opportunity } from 'src/app/models/oportunidad';
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +77,7 @@ export class OportunidadService {
     );
   }
 
-  createOpp(token: string, document: OpportunitySAP, usuario: string) {
+  createOpp(token: string, document: Opportunity, usuario: string) {
     const headerApi = new HttpHeaders()
     .set('Authorization', token);
     const api = `${this.endpoint}salesCVM/CRM/CreateOpportunity?usuario=${usuario}`;
@@ -92,7 +93,7 @@ export class OportunidadService {
     );
   }
 
-  updateOpp(token: string, document: OpportunitySAP, usuario: string) {
+  updateOpp(token: string, document: Opportunity, usuario: string) {
     const headerApi = new HttpHeaders()
     .set('Authorization', token);
     const api = `${this.endpoint}salesCVM/CRM/UpdateOpportunity?usuario=${usuario}`;
